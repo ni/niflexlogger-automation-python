@@ -1,11 +1,11 @@
-# Contributing to *niflexlogger-automation-python* 
+# Contributing to *niflexlogger-python* 
 
-Contributions to *niflexlogger-automation-python* are welcome from all!
+Contributions to *niflexlogger-python* are welcome from all!
 
-*niflexlogger-automation-python* is managed via [git](https://git-scm.com), with the canonical upstream
-repository hosted on [GitHub](https://github.com/ni/niflexlogger-automation-python/).
+*niflexlogger-python* is managed via [git](https://git-scm.com), with the canonical upstream
+repository hosted on [GitHub](https://github.com/ni/niflexlogger-python/).
 
-*niflexlogger-automation-python* follows a pull-request model for development.  If you wish to
+*niflexlogger-python* follows a pull-request model for development.  If you wish to
 contribute, you will need to create a GitHub account, fork this project, push a
 branch with your changes to your project, and then submit a pull request.
 
@@ -19,7 +19,7 @@ To contribute to this project, it is recommended that you follow these steps:
 2. Run the unit tests on your system (see Testing section). At this point,
    if any tests fail, do not begin development. Try to investigate these
    failures. If you're unable to do so, report an issue through our
-   [GitHub issues page](https://github.com/ni/niflexlogger-automation-python/issues).
+   [GitHub issues page](https://github.com/ni/niflexlogger-python/issues).
 3. Write new tests that demonstrate your bug or feature. Ensure that these
    new tests fail.
 4. Make your change.
@@ -92,5 +92,5 @@ $ pytest tests/myfolder
 
 (taken from [developercertificate.org](https://developercertificate.org/))
 
-See [LICENSE](https://github.com/ni/niflexlogger-automation-python/blob/master/LICENSE)
-for details about how *niflexlogger-automation-python* is licensed.
+See [LICENSE](https://github.com/ni/niflexlogger-python/blob/master/LICENSE)
+for details about how *niflexlogger-python* is licensed.
