@@ -1,4 +1,6 @@
 from typing import Optional
+import mmap
+import uuid
 import winreg
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
@@ -19,5 +21,9 @@ def _launch_flexlogger(path: Optional[str]):
         path = _get_latest_installed_flexlogger_path()
     if path is None:
         raise Exception("Could not determine latest installed path of FlexLogger")
+    event_name = uuid.uuid4().hex
+    mapped_file_name = uuid.uuid4().hex
+
+
 
 print(_get_latest_installed_flexlogger_path())
