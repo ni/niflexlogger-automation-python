@@ -1,6 +1,10 @@
 from typing import Optional
 import mmap
+import subprocess
 import uuid
+# TODO - install this with requirements.txt or pyproject.toml or something to install pywin32
+import win32api
+import win32event
 import winreg
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
@@ -16,6 +20,7 @@ def _get_latest_installed_flexlogger_path() -> Optional[str]:
     except:
         return None
 
+# TODO - need to make this parameter actually optional
 def _launch_flexlogger(path: Optional[str]):
     if path is None:
         path = _get_latest_installed_flexlogger_path()
@@ -24,6 +29,24 @@ def _launch_flexlogger(path: Optional[str]):
     event_name = uuid.uuid4().hex
     mapped_file_name = uuid.uuid4().hex
 
+    event = win32event.CreateEvent(None, 0, 0, event_name)
+    args = [path]
+    args += ["-mappedFileIsReadyEventName=" + event_name, "-mappedFileName=" + mapped_file_name]
+    # TODO - close if client closes option
+    print(args)
+    try:
+        print("Launching...")
+        subprocess.Popen(args)
+        # TODO - configurable timeout here? Or just something reasonable?
+        # TODO - this event never gets signaled
+        object_signaled = win32event.WaitForSingleObject(event, 20000)
+        if object_signaled == 0:
+            print("Launched!")
+        else:
+            print("Something went wrong: " + str(object_signaled))
+    finally:
+        win32api.CloseHandle(event)
 
 
 print(_get_latest_installed_flexlogger_path())
+_launch_flexlogger(path=None)
