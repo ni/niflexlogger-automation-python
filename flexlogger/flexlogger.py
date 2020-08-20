@@ -32,18 +32,26 @@ def _launch_flexlogger(path: Optional[str]):
     event = win32event.CreateEvent(None, 0, 0, event_name)
     args = [path]
     args += ["-mappedFileIsReadyEventName=" + event_name, "-mappedFileName=" + mapped_file_name]
+    args += ["-enableAutomationServer", "-allowPrototype"]
     # TODO - close if client closes option
     print(args)
     try:
         print("Launching...")
         subprocess.Popen(args)
         # TODO - configurable timeout here? Or just something reasonable?
-        # TODO - this event never gets signaled
-        object_signaled = win32event.WaitForSingleObject(event, 20000)
-        if object_signaled == 0:
-            print("Launched!")
-        else:
-            print("Something went wrong: " + str(object_signaled))
+        TIMEOUT_IN_SECONDS = 60
+        launched = False
+        for i in range(TIMEOUT_IN_SECONDS):
+            object_signaled = win32event.WaitForSingleObject(event, 1000)
+            if object_signaled == 0:
+                print("Launched!")
+                launched = True
+                break
+            elif object_signaled != 258:
+                print("Something went wrong: " + str(object_signaled))
+                break
+        if not launched:
+            print("Timed out")
     finally:
         win32api.CloseHandle(event)
 
