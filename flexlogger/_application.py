@@ -18,9 +18,9 @@ FlexLoggerApplication_pb2_grpc = _import_module_from_path('FlexLoggerApplication
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
 class Application:
-    def __init__(self, connect_to_existing=False) -> None:
+    def __init__(self, connect_to_existing : bool=False, timeout_in_seconds : int=60) -> None:
         if not connect_to_existing:
-            self._server_port = _launch_flexlogger()
+            self._server_port = _launch_flexlogger(timeout_in_seconds=timeout_in_seconds)
         self._channel = grpc.insecure_channel('localhost:%d' % self._server_port)
 
     def __enter__(self):
@@ -39,7 +39,7 @@ class Application:
         response = stub.OpenProject(FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path))
         return Project(self._channel, response.project)
 
-def _launch_flexlogger(path: Optional[str] = None) -> int:
+def _launch_flexlogger(timeout_in_seconds: int, path: Optional[str] = None) -> int:
     if path is None:
         path = _get_latest_installed_flexlogger_path()
     if path is None:
@@ -55,10 +55,8 @@ def _launch_flexlogger(path: Optional[str] = None) -> int:
     server_port = None
     try:
         subprocess.Popen(args)
-        # TODO - configurable timeout here? Or just something reasonable?
-        TIMEOUT_IN_SECONDS = 60
         launched = False
-        for _ in range(TIMEOUT_IN_SECONDS):
+        for _ in range(timeout_in_seconds):
             object_signaled = win32event.WaitForSingleObject(event, 1000)
             if object_signaled == 0:
                 launched = True
