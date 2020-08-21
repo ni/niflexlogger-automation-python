@@ -1,17 +1,45 @@
 from typing import Optional
+import grpc
 import mmap
+import os
 import struct
 import subprocess
 import uuid
+from ._utils import _import_module_from_path
 # TODO - install this with requirements.txt or pyproject.toml or something to install pywin32
 import win32api
 import win32event
 import winreg
 
+from flexlogger.ConfigurationBasedSoftware.FlexLogger.Automation.FlexLogger.Automation.Protocols import FlexLoggerApplication_pb2
+FlexLoggerApplication_pb2_grpc = _import_module_from_path('FlexLoggerApplication_pb2_grpc', os.path.join(os.path.dirname(__file__), 'ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/FlexLoggerApplication_pb2_grpc.py'))
+
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
-# TODO - need to make this parameter actually optional
-def _launch_flexlogger(path: Optional[str]):
+class Application:
+    def __init__(self, connect_to_existing=False) -> None:
+        if not connect_to_existing:
+            self._server_port = _launch_flexlogger()
+        self._channel = grpc.insecure_channel('localhost:%d' % self._server_port)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+    
+    def close(self):
+        if self._channel is not None:
+            self._channel.close()
+            self._channel = None
+        
+    def open_project(self, path: str) -> 'Project':
+        stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
+        response = stub.OpenProject(FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path))
+        return response.project
+
+
+def _launch_flexlogger(path: Optional[str] = None) -> int:
     if path is None:
         path = _get_latest_installed_flexlogger_path()
     if path is None:
@@ -32,7 +60,7 @@ def _launch_flexlogger(path: Optional[str]):
         # TODO - configurable timeout here? Or just something reasonable?
         TIMEOUT_IN_SECONDS = 60
         launched = False
-        for i in range(TIMEOUT_IN_SECONDS):
+        for _ in range(TIMEOUT_IN_SECONDS):
             object_signaled = win32event.WaitForSingleObject(event, 1000)
             if object_signaled == 0:
                 print("Launched!")
@@ -41,12 +69,12 @@ def _launch_flexlogger(path: Optional[str]):
                 print("server_port is %d" % (server_port))
                 break
             elif object_signaled != 258:
-                print("Something went wrong: " + str(object_signaled))
-                break
+                raise Exception("Internal error waiting for FlexLogger to launch. Error code %d" % object_signaled)
         if not launched:
-            print("Timed out")
+            raise Exception("Timed out waiting for FlexLogger to launch.")
     finally:
         win32api.CloseHandle(event)
+    return server_port
 
 def _get_latest_installed_flexlogger_path() -> Optional[str]:
     try:
@@ -63,6 +91,3 @@ def _read_int_from_mmap(mapped_name: str) -> int:
     with mmap.mmap(-1, 4, tagname=mapped_name, access=mmap.ACCESS_READ) as mapped_file:
         int_bytes = mapped_file.read(4)
         return struct.unpack('i', int_bytes)[0]
-
-print(_get_latest_installed_flexlogger_path())
-_launch_flexlogger(path=None)
