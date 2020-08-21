@@ -2,6 +2,7 @@ from typing import Optional
 import grpc
 import mmap
 import os
+from ._project import Project
 import struct
 import subprocess
 import uuid
@@ -28,16 +29,15 @@ class Application:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
     
-    def close(self):
+    def close(self) -> None:
         if self._channel is not None:
             self._channel.close()
             self._channel = None
         
-    def open_project(self, path: str) -> 'Project':
+    def open_project(self, path: str) -> Project:
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
         response = stub.OpenProject(FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path))
-        return response.project
-
+        return Project(self._channel, response.project)
 
 def _launch_flexlogger(path: Optional[str] = None) -> int:
     if path is None:
