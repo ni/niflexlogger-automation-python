@@ -52,10 +52,8 @@ def _launch_flexlogger(path: Optional[str] = None) -> int:
     args += ["-mappedFileIsReadyEventName=" + event_name, "-mappedFileName=" + mapped_name]
     args += ["-enableAutomationServer", "-allowPrototype"]
     # TODO - close if client closes option
-    print(args)
     server_port = None
     try:
-        print("Launching...")
         subprocess.Popen(args)
         # TODO - configurable timeout here? Or just something reasonable?
         TIMEOUT_IN_SECONDS = 60
@@ -63,10 +61,8 @@ def _launch_flexlogger(path: Optional[str] = None) -> int:
         for _ in range(TIMEOUT_IN_SECONDS):
             object_signaled = win32event.WaitForSingleObject(event, 1000)
             if object_signaled == 0:
-                print("Launched!")
                 launched = True
                 server_port = _read_int_from_mmap(mapped_name)
-                print("server_port is %d" % (server_port))
                 break
             elif object_signaled != 258:
                 raise Exception("Internal error waiting for FlexLogger to launch. Error code %d" % object_signaled)
