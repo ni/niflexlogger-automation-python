@@ -52,23 +52,17 @@ def _launch_flexlogger(timeout_in_seconds: int, path: Optional[str] = None) -> i
     args += ["-mappedFileIsReadyEventName=" + event_name, "-mappedFileName=" + mapped_name]
     args += ["-enableAutomationServer", "-allowPrototype"]
     # TODO - close if client closes option
-    server_port = None
     try:
         subprocess.Popen(args)
-        launched = False
         for _ in range(timeout_in_seconds):
             object_signaled = win32event.WaitForSingleObject(event, 1000)
             if object_signaled == 0:
-                launched = True
-                server_port = _read_int_from_mmap(mapped_name)
-                break
+                return _read_int_from_mmap(mapped_name)
             elif object_signaled != 258:
                 raise Exception("Internal error waiting for FlexLogger to launch. Error code %d" % object_signaled)
-        if not launched:
-            raise Exception("Timed out waiting for FlexLogger to launch.")
+        raise Exception("Timed out waiting for FlexLogger to launch.")
     finally:
         win32api.CloseHandle(event)
-    return server_port
 
 def _get_latest_installed_flexlogger_path() -> Optional[str]:
     try:
