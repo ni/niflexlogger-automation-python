@@ -6,7 +6,6 @@ from ._project import Project
 import struct
 import subprocess
 import uuid
-from ._utils import _import_module_from_path
 
 # TODO - install this with requirements.txt or pyproject.toml or something to install pywin32
 import win32api
@@ -15,14 +14,7 @@ import winreg
 
 from flexlogger.ConfigurationBasedSoftware.FlexLogger.Automation.FlexLogger.Automation.Protocols import (
     FlexLoggerApplication_pb2,
-)
-
-FlexLoggerApplication_pb2_grpc = _import_module_from_path(
-    "FlexLoggerApplication_pb2_grpc",
-    os.path.join(
-        os.path.dirname(__file__),
-        "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/FlexLoggerApplication_pb2_grpc.py",
-    ),
+    FlexLoggerApplication_pb2_grpc,
 )
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
