@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side channel specification document.
+service ChannelSpecificationDocument {
+    // RPC call to get all channel names
+    rpc GetChannelNames(GetChannelNamesRequest) returns (GetChannelNamesResponse) {}
+}
+
+// Request object for getting all channel names
+message GetChannelNamesRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for getting all channel names
+message GetChannelNamesResponse {
+    // The channels defined in the channel specification. Can be empty.
+    repeated string channel_names = 1;
+}

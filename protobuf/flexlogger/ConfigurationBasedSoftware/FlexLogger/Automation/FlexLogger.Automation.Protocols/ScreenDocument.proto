@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side screen document.
+service ScreenDocument {
+}
