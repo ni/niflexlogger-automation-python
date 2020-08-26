@@ -109,5 +109,5 @@ venv.bak/
 .vscode/
 
 # Generated protobuf files
-flexlogger/ConfigurationBasedSoftware
-flexlogger/DiagramSdk
+flexlogger/protobuf
+flexlogger/proto
