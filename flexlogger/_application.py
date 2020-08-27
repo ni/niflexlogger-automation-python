@@ -20,20 +20,27 @@ _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
 
 class Application:
-    def __init__(
-        self, connect_to_existing: bool = False, timeout_in_seconds: int = 60
-    ) -> None:
-        if not connect_to_existing:
-            self._server_port = Application._launch_flexlogger(
-                timeout_in_seconds=timeout_in_seconds
-            )
-        self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
+    # TODO - this should connect to existing
+    def __init__(self) -> None:
+        self._server_port = -1
+        self._channel = None
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
+
+    @classmethod
+    def launch(cls, timeout_in_seconds: int = 60) -> "Application":
+        application = Application()
+        application._server_port = Application._launch_flexlogger(
+            timeout_in_seconds=timeout_in_seconds
+        )
+        application._channel = grpc.insecure_channel(
+            "localhost:%d" % application._server_port
+        )
+        return application
 
     def close(self) -> None:
         if self._channel is not None:
