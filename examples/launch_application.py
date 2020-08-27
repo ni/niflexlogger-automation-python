@@ -1,6 +1,7 @@
-from flexlogger import Application
 import os
 import sys
+
+from flexlogger import Application
 
 if len(sys.argv) < 2:
     print("Usage: %s <path of project to open>" % os.path.basename(__file__))

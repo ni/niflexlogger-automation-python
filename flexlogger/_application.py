@@ -1,21 +1,20 @@
-from typing import Optional
-import grpc
 import mmap
-import os
-from ._project import Project
 import struct
 import subprocess
 import uuid
+from typing import Optional
 
-# TODO - install this with requirements.txt or pyproject.toml or something to install pywin32
+# TODO - install these with requirements.txt or pyproject.toml or something to install pywin32
+import grpc
 import win32api
 import win32event
 import winreg
-
 from flexlogger.proto import (
     FlexLoggerApplication_pb2,
     FlexLoggerApplication_pb2_grpc,
 )
+
+from ._project import Project
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
@@ -96,7 +95,7 @@ def _get_latest_installed_flexlogger_path() -> Optional[str]:
             ]
             with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
                 return winreg.QueryValueEx(latest_flexLogger_key, "Path")[0]
-    except:
+    except EnvironmentError:
         return None
 
 
@@ -104,4 +103,3 @@ def _read_int_from_mmap(mapped_name: str) -> int:
     with mmap.mmap(-1, 4, tagname=mapped_name, access=mmap.ACCESS_READ) as mapped_file:
         int_bytes = mapped_file.read(4)
         return struct.unpack("i", int_bytes)[0]
-
