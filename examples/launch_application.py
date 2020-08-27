@@ -4,7 +4,7 @@ import sys
 from flexlogger import Application
 
 
-def main(argv=None):
+def main(argv=None) -> int:
     """Launch FlexLogger and open a project"""
     if argv is None:
         argv = sys.argv
@@ -18,6 +18,7 @@ def main(argv=None):
         print("Press Enter to close project...")
         input()
         project.close(allow_prompts=False)
+    return 0
 
 
 if __name__ == "__main__":
