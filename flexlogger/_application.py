@@ -12,7 +12,7 @@ import win32api
 import win32event
 import winreg
 
-from flexlogger.ConfigurationBasedSoftware.FlexLogger.Automation.FlexLogger.Automation.Protocols import (
+from flexlogger.proto import (
     FlexLoggerApplication_pb2,
     FlexLoggerApplication_pb2_grpc,
 )

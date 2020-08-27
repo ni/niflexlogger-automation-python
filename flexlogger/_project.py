@@ -1,6 +1,6 @@
 import os
 
-from flexlogger.ConfigurationBasedSoftware.FlexLogger.Automation.FlexLogger.Automation.Protocols import (
+from flexlogger.proto import (
     Project_pb2,
     Project_pb2_grpc,
 )
