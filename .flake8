@@ -1,0 +1,15 @@
+[flake8]
+
+max-line-length = 119
+# but keep line length to 88 in general
+# - use "black" to auto-format
+
+ignore =
+    # D400 and D205 are because we sometimes split the first line of the docstring
+    *.py E203, W503, D100,D101,D102,D105,D106,D107, D400,D205, D415
+
+# Config for flake8-docstrings
+docstring-convention = google
+
+# Config for flake8-import-order
+import-order-style = smarkets
