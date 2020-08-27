@@ -24,7 +24,7 @@ class Application:
         self, connect_to_existing: bool = False, timeout_in_seconds: int = 60
     ) -> None:
         if not connect_to_existing:
-            self._server_port = _launch_flexlogger(
+            self._server_port = Application._launch_flexlogger(
                 timeout_in_seconds=timeout_in_seconds
             )
         self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
@@ -47,59 +47,65 @@ class Application:
         )
         return Project(self._channel, response.project)
 
+    @classmethod
+    def _launch_flexlogger(
+        cls, timeout_in_seconds: int, path: Optional[str] = None
+    ) -> int:
+        if path is None:
+            path = cls._get_latest_installed_flexlogger_path()
+        if path is None:
+            raise Exception("Could not determine latest installed path of FlexLogger")
+        event_name = uuid.uuid4().hex
+        mapped_name = uuid.uuid4().hex
 
-def _launch_flexlogger(timeout_in_seconds: int, path: Optional[str] = None) -> int:
-    if path is None:
-        path = _get_latest_installed_flexlogger_path()
-    if path is None:
-        raise Exception("Could not determine latest installed path of FlexLogger")
-    event_name = uuid.uuid4().hex
-    mapped_name = uuid.uuid4().hex
+        event = win32event.CreateEvent(None, 0, 0, event_name)
+        args = [path]
+        args += [
+            "-mappedFileIsReadyEventName=" + event_name,
+            "-mappedFileName=" + mapped_name,
+        ]
+        args += ["-enableAutomationServer", "-allowPrototype"]
+        # TODO - close if client closes option
 
-    event = win32event.CreateEvent(None, 0, 0, event_name)
-    args = [path]
-    args += [
-        "-mappedFileIsReadyEventName=" + event_name,
-        "-mappedFileName=" + mapped_name,
-    ]
-    args += ["-enableAutomationServer", "-allowPrototype"]
-    # TODO - close if client closes option
+        try:
+            subprocess.Popen(args)
+            for _ in range(timeout_in_seconds):
+                object_signaled = win32event.WaitForSingleObject(event, 1000)
+                if object_signaled == 0:
+                    return cls._read_int_from_mmap(mapped_name)
+                elif object_signaled != 258:
+                    raise Exception(
+                        "Internal error waiting for FlexLogger to launch. Error code %d"
+                        % object_signaled
+                    )
+            raise Exception("Timed out waiting for FlexLogger to launch.")
+        finally:
+            win32api.CloseHandle(event)
 
-    try:
-        subprocess.Popen(args)
-        for _ in range(timeout_in_seconds):
-            object_signaled = win32event.WaitForSingleObject(event, 1000)
-            if object_signaled == 0:
-                return _read_int_from_mmap(mapped_name)
-            elif object_signaled != 258:
-                raise Exception(
-                    "Internal error waiting for FlexLogger to launch. Error code %d"
-                    % object_signaled
-                )
-        raise Exception("Timed out waiting for FlexLogger to launch.")
-    finally:
-        win32api.CloseHandle(event)
+    @classmethod
+    def _get_latest_installed_flexlogger_path(cls) -> Optional[str]:
+        try:
+            with winreg.OpenKey(
+                winreg.HKEY_LOCAL_MACHINE, _FLEXLOGGER_REGISTRY_KEY_PATH
+            ) as flexLoggerKey:
+                number_of_subkeys = winreg.QueryInfoKey(flexLoggerKey)[0]
+                subkey_names = [
+                    winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)
+                ]
+                latest_subkey = sorted([(float(name), name) for name in subkey_names])[
+                    -1
+                ][1]
+                with winreg.OpenKey(
+                    flexLoggerKey, latest_subkey
+                ) as latest_flexLogger_key:
+                    return winreg.QueryValueEx(latest_flexLogger_key, "Path")[0]
+        except EnvironmentError:
+            return None
 
-
-def _get_latest_installed_flexlogger_path() -> Optional[str]:
-    try:
-        with winreg.OpenKey(
-            winreg.HKEY_LOCAL_MACHINE, _FLEXLOGGER_REGISTRY_KEY_PATH
-        ) as flexLoggerKey:
-            number_of_subkeys = winreg.QueryInfoKey(flexLoggerKey)[0]
-            subkey_names = [
-                winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)
-            ]
-            latest_subkey = sorted([(float(name), name) for name in subkey_names])[-1][
-                1
-            ]
-            with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
-                return winreg.QueryValueEx(latest_flexLogger_key, "Path")[0]
-    except EnvironmentError:
-        return None
-
-
-def _read_int_from_mmap(mapped_name: str) -> int:
-    with mmap.mmap(-1, 4, tagname=mapped_name, access=mmap.ACCESS_READ) as mapped_file:
-        int_bytes = mapped_file.read(4)
-        return struct.unpack("i", int_bytes)[0]
+    @classmethod
+    def _read_int_from_mmap(cls, mapped_name: str) -> int:
+        with mmap.mmap(
+            -1, 4, tagname=mapped_name, access=mmap.ACCESS_READ
+        ) as mapped_file:
+            int_bytes = mapped_file.read(4)
+            return struct.unpack("i", int_bytes)[0]
