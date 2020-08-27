@@ -1,5 +1,3 @@
-import os
-
 from flexlogger.proto import (
     Project_pb2,
     Project_pb2_grpc,
