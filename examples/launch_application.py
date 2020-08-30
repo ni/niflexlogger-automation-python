@@ -13,8 +13,8 @@ def main(argv=None) -> int:
         return 1
 
     project_path = argv[1]
-    with Application.launch() as a:
-        project = a.open_project(path=project_path)
+    with Application.launch() as app:
+        project = app.open_project(path=project_path)
         print("Press Enter to close project...")
         input()
         project.close(allow_prompts=False)
