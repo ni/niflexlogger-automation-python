@@ -1,0 +1,78 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side project.
+service Project {
+  // RPC call to open the channel specification document
+  rpc OpenChannelSpecificationDocument(OpenChannelSpecificationDocumentRequest) returns (OpenChannelSpecificationDocumentResponse) {}
+  // RPC call to open the logging specification document
+  rpc OpenLoggingSpecificationDocument(OpenLoggingSpecificationDocumentRequest) returns (OpenLoggingSpecificationDocumentResponse) {}
+  // RPC call to open the specified screen document
+  rpc OpenScreenDocument(OpenScreenDocumentRequest) returns (OpenScreenDocumentResponse) {}
+  // RPC call to open the test specification document
+  rpc OpenTestSpecificationDocument(OpenTestSpecificationDocumentRequest) returns (OpenTestSpecificationDocumentResponse) {}
+  // RPC call to close the current project.
+  rpc Close(CloseProjectRequest) returns (CloseProjectResponse) {}
+}
+
+// Information necessary to open the channel specification document.
+message OpenChannelSpecificationDocumentRequest {
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}
+
+// Response object for the open channel specificaiton document request.
+message OpenChannelSpecificationDocumentResponse {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Information necessary to open the logging specification document.
+message OpenLoggingSpecificationDocumentRequest {
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}
+
+// Response object for the open logging specificaiton document request.
+message OpenLoggingSpecificationDocumentResponse {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Information necessary to open a specific screen document.
+message OpenScreenDocumentRequest {
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+    // The name of the scren document to open
+    string screen_name = 2;
+}
+
+// Response object for the open screen document request.
+message OpenScreenDocumentResponse {
+    // The id for the screen document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Information necessary to open the test specification document.
+message OpenTestSpecificationDocumentRequest {
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}
+
+// Response object for the open test specificaiton document request.
+message OpenTestSpecificationDocumentResponse {
+    // The id for the test specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Message sent to close the current project.
+message CloseProjectRequest {
+    // True to allow prompts to be displayed.
+    bool allow_prompts = 1;
+}
+
+// The result of the close project message.
+message CloseProjectResponse {}

@@ -105,3 +105,8 @@ venv.bak/
 
 # PyCharm settings
 .idea/
+
+.vscode/
+
+# Generated protobuf files
+flexlogger/proto

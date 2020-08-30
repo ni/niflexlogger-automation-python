@@ -1,0 +1,7 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+// Service interface for a server side screen document.
+service ScreenDocument {
+}

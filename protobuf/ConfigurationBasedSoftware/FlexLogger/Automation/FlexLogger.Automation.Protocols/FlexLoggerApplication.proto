@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for the server application.
+service FlexLoggerApplication {
+  // RPC call to open an existing project on the server.
+  rpc OpenProject(OpenProjectRequest) returns (OpenProjectResponse) {}
+}
+
+// Information necessary to open an existing Project.
+message OpenProjectRequest {
+    // The path to the existing project to be opened.
+    string project_path = 1;
+}
+
+// An identifier used to identify a particular project.  The id is unique for
+// each project that is created or opened in this instance.
+message OpenProjectResponse {
+    // The id of the project that was opened.
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}

@@ -1,0 +1,131 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side logging specification document.
+service LoggingSpecificationDocument {
+    // RPC call to get the log file base path
+    rpc GetLogFileBasePath(GetLogFileBasePathRequest) returns (GetLogFileBasePathResponse) {}
+    // RPC call to set the log file base path
+    rpc SetLogFileBasePath(SetLogFileBasePathRequest) returns (SetLogFileBasePathResponse) {}
+    // RPC call to get the log file name
+    rpc GetLogFileName(GetLogFileNameRequest) returns (GetLogFileNameResponse) {}
+    // RPC call to set the log file name
+    rpc SetLogFileName(SetLogFileNameRequest) returns (SetLogFileNameResponse) {}
+    // RPC call to get all test properties
+    rpc GetTestProperties(GetTestPropertiesRequest) returns (GetTestPropertiesResponse) {}
+    // RPC call to get a specific test property
+    rpc GetTestProperty(GetTestPropertyRequest) returns (GetTestPropertyResponse) {}
+    // RPC call to set a specific test property
+    rpc SetTestProperty(SetTestPropertyRequest) returns (SetTestPropertyResponse) {}
+    // RPC call to remove a specific test property
+    rpc RemoveTestProperty(RemoveTestPropertyRequest) returns (RemoveTestPropertyResponse) {}
+}
+
+// Request object for getting the log file base path
+message GetLogFileBasePathRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a get log file base path request
+message GetLogFileBasePathResponse {
+    // The log file base path
+    string log_file_base_path = 1;
+}
+
+// Request object for setting the log file base path
+message SetLogFileBasePathRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The log file base path
+    string log_file_base_path = 2;
+}
+
+// Response object for a set log file base path request
+message SetLogFileBasePathResponse {
+}
+
+// Request object for getting the log file name
+message GetLogFileNameRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a get log file name request
+message GetLogFileNameResponse {
+    // The log file name
+    string log_file_name = 1;
+}
+
+// Request object for setting the log file name
+message SetLogFileNameRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The log file base path
+    string log_file_name = 2;
+}
+
+// Response object for a set log file name
+message SetLogFileNameResponse {
+}
+
+// Message that defines an individual test property
+message TestProperty {
+    string property_name = 1;
+    string property_value = 2;
+    bool prompt_on_start = 3;
+}
+
+// Request object for getting all test properties
+message GetTestPropertiesRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for getting all test properties
+message GetTestPropertiesResponse {
+    // The test properties for the logging specification document. Can be empty.
+    repeated TestProperty test_properties = 1;
+}
+
+// Request object for getting a specific test property
+message GetTestPropertyRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the test property to get
+    string property_name = 2;
+}
+
+// Response object for getting a specific test property
+message GetTestPropertyResponse {
+    // The requested test property
+    TestProperty test_property = 1;
+}
+
+// Request object for setting a specific test property
+message SetTestPropertyRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The test property to set
+    TestProperty test_property = 2;
+}
+
+// Response object for setting a specific test property
+message SetTestPropertyResponse {
+}
+
+// Request object for removing a specific test property
+message RemoveTestPropertyRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the test property to remove
+    string property_name = 2;
+}
+
+// Response object for removing a specific test property
+message RemoveTestPropertyResponse {
+}
+

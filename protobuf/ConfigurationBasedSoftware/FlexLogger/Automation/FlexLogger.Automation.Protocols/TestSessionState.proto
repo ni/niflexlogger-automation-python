@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum TestSessionState {
+  // The test session is idle and ready to start.
+  TEST_SESSION_STATE_IDLE = 0;
+  // The test session is currently runnging.
+  TEST_SESSION_STATE_RUNNING = 2;
+  // The project has an invalid configuration. The test session cannot be started.
+  TEST_SESSION_STATE_INVALID_CONFIGURATION = 3;
+  // The project does not have any valid channels that can be logged. The test session cannot be started.
+  TEST_SESSION_STATE_NO_VALID_LOGGED_CHANNELS = 4;
+}

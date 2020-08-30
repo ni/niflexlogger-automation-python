@@ -1,0 +1,58 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "google/protobuf/timestamp.proto";
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side channel specification document.
+service ChannelSpecificationDocument {
+    // RPC call to get all channel names
+    rpc GetChannelNames(GetChannelNamesRequest) returns (GetChannelNamesResponse) {}
+    // RPC call to get the latest value of a double channel
+    rpc GetDoubleChannelValue(GetDoubleChannelValueRequest) returns (GetDoubleChannelValueResponse) {}
+    // RPC call to set the value of a double channel
+    rpc SetDoubleChannelValue(SetDoubleChannelValueRequest) returns (SetDoubleChannelValueResponse) {}
+}
+
+// Request object for getting all channel names
+message GetChannelNamesRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for getting all channel names
+message GetChannelNamesResponse {
+    // The channels defined in the channel specification. Can be empty.
+    repeated string channel_names = 1;
+}
+
+// Request object for getting a channel value
+message GetDoubleChannelValueRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to get a double value for
+    string channel_name = 2;
+}
+
+// Response object for getting a channel value
+message GetDoubleChannelValueResponse {
+    // The timestamp indicating when the channel value occurred
+    google.protobuf.Timestamp value_timestamp = 1;
+    // The value of the channel at the timestamp
+    double channel_value = 2;
+}
+
+// Request object for setting a channel value
+message SetDoubleChannelValueRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to get a double value for
+    string channel_name = 2;
+    // The value of the channel at the timestamp
+    double channel_value = 3;
+}
+
+// Response object for setting a channel value
+message SetDoubleChannelValueResponse {
+}
