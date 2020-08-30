@@ -37,9 +37,7 @@ class Application:
         application._server_port = Application._launch_flexlogger(
             timeout_in_seconds=timeout_in_seconds
         )
-        application._channel = grpc.insecure_channel(
-            "localhost:%d" % application._server_port
-        )
+        application._channel = grpc.insecure_channel("localhost:%d" % application._server_port)
         return application
 
     def close(self) -> None:
@@ -49,15 +47,11 @@ class Application:
 
     def open_project(self, path: str) -> Project:
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
-        response = stub.OpenProject(
-            FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path)
-        )
+        response = stub.OpenProject(FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path))
         return Project(self._channel, response.project)
 
     @classmethod
-    def _launch_flexlogger(
-        cls, timeout_in_seconds: int, path: Optional[str] = None
-    ) -> int:
+    def _launch_flexlogger(cls, timeout_in_seconds: int, path: Optional[str] = None) -> int:
         if path is None:
             path = cls._get_latest_installed_flexlogger_path()
         if path is None:
@@ -96,23 +90,15 @@ class Application:
                 winreg.HKEY_LOCAL_MACHINE, _FLEXLOGGER_REGISTRY_KEY_PATH
             ) as flexLoggerKey:
                 number_of_subkeys = winreg.QueryInfoKey(flexLoggerKey)[0]
-                subkey_names = [
-                    winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)
-                ]
-                latest_subkey = sorted([(float(name), name) for name in subkey_names])[
-                    -1
-                ][1]
-                with winreg.OpenKey(
-                    flexLoggerKey, latest_subkey
-                ) as latest_flexLogger_key:
+                subkey_names = [winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)]
+                latest_subkey = sorted([(float(name), name) for name in subkey_names])[-1][1]
+                with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
                     return winreg.QueryValueEx(latest_flexLogger_key, "Path")[0]
         except EnvironmentError:
             return None
 
     @classmethod
     def _read_int_from_mmap(cls, mapped_name: str) -> int:
-        with mmap.mmap(
-            -1, 4, tagname=mapped_name, access=mmap.ACCESS_READ
-        ) as mapped_file:
+        with mmap.mmap(-1, 4, tagname=mapped_name, access=mmap.ACCESS_READ) as mapped_file:
             int_bytes = mapped_file.read(4)
             return struct.unpack("i", int_bytes)[0]
