@@ -68,7 +68,9 @@ class Application:
         return Project(self._channel, response.project)
 
     @classmethod
-    def _launch_flexlogger(cls, timeout_in_seconds: int, path: Optional[str] = None) -> int:
+    def _launch_flexlogger(cls, timeout_in_seconds: int, path: Optional[Path] = None) -> int:
+        if path is not None and not path.name.lower().endswith(".exe"):
+            path = path / "FlexLogger.exe"
         if path is None:
             path = cls._get_latest_installed_flexlogger_path()
         if path is None:
@@ -77,7 +79,7 @@ class Application:
         mapped_name = uuid.uuid4().hex
 
         event = win32event.CreateEvent(None, 0, 0, event_name)
-        args = [path]
+        args = [str(path)]
         args += [
             "-mappedFileIsReadyEventName=" + event_name,
             "-mappedFileName=" + mapped_name,
@@ -101,7 +103,7 @@ class Application:
             win32api.CloseHandle(event)
 
     @classmethod
-    def _get_latest_installed_flexlogger_path(cls) -> Optional[str]:
+    def _get_latest_installed_flexlogger_path(cls) -> Optional[Path]:
         try:
             with winreg.OpenKey(
                 winreg.HKEY_LOCAL_MACHINE, _FLEXLOGGER_REGISTRY_KEY_PATH
@@ -110,7 +112,10 @@ class Application:
                 subkey_names = [winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)]
                 latest_subkey = sorted([(float(name), name) for name in subkey_names])[-1][1]
                 with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
-                    return winreg.QueryValueEx(latest_flexLogger_key, "Path")[0]
+                    return (
+                        Path(winreg.QueryValueEx(latest_flexLogger_key, "Path")[0])
+                        / "FlexLogger.exe"
+                    )
         except EnvironmentError:
             return None
 
