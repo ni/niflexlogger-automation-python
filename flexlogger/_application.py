@@ -1,9 +1,11 @@
 import mmap
+import re
 import struct
 import subprocess
+import time
 import uuid
 from pathlib import Path
-from typing import Any, Optional, Union
+from typing import Any, List, Optional, Union
 
 import grpc  # type: ignore
 import win32api  # type: ignore
@@ -38,12 +40,10 @@ class Application:
         self._disconnect(exit_application=self._launched)
 
     @classmethod
-    def launch(cls, timeout_in_seconds: int = 60) -> "Application":
+    def launch(cls, *, timeout: float = 60) -> "Application":
         application = Application()
         application._launched = True
-        application._server_port = Application._launch_flexlogger(
-            timeout_in_seconds=timeout_in_seconds
-        )
+        application._server_port = Application._launch_flexlogger(timeout_in_seconds=timeout)
         application._channel = grpc.insecure_channel("localhost:%d" % application._server_port)
         return application
 
@@ -68,13 +68,13 @@ class Application:
         return Project(self._channel, response.project)
 
     @classmethod
-    def _launch_flexlogger(cls, timeout_in_seconds: int, path: Optional[Path] = None) -> int:
+    def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
         if path is not None and not path.name.lower().endswith(".exe"):
             path = path / "FlexLogger.exe"
         if path is None:
             path = cls._get_latest_installed_flexlogger_path()
         if path is None:
-            raise Exception("Could not determine latest installed path of FlexLogger")
+            raise RuntimeError("Could not determine latest installed path of FlexLogger")
         event_name = uuid.uuid4().hex
         mapped_name = uuid.uuid4().hex
 
@@ -89,16 +89,19 @@ class Application:
 
         try:
             subprocess.Popen(args)
-            for _ in range(timeout_in_seconds):
-                object_signaled = win32event.WaitForSingleObject(event, 1000)
+            timeout_end_time = time.time() + timeout_in_seconds * 1000
+            while True:
+                # Only wait for 200 ms at a time so we can still be responsive to Ctrl-C
+                object_signaled = win32event.WaitForSingleObject(event, 200)
                 if object_signaled == 0:
                     return cls._read_int_from_mmap(mapped_name)
-                elif object_signaled != 258:
-                    raise Exception(
+                elif object_signaled != win32event.WAIT_TIMEOUT:
+                    raise RuntimeError(
                         "Internal error waiting for FlexLogger to launch. Error code %d"
                         % object_signaled
                     )
-            raise Exception("Timed out waiting for FlexLogger to launch.")
+                if time.time() >= timeout_end_time:
+                    raise RuntimeError("Timed out waiting for FlexLogger to launch.")
         finally:
             win32api.CloseHandle(event)
 
@@ -110,7 +113,9 @@ class Application:
             ) as flexLoggerKey:
                 number_of_subkeys = winreg.QueryInfoKey(flexLoggerKey)[0]
                 subkey_names = [winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)]
-                latest_subkey = sorted([(float(name), name) for name in subkey_names])[-1][1]
+                latest_subkey = cls._get_latest_subkey_name(subkey_names)
+                if latest_subkey is None:
+                    return None
                 with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
                     return (
                         Path(winreg.QueryValueEx(latest_flexLogger_key, "Path")[0])
@@ -118,6 +123,20 @@ class Application:
                     )
         except EnvironmentError:
             return None
+
+    # TODO - add a unit test for this logic
+    @classmethod
+    def _get_latest_subkey_name(cls, names: List[str]) -> Optional[str]:
+        major_minor_re = re.compile(r"^(\d+)\.(\d+)")
+        matches = [major_minor_re.match(name) for name in names]
+        sorted_names = sorted(
+            (match.group(1), match.group(2), match.group(0))
+            for match in matches
+            if match is not None
+        )
+        if len(sorted_names) == 0:
+            return None
+        return sorted_names[-1][2]
 
     @classmethod
     def _read_int_from_mmap(cls, mapped_name: str) -> int:
