@@ -12,6 +12,8 @@ import winreg  # type: ignore
 
 from ._project import Project
 from .proto import (
+    Application_pb2,  # type: ignore
+    Application_pb2_grpc,  # type: ignore
     FlexLoggerApplication_pb2,  # type: ignore
     FlexLoggerApplication_pb2_grpc,  # type: ignore
 )
@@ -24,16 +26,21 @@ class Application:
     def __init__(self) -> None:
         self._server_port = -1
         self._channel = None
+        self._launched = False
 
     def __enter__(self) -> "Application":
         return self
 
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        self.close()
+        # Only exit the application if this was created with Application.launch()
+        # If the user wants to override this behavior they can call close()
+        # or disconnect() explicitly.
+        self._disconnect(exit_application=self._launched)
 
     @classmethod
     def launch(cls, timeout_in_seconds: int = 60) -> "Application":
         application = Application()
+        application._launched = True
         application._server_port = Application._launch_flexlogger(
             timeout_in_seconds=timeout_in_seconds
         )
@@ -41,7 +48,15 @@ class Application:
         return application
 
     def close(self) -> None:
+        self._disconnect(exit_application=True)
+
+    def disconnect(self) -> None:
+        self._disconnect(exit_application=False)
+
+    def _disconnect(self, exit_application: bool) -> None:
         if self._channel is not None:
+            stub = Application_pb2_grpc.ApplicationStub(self._channel)
+            stub.Disconnect(Application_pb2.DisconnectRequest(exit_application=exit_application))
             self._channel.close()
             self._channel = None
 

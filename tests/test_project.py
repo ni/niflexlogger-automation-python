@@ -18,5 +18,3 @@ class TestProject:
             finally:
                 if project is not None:
                     project.close(allow_prompts=False)
-                app.close()
-                # TODO actually close FlexLogger

@@ -4,6 +4,7 @@ from pathlib import Path
 
 PROTO_PATHS = [
     "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols",
+    "Core/Automation/Core.Automation.Protocols",
     "DiagramSdk/Automation/DiagramSdk.Automation.Protocols",
 ]
 
