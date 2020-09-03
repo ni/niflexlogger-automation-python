@@ -1,10 +1,11 @@
 import os
 import sys
+from typing import List
 
 from flexlogger import Application
 
 
-def main(argv=None) -> int:
+def main(argv: List[str] = None) -> int:
     """Launch FlexLogger and open a project"""
     if argv is None:
         argv = sys.argv

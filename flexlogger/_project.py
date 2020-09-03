@@ -1,11 +1,13 @@
-from flexlogger.proto import (
-    Project_pb2,
-    Project_pb2_grpc,
+from typing import Any
+
+from .proto import (
+    Project_pb2,  # type: ignore
+    Project_pb2_grpc,  # type: ignore
 )
 
 
 class Project:
-    def __init__(self, channel, identifier) -> None:
+    def __init__(self, channel: Any, identifier: Any) -> None:
         self._channel = channel
         self._identifier = identifier
 

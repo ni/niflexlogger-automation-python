@@ -14,6 +14,7 @@ def _main(*args: str) -> int:
     if exit_code != 0:
         return exit_code
     _move_generated_files()
+    _create_init_py()
     return 0
 
 
@@ -33,9 +34,7 @@ def _fixup_proto_file(src: Path, dst: Path) -> None:
         # something like
         #    from flexlogger.proto import Identifiers
         # So we need the "import" statement in the .proto file to match this
-        contents = contents.replace(
-            'import "' + proto_path + "/", 'import "flexlogger/proto/'
-        )
+        contents = contents.replace('import "' + proto_path + "/", 'import "flexlogger/proto/')
     dst.write_text(contents)
 
 
@@ -47,6 +46,12 @@ def _move_generated_files() -> None:
         source_path.rename(dest_path)
     source_dir.rmdir()
     (dest_dir / "flexlogger").rmdir()
+
+
+def _create_init_py() -> None:
+    dest_dir = Path("./flexlogger/proto")
+    with open(str(dest_dir / "__init__.py"), "w") as f:
+        f.write("# flake8: noqa")
 
 
 def _call_protoc() -> int:

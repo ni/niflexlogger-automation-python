@@ -2,19 +2,19 @@ import mmap
 import struct
 import subprocess
 import uuid
-from typing import Optional
+from pathlib import Path
+from typing import Any, Optional, Union
 
-# TODO - install these with requirements.txt or pyproject.toml or something to install pywin32
-import grpc
-import win32api
-import win32event
-import winreg
-from flexlogger.proto import (
-    FlexLoggerApplication_pb2,
-    FlexLoggerApplication_pb2_grpc,
-)
+import grpc  # type: ignore
+import win32api  # type: ignore
+import win32event  # type: ignore
+import winreg  # type: ignore
 
 from ._project import Project
+from .proto import (
+    FlexLoggerApplication_pb2,  # type: ignore
+    FlexLoggerApplication_pb2_grpc,  # type: ignore
+)
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
@@ -25,10 +25,10 @@ class Application:
         self._server_port = -1
         self._channel = None
 
-    def __enter__(self):
+    def __enter__(self) -> "Application":
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         self.close()
 
     @classmethod
@@ -45,9 +45,11 @@ class Application:
             self._channel.close()
             self._channel = None
 
-    def open_project(self, path: str) -> Project:
+    def open_project(self, path: Union[str, Path]) -> Project:
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
-        response = stub.OpenProject(FlexLoggerApplication_pb2.OpenProjectRequest(project_path=path))
+        response = stub.OpenProject(
+            FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
+        )
         return Project(self._channel, response.project)
 
     @classmethod
