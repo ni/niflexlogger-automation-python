@@ -1,4 +1,4 @@
-from flexlogger._testsessionstate import TestSessionState
+from flexlogger._test_session_state import TestSessionState
 from flexlogger.proto import (
     TestSession_pb2,
     TestSession_pb2_grpc,

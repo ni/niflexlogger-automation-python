@@ -60,7 +60,7 @@ class Application:
         Args:
             timeout: How long to wait for FlexLogger to launch before an exception is raised.
                 Defaults to 60.
-        
+
         Returns:
             The created Application object
         """

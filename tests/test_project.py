@@ -12,7 +12,17 @@ class TestProject:
         with Application.launch() as app:
             project = app.open_project(project_path)
             assert project is not None
-            # TODO assert on all 4 document types
+            channel_specification_document = project.open_channel_specification_document()
+            assert channel_specification_document is not None
+            logging_specification_document = project.open_logging_specification_document()
+            assert logging_specification_document is not None
+            # Validate screen can be accessed with and without extension
+            screen_document = project.open_screen_document("Screen")
+            assert screen_document is not None
+            screen_document = project.open_screen_document("Screen.flxscr")
+            assert screen_document is not None
+            test_specification_document = project.open_test_specification_document()
+            assert test_specification_document is not None
 
     def test__launch_flexlogger_and_disconnect__connect_to_existing_and_open_project__is_not_None(
         self,
