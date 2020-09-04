@@ -24,10 +24,15 @@ _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
 
 class Application:
-    # TODO - this should connect to existing
-    def __init__(self) -> None:
-        self._server_port = -1
-        self._channel = None
+    def __init__(self, server_port: int) -> None:
+        """Connect to an already running instance of FlexLogger
+
+        Args:
+            server_port: The port that the automation server is listening to
+
+        """
+        self._server_port = server_port
+        self._connect()
         self._launched = False
 
     def __enter__(self) -> "Application":
@@ -39,19 +44,49 @@ class Application:
         # or disconnect() explicitly.
         self._disconnect(exit_application=self._launched)
 
+    @property
+    def server_port(self) -> int:
+        """Gets the port that the automation server is listening to"""
+        return self._server_port
+
     @classmethod
     def launch(cls, *, timeout: float = 60) -> "Application":
-        application = Application()
+        """Launches a new instance of FlexLogger.
+
+        Note that if this method is used to initialize a "with" statement, when
+        it goes out of scope FlexLogger will be closed.  To prevent this, you can
+        explicitly call disconnect() instead.
+
+        Args:
+            timeout: How long to wait for FlexLogger to launch before an exception is raised.
+                Defaults to 60.
+        
+        Returns:
+            The created Application object
+        """
+        server_port = Application._launch_flexlogger(timeout_in_seconds=timeout)
+        application = Application(server_port=server_port)
         application._launched = True
-        application._server_port = Application._launch_flexlogger(timeout_in_seconds=timeout)
-        application._channel = grpc.insecure_channel("localhost:%d" % application._server_port)
         return application
 
     def close(self) -> None:
+        """Closes the application and disconnects from the automation server.
+
+        Further calls to this object will fail.
+        """
         self._disconnect(exit_application=True)
 
     def disconnect(self) -> None:
+        """Disconnects from the automation server, but leaves the application running.
+
+        Further calls to this object will fail.
+        """
         self._disconnect(exit_application=False)
+
+    def _connect(self) -> None:
+        if self._server_port <= 0:
+            raise ValueError("Tried to connect to invalid port number %d" % self._server_port)
+        self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
 
     def _disconnect(self, exit_application: bool) -> None:
         if self._channel is not None:
@@ -61,6 +96,14 @@ class Application:
             self._channel = None
 
     def open_project(self, path: Union[str, Path]) -> Project:
+        """Opens a project.
+
+        Args:
+            path: The path to the project to open.
+
+        Returns:
+            The opened project.
+        """
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
         response = stub.OpenProject(
             FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
@@ -84,12 +127,11 @@ class Application:
             "-mappedFileIsReadyEventName=" + event_name,
             "-mappedFileName=" + mapped_name,
         ]
-        args += ["-enableAutomationServer", "-allowPrototype"]
-        # TODO - close if client closes option
+        args += ["-enableAutomationServer", "-allowPrototype", "-newProcess"]
 
         try:
             subprocess.Popen(args)
-            timeout_end_time = time.time() + timeout_in_seconds * 1000
+            timeout_end_time = time.time() + timeout_in_seconds
             while True:
                 # Only wait for 200 ms at a time so we can still be responsive to Ctrl-C
                 object_signaled = win32event.WaitForSingleObject(event, 200)
