@@ -5,7 +5,7 @@ from flexlogger import Application
 
 
 class TestProject:
-    def test__launch_FlexLogger__open_default_project__project_contains_standard_four_documents(
+    def test__launch_flexLogger__open_default_project__project_contains_standard_four_documents(
         self,
     ) -> None:
         project_path = Path(__file__).parent / "assets/DefaultProject/DefaultProject.flxproj"
