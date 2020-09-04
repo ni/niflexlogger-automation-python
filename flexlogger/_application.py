@@ -166,13 +166,25 @@ class Application:
         except EnvironmentError:
             return None
 
-    # TODO - add a unit test for this logic
     @classmethod
     def _get_latest_subkey_name(cls, names: List[str]) -> Optional[str]:
+        """Get the latest version name from the registry key names
+
+        >>> Application._get_latest_subkey_name(["1.1", "2.0", "7", "foo"])
+        '2.0'
+        >>> Application._get_latest_subkey_name(["2.100", "2.9", "2.10", "2.1"])
+        '2.100'
+        >>> Application._get_latest_subkey_name(["9.2", "10.1", "10.0"])
+        '10.1'
+        >>> Application._get_latest_subkey_name([]) is None
+        True
+        >>> Application._get_latest_subkey_name(["not real"]) is None
+        True
+        """
         major_minor_re = re.compile(r"^(\d+)\.(\d+)")
         matches = [major_minor_re.match(name) for name in names]
         sorted_names = sorted(
-            (match.group(1), match.group(2), match.group(0))
+            (int(match.group(1)), int(match.group(2)), match.group(0))
             for match in matches
             if match is not None
         )

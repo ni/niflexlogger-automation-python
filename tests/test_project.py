@@ -1,14 +1,15 @@
-# import pytest  # type: ignore
-from pathlib import Path
-
+import pytest  # type: ignore
 from flexlogger import Application
+
+from .utils import get_project_path
 
 
 class TestProject:
+    @pytest.mark.integration  # type: ignore
     def test__launch_flexLogger__open_default_project__project_contains_standard_four_documents(
         self,
     ) -> None:
-        project_path = Path(__file__).parent / "assets/DefaultProject/DefaultProject.flxproj"
+        project_path = get_project_path("DefaultProject")
         with Application.launch() as app:
             project = app.open_project(project_path)
             assert project is not None
@@ -24,10 +25,11 @@ class TestProject:
             test_specification_document = project.open_test_specification_document()
             assert test_specification_document is not None
 
+    @pytest.mark.integration  # type: ignore
     def test__launch_flexlogger_and_disconnect__connect_to_existing_and_open_project__is_not_None(
         self,
     ) -> None:
-        project_path = Path(__file__).parent / "assets/DefaultProject/DefaultProject.flxproj"
+        project_path = get_project_path("DefaultProject")
         server_port = -1
         try:
             with Application.launch() as app:
