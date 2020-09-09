@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="5715C1630C77B4BF563612D8553362DFE5DB4F30676E7479931A7BF754E87943B7DB994DAD2D10119FB8021956D70ADAF7B56975B4E48D12476A689247821572" Timestamp="1D66D08CD380759" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="20.3.0.0" />
+	</SourceModelFeatureSet>
+	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<LoggingConfigurationModel Id="f576f7d45bbb483f97eacfe876781021">
+			<ProcessingElementModelOwner Id="c36b0f6a1de341ae9f08823dadc39637">
+				<TriggeredLoggingProvider Id="ec1b3bf619aa46ba85486b6ccf47c414" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-08-07T09:47:00.485542799999999999979553855222746960862423293292522430419921875-05:00" />
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="44c2378b093f4dbaa9f3e2ea9ada589f" LogFileBasePath="&quot;C:\\Users\\bparrott\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+					<UserDefinedMetadata Id="95a7203a63e64a3e8ffd855f313486c1">
+						<UserDefinedMetadataItem DataType="String" Id="30ca61a875934f46a512289cd69f7df2" Name="Operator">
+							<p.Value>bparrott</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="c0e3319f484e4546bc905ed03ca4b54e" IsPromptOnStartActivated="True" Name="DUT">
+							<p.Value>Serial number: &lt;replace with serial number&gt;</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="2c60b325dfa54c4dbc3fa3a829ca1468" Name="Property">
+							<p.Value>""</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="e82bd7b4d28e47a3b057c3b937e217cd" Name="Best Configuration Based Data Logging Software">
+							<p.Value>FlexLogger</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="faed8dcc8f774b6d9bada17e9ffaceb4" Name="Who you gonna call?">
+							<p.Value>Ghostbusters</p.Value>
+						</UserDefinedMetadataItem>
+					</UserDefinedMetadata>
+				</TdmsLoggingProvider>
+			</ProcessingElementModelOwner>
+		</LoggingConfigurationModel>
+	</LoggingSpecification>
+</SourceFile>

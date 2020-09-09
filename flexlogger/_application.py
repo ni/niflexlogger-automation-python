@@ -12,6 +12,7 @@ import win32api  # type: ignore
 import win32event  # type: ignore
 import winreg  # type: ignore
 
+from ._flexlogger_error import FlexLoggerError
 from ._project import Project
 from .proto import (
     Application_pb2,  # type: ignore
@@ -86,7 +87,10 @@ class Application:
     def _connect(self) -> None:
         if self._server_port <= 0:
             raise ValueError("Tried to connect to invalid port number %d" % self._server_port)
-        self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
+        try:
+            self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
+        except grpc.RpcError as error:
+            raise FlexLoggerError("Failed to connect to FlexLogger") from error
 
     def _disconnect(self, exit_application: bool) -> None:
         if self._channel is not None:
@@ -105,10 +109,13 @@ class Application:
             The opened project.
         """
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
-        response = stub.OpenProject(
-            FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
-        )
-        return Project(self._channel, response.project)
+        try:
+            response = stub.OpenProject(
+                FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
+            )
+            return Project(self._channel, response.project)
+        except grpc.RpcError as rpc_error:
+            raise FlexLoggerError("Failed to close project") from rpc_error
 
     @classmethod
     def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
@@ -168,7 +175,7 @@ class Application:
 
     @classmethod
     def _get_latest_subkey_name(cls, names: List[str]) -> Optional[str]:
-        """Get the latest version name from the registry key names
+        """Get the latest version name from the registry key names.
 
         >>> Application._get_latest_subkey_name(["1.1", "2.0", "7", "foo"])
         '2.0'

@@ -43,6 +43,17 @@ Usage
 Refer to the `documentation <https://niflexlogger.readthedocs.io>`_
 for detailed information on how to use **niflexlogger**.
 
+.. _tests_section:
+
+Tests
+=====
+To run the tests, you must first configure FlexLogger to load the test
+plugins that the test projects use.  To do this, copy ``tests/assets/pythonTests.config``
+to ``%public%\Documents\National Instruments\FlexLogger\Plugins\IOPlugins``, and in that file
+replace ``<path to git repo>`` with the path to the cloned repo.
+
+After this is done, you can run the tests with `tox <https://pypi.org/project/tox/>`_.
+
 .. _support_section:
 
 Support / Feedback

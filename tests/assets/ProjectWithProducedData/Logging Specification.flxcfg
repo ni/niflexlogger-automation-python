@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="9406ABD5807C664D33AAAE454D683E17A2BB3C8A3ECE6445B2945E9EC3E31DB6BCC2FD20B644A2A36C59DB2BFB06A0C9B6C420ABC74557F8F04EE1B31D994D17" Timestamp="1D6860E2690BB87" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.4.0.756" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.4.0.756" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.4.0.756" Name="FlexLogger" Version="20.3.0.0" />
+	</SourceModelFeatureSet>
+	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<LoggingConfigurationModel Id="3302b7bff24741518de43c1f1b01b360">
+			<ProcessingElementModelOwner Id="58d7b6e35442424c8e242e40ebc662b1">
+				<TriggeredLoggingProvider Id="600fb80409f64e15919a2e5ab48843f6" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-09-08T13:26:02.9171500999999999999691240037957840058879810385406017303466796875-05:00" />
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="769b2ab339c94bc5b3d2eafd4dc8151a" LogFileBasePath="&quot;C:\\Users\\gstoll\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+					<UserDefinedMetadata Id="d5f250af140343559827266789a46971">
+						<UserDefinedMetadataItem DataType="String" Id="1f88e6acb9df4161b6a766936fea66e1" Name="Operator">
+							<p.Value>gstoll</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="445f9a4c5ea14ca2aab965b9961a70c4" Name="DUT">
+							<p.Value>""</p.Value>
+						</UserDefinedMetadataItem>
+					</UserDefinedMetadata>
+				</TdmsLoggingProvider>
+			</ProcessingElementModelOwner>
+		</LoggingConfigurationModel>
+	</LoggingSpecification>
+</SourceFile>

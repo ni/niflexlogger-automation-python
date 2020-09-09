@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProcessingElement>
+  <Type>94D4 1FA- F6F-6C4F-B623-8FBFB79085 1</Type>
+  <Name>CreateChannelsInProcess</Name>
+  <TemplateType>Plugin</TemplateType>
+  <DevelopmentKitVersion>1.0</DevelopmentKitVersion>
+  <Version>0.1</Version>
+  <OldestCompatibleVersion>0.1</OldestCompatibleVersion>
+  <AliasBase>CreateChannelsInProcess</AliasBase>
+  <Icon>input</Icon>
+  <Description>This template type provides a starting point for plugins that produce data for FlexLogger. For example, this type acquires data from a third-party instrument to be logged alongside other FlexLogger channels.</Description>
+  <VIExec>niPluginWrapper</VIExec>  
+</ProcessingElement>

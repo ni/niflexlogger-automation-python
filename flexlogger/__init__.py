@@ -7,3 +7,4 @@ from ._channel_specification_document import ChannelSpecificationDocument
 from ._logging_specification_document import LoggingSpecificationDocument
 from ._screen_document import ScreenDocument
 from ._test_specification_document import TestSpecificationDocument
+from ._flexlogger_error import FlexLoggerError
