@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from itertools import chain
 from pathlib import Path
 
 PROTO_PATHS = [
@@ -8,24 +9,28 @@ PROTO_PATHS = [
     "DiagramSdk/Automation/DiagramSdk.Automation.Protocols",
 ]
 
+DEST_DIR = Path("./flexlogger/proto")
+
 
 def _main(*args: str) -> int:
+    _prepare_dest_dir()
     _fixup_proto_files()
     exit_code = _call_protoc()
     if exit_code != 0:
         return exit_code
     _move_generated_files()
-    _create_init_py()
     return 0
 
 
-def _fixup_proto_files() -> None:
-    dest_dir = Path("./flexlogger/proto")
-    dest_dir.mkdir(parents=True, exist_ok=True)
+def _prepare_dest_dir() -> None:
+    for existing_generated_file in chain(DEST_DIR.glob("*_pb2.py"), DEST_DIR.glob("*_pb2_grpc.py")):
+        existing_generated_file.unlink()
 
+
+def _fixup_proto_files() -> None:
     for path_str in PROTO_PATHS:
         for proto_file in (Path("./protobuf") / path_str).glob("*.proto"):
-            _fixup_proto_file(proto_file, dest_dir / proto_file.name)
+            _fixup_proto_file(proto_file, DEST_DIR / proto_file.name)
 
 
 def _fixup_proto_file(src: Path, dst: Path) -> None:
@@ -40,19 +45,12 @@ def _fixup_proto_file(src: Path, dst: Path) -> None:
 
 
 def _move_generated_files() -> None:
-    dest_dir = Path("./flexlogger/proto")
-    source_dir = dest_dir / "flexlogger/proto"
+    source_dir = DEST_DIR / "flexlogger/proto"
     for source_path in source_dir.glob("*.py"):
-        dest_path = dest_dir / source_path.name
+        dest_path = DEST_DIR / source_path.name
         source_path.rename(dest_path)
     source_dir.rmdir()
-    (dest_dir / "flexlogger").rmdir()
-
-
-def _create_init_py() -> None:
-    dest_dir = Path("./flexlogger/proto")
-    with open(str(dest_dir / "__init__.py"), "w") as f:
-        f.write("# flake8: noqa")
+    (DEST_DIR / "flexlogger").rmdir()
 
 
 def _call_protoc() -> int:
