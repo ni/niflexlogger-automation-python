@@ -51,7 +51,7 @@ class Application:
         return self._server_port
 
     @classmethod
-    def launch(cls, *, timeout: float = 60) -> "Application":
+    def launch(cls, *, timeout: float = 60, path: Union[str, Path] = None) -> "Application":
         """Launches a new instance of FlexLogger.
 
         Note that if this method is used to initialize a "with" statement, when
@@ -61,11 +61,15 @@ class Application:
         Args:
             timeout: How long to wait for FlexLogger to launch before an exception is raised.
                 Defaults to 60.
+            path: The path to the FlexLogger exe to launch.
+                Defaults to None, meaning the latest installed version will be launched.
 
         Returns:
             The created Application object
         """
-        server_port = Application._launch_flexlogger(timeout_in_seconds=timeout)
+        if isinstance(path, str):
+            path = Path(path)
+        server_port = Application._launch_flexlogger(timeout_in_seconds=timeout, path=path)
         application = Application(server_port=server_port)
         application._launched = True
         return application
