@@ -20,6 +20,7 @@ class Project:
         self._test_session = TestSession(self._channel)
 
     def open_channel_specification_document(self) -> ChannelSpecificationDocument:
+        """Open the channel specification document in the project."""
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenChannelSpecificationDocument(
@@ -30,6 +31,7 @@ class Project:
             raise FlexLoggerError("Failed to open channel specification document") from rpc_error
 
     def open_logging_specification_document(self) -> LoggingSpecificationDocument:
+        """Open the logging specification document in the project."""
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenLoggingSpecificationDocument(
@@ -40,6 +42,12 @@ class Project:
             raise FlexLoggerError("Failed to open logging specification document") from rpc_error
 
     def open_screen_document(self, filename: str) -> ScreenDocument:
+        """Open the specified screen document in the project.
+
+        Args:
+            filename: The name of the screen document to open.  Including
+                the .flxscr extension in this argument is optional.
+        """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenScreenDocument(
@@ -52,6 +60,7 @@ class Project:
             raise FlexLoggerError("Failed to open screen document") from rpc_error
 
     def open_test_specification_document(self) -> TestSpecificationDocument:
+        """Open the test specification document in the project."""
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenTestSpecificationDocument(
@@ -62,6 +71,13 @@ class Project:
             raise FlexLoggerError("Failed to open test specification document") from rpc_error
 
     def close(self, allow_prompts: bool) -> None:
+        """Close the project.
+
+        Args:
+            allow_prompts: Whether to allow prompts asking the user to save the project
+                if it has changed.  If this is set to false, any changes to the project will
+                be discarded.
+        """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=allow_prompts))
@@ -70,4 +86,5 @@ class Project:
 
     @property
     def test_session(self) -> TestSession:
+        """Get the test session for the project."""
         return self._test_session

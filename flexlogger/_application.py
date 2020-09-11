@@ -26,7 +26,7 @@ _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
 class Application:
     def __init__(self, server_port: int) -> None:
-        """Connect to an already running instance of FlexLogger
+        """Connect to an already running instance of FlexLogger.
 
         Args:
             server_port: The port that the automation server is listening to
@@ -47,12 +47,12 @@ class Application:
 
     @property
     def server_port(self) -> int:
-        """Gets the port that the automation server is listening to"""
+        """Get the port that the automation server is listening to."""
         return self._server_port
 
     @classmethod
     def launch(cls, *, timeout: float = 60, path: Union[str, Path] = None) -> "Application":
-        """Launches a new instance of FlexLogger.
+        """Launch a new instance of FlexLogger.
 
         Note that if this method is used to initialize a "with" statement, when
         it goes out of scope FlexLogger will be closed.  To prevent this, you can
@@ -75,14 +75,14 @@ class Application:
         return application
 
     def close(self) -> None:
-        """Closes the application and disconnects from the automation server.
+        """Close the application and disconnect from the automation server.
 
         Further calls to this object will fail.
         """
         self._disconnect(exit_application=True)
 
     def disconnect(self) -> None:
-        """Disconnects from the automation server, but leaves the application running.
+        """Disconnect from the automation server, but leave the application running.
 
         Further calls to this object will fail.
         """
@@ -104,7 +104,7 @@ class Application:
             self._channel = None
 
     def open_project(self, path: Union[str, Path]) -> Project:
-        """Opens a project.
+        """Open a project.
 
         Args:
             path: The path to the project to open.

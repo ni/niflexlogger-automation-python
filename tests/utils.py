@@ -1,4 +1,3 @@
-import os
 from contextlib import contextmanager
 from pathlib import Path
 from shutil import copy, rmtree
@@ -29,11 +28,10 @@ def open_project(application: Application, project_name: str) -> Iterator[Projec
     project_dir = project_path.parent
 
     tmp_directory = TemporaryDirectory(prefix="pyflextest_")
-    names = os.listdir(project_dir)
-    for name in names:
-        source_file = project_dir / name
+    source_files = project_dir.iterdir()
+    for source_file in source_files:
         if source_file.is_file():
-            copy(source_file, tmp_directory.name)
+            copy(str(source_file), tmp_directory.name)
     project = application.open_project(Path(tmp_directory.name) / project_filename)
     try:
         yield project

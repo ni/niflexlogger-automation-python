@@ -58,6 +58,7 @@ setup(
     keywords=["niflexlogger", "flexlogger"],
     license="MIT",
     packages=packages,
+    scripts=["generate_protobuf_classes.py"],
     install_requires=["typing-extensions", "grpcio", "grpcio-tools", "pywin32"],
     setup_requires=["grpcio", "grpcio-tools"],
     tests_require=["pytest", "mypy"],
@@ -77,5 +78,5 @@ setup(
         "Topic :: System :: Hardware :: Hardware Drivers",  # TODO?
     ],
     cmdclass={"test": PyTest, "build_py": GenerateProtobufAndBuildPyCommand,},
-    package_data={"": ["VERSION", "*.pyi", "py.typed"]},
+    package_data={"": ["VERSION", "*.pyi", "py.typed", "*.proto"]},
 )
