@@ -42,6 +42,20 @@ class PyTest(TestCommand):
         pytest.main(self.test_args)
 
 
+def _get_version(name):
+    import os
+
+    version = None
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_dir = os.path.join(script_dir, name)
+    if not os.path.exists(os.path.join(script_dir, "VERSION")):
+        version = "0.1.0"
+    else:
+        with open(os.path.join(script_dir, "VERSION"), "r") as version_file:
+            version = version_file.read().rstrip()
+    return version
+
+
 def _read_contents(file_to_read):
     with open(file_to_read, "r") as f:
         return f.read()
@@ -49,7 +63,7 @@ def _read_contents(file_to_read):
 
 setup(
     name=pypi_name,
-    version="0.1",  # TODO
+    version=_get_version(pypi_name),
     description="NI FlexLogger Python API",
     long_description=_read_contents("README.rst"),
     author="National Instruments",
@@ -77,6 +91,6 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: System :: Hardware :: Hardware Drivers",  # TODO?
     ],
-    cmdclass={"test": PyTest, "build_py": GenerateProtobufAndBuildPyCommand,},
+    cmdclass={"test": PyTest, "build_py": GenerateProtobufAndBuildPyCommand},
     package_data={"": ["VERSION", "*.pyi", "py.typed", "*.proto"]},
 )
