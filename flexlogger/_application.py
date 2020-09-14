@@ -119,7 +119,7 @@ class Application:
             )
             return Project(self._channel, response.project)
         except grpc.RpcError as rpc_error:
-            raise FlexLoggerError("Failed to close project") from rpc_error
+            raise FlexLoggerError("Failed to open project") from rpc_error
 
     @classmethod
     def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
