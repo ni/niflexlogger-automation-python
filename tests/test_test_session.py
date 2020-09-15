@@ -1,7 +1,10 @@
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Iterator
 
 import pytest  # type: ignore
 from flexlogger import Application, FlexLoggerError, Project, TestSessionState
+from nptdms import TdmsFile  # type: ignore
 
 from .utils import open_project
 
@@ -91,7 +94,33 @@ class TestTestSession:
         assert stopped is True
         assert TestSessionState.IDLE == project.test_session.state
 
-    # TODO test__test_session_running__add_note__note_added(self) -> None:
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_running__add_note__note_added(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("AddNoteTest.tdms")
+                project.test_session.start()
+
+                note_str = "Some note about what is happening in the test"
+                project.test_session.add_note(note_str)
+
+                project.test_session.stop()
+                self._verify_tdms_file_has_note(temp_dir, "AddNoteTest.tdms", note_str)
+
+    def _verify_tdms_file_has_note(
+        self, log_file_base_path: str, log_file_name: str, expected_note_contents: str
+    ) -> None:
+        log_file_path = Path(log_file_base_path) / log_file_name
+        with TdmsFile.open(str(log_file_path)) as tdms_file:
+            user_notes_group = tdms_file["Test Information"]
+            user_notes_channel = user_notes_group["User Notes"]
+            assert user_notes_channel is not None
+            user_notes_time_channel = user_notes_group["User Notes_time"]
+            assert user_notes_time_channel is not None
+            assert 1 == len(user_notes_channel)
+            assert expected_note_contents == user_notes_channel[0]
 
     @pytest.mark.integration  # type: ignore
     def test__test_session_idle__add_note__exception_raised(

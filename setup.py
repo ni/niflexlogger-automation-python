@@ -75,7 +75,7 @@ setup(
     scripts=["generate_protobuf_classes.py"],
     install_requires=["typing-extensions", "grpcio", "grpcio-tools", "pywin32"],
     setup_requires=["grpcio", "grpcio-tools"],
-    tests_require=["pytest", "mypy"],
+    tests_require=["pytest", "mypy", "npTDMS"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
