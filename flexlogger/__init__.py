@@ -8,5 +8,5 @@ from ._logging_specification_document import LoggingSpecificationDocument
 from ._screen_document import ScreenDocument
 from ._test_specification_document import TestSpecificationDocument
 from ._flexlogger_error import FlexLoggerError
-from ._double_channel_data_point import DoubleChannelDataPoint
+from ._channel_data_point import ChannelDataPoint
 from ._test_property import TestProperty

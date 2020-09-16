@@ -1,5 +1,5 @@
 class TestProperty:
-    """Information about a test property"""
+    """Information about a test property."""
 
     def __init__(self, property_name: str, property_value: str, prompt_on_start: bool):
         """Create a new TestProperty.

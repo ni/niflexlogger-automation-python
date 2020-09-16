@@ -1,8 +1,8 @@
 from datetime import datetime
 
 
-class DoubleChannelDataPoint:
-    """The double value for a channel that occurred at the specified timestamp."""
+class ChannelDataPoint:
+    """The value for a channel that occurred at the specified timestamp."""
 
     def __init__(self, channel_name: str, channel_value: float, timestamp: datetime):
         self._channel_name = channel_name

@@ -9,12 +9,25 @@ from .proto.Identifiers_pb2 import ElementIdentifier
 
 
 class LoggingSpecificationDocument:
+    """Represents a document that describes how data is logged.
+
+    This should not be created directly; instead, the return value of
+    :meth:`.Project.open_logging_specification_document` should be used.
+    """
+
     def __init__(self, channel: Channel, identifier: ElementIdentifier) -> None:
         self._channel = channel
         self._identifier = identifier
 
     def get_log_file_base_path(self) -> str:
-        """Get the log file base path."""
+        """Get the log file base path.
+
+        Returns:
+            The base path for the log file.
+
+        Raises:
+            :class:`.FlexLoggerError`: if getting the log file base path fails.
+        """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
             response = stub.GetLogFileBasePath(
@@ -31,6 +44,9 @@ class LoggingSpecificationDocument:
 
         Args:
             log_file_base_path: The log file base path to set
+
+        Raises:
+            :class:`.FlexLoggerError`: if setting the log file base path fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
@@ -43,7 +59,14 @@ class LoggingSpecificationDocument:
             raise FlexLoggerError("Failed to set log file base path") from rpc_error
 
     def get_log_file_name(self) -> str:
-        """Get the log file name."""
+        """Get the log file name.
+
+        Returns:
+            The file name that will be logged to.
+
+        Raises:
+            :class:`.FlexLoggerError`: if getting the log file name fails.
+        """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
             response = stub.GetLogFileName(
@@ -60,6 +83,9 @@ class LoggingSpecificationDocument:
 
         Args:
             log_file_name: The log file name to set
+
+        Raises:
+            :class:`.FlexLoggerError`: if setting the log file name fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
@@ -90,7 +116,14 @@ class LoggingSpecificationDocument:
         )
 
     def get_test_properties(self) -> List[TestProperty]:
-        """Get all test properties."""
+        """Get all test properties.
+
+        Returns:
+            A list of the test properties on this document.
+
+        Raises:
+            :class:`.FlexLoggerError`: if getting the test properties fails.
+        """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
             response = stub.GetTestProperties(
@@ -105,10 +138,18 @@ class LoggingSpecificationDocument:
     def get_test_property(self, test_property_name: str) -> TestProperty:
         """Get the test property with the specified name.
 
-        Throws an exception if a property with the specified name does not exist.
+        Throws a :class:`FlexLoggerError` if a property with the
+        specified name does not exist.
 
         Args:
             test_property_name: The name of the test property to get information about.
+
+        Returns:
+            The :class:`TestProperty` with the specified name.
+
+        Raises:
+            :class:`.FlexLoggerError`: if a property with the specified name does
+                not exist, or if getting the property fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
@@ -129,9 +170,12 @@ class LoggingSpecificationDocument:
 
         Args:
             test_property: Information defining the test property to set. If a test property
-                already exists with the name test_property.property_name, that test property
+                already exists with the same ``test_property.property_name``, that test property
                 will be updated with the other test property's information. Otherwise, a new
                 test property will be created to reflect the specified test information.
+
+        Raises:
+            :class:`.FlexLoggerError`: if setting the property fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
@@ -151,6 +195,10 @@ class LoggingSpecificationDocument:
 
         Args:
             test_property_name: The name of the test property to remove.
+
+        Raises:
+            :class:`.FlexLoggerError`: if a property with the specified name does not
+                exist, or if removing the property fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:

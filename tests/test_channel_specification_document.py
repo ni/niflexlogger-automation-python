@@ -42,9 +42,9 @@ class TestChannelSpecificationDocument:
         self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
     ) -> None:
         channel_specification = channels_with_produced_data
-        first_channel_value = channel_specification.get_double_channel_value("Channel 1")
+        first_channel_value = channel_specification.get_channel_value("Channel 1")
         sleep(0.5)
-        second_channel_value = channel_specification.get_double_channel_value("Channel 1")
+        second_channel_value = channel_specification.get_channel_value("Channel 1")
 
         assert "Channel 1" == first_channel_value.channel_name
         assert "Channel 1" == second_channel_value.channel_name
@@ -57,7 +57,7 @@ class TestChannelSpecificationDocument:
     ) -> None:
         channel_specification = channels_with_produced_data
         with pytest.raises(FlexLoggerError):
-            channel_specification.get_double_channel_value("Not a channel")
+            channel_specification.get_channel_value("Not a channel")
 
     @pytest.mark.integration  # type: ignore
     def test__project_with_writable_channels__set_channel_value__channel_value_updated(
@@ -66,9 +66,9 @@ class TestChannelSpecificationDocument:
         with open_project(app, "ProjectWithSwitchboard") as project:
             channel_specification = project.open_channel_specification_document()
             now = datetime.now()
-            channel_specification.set_double_channel_value("Switch 42", 84.5)
+            channel_specification.set_channel_value("Switch 42", 84.5)
 
-            updated_value = channel_specification.get_double_channel_value("Switch 42")
+            updated_value = channel_specification.get_channel_value("Switch 42")
 
             assert "Switch 42" == updated_value.channel_name
             assert 84.5 == updated_value.channel_value
@@ -80,7 +80,7 @@ class TestChannelSpecificationDocument:
     ) -> None:
         channel_specification = channels_with_produced_data
         with pytest.raises(FlexLoggerError):
-            channel_specification.set_double_channel_value("Not a channel", 42)
+            channel_specification.set_channel_value("Not a channel", 42)
 
     @pytest.mark.integration  # type: ignore
     def test__set_channel_value_for_readonly_channel__exception_raised(
@@ -88,4 +88,4 @@ class TestChannelSpecificationDocument:
     ) -> None:
         channel_specification = channels_with_produced_data
         with pytest.raises(FlexLoggerError):
-            channel_specification.set_double_channel_value("Channel 1", 42)
+            channel_specification.set_channel_value("Channel 1", 42)

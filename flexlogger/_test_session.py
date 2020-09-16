@@ -20,10 +20,28 @@ STATE_MAP = {
 
 
 class TestSession:
+    """Represents a test session for a project.
+
+    This should not be created directly; instead, the property
+    :attr:`.Project.test_session` should be used.
+    """
+
     def __init__(self, channel: Channel) -> None:
         self._channel = channel
 
     def add_note(self, note: str) -> None:
+        """Add a note to the current log file.
+
+        This method requires the test session to be in the
+        :attr:`.TestSessionState.RUNNING` state.
+
+        Args:
+            note: The note to add to the log file.
+
+        Raises:
+            :class:`.FlexLoggerError`: if the test session is not in the
+                :attr:`.TestSessionState.RUNNING` state, or if adding the note fails.
+        """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             stub.AddNote(TestSession_pb2.AddNoteRequest(note=note))
@@ -32,6 +50,11 @@ class TestSession:
 
     @property
     def state(self) -> TestSessionState:
+        """Get the current state of the test session.
+
+        Raises:
+            :class:`.FlexLoggerError`: if getting the current state fails.
+        """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             getTestSessionStateResponse = stub.GetState(
@@ -45,6 +68,14 @@ class TestSession:
             raise FlexLoggerError("Failed to get test session state") from rpc_error
 
     def start(self) -> bool:
+        """Start the test session, if possible.
+
+        Returns:
+            True if the test was started, otherwise False.
+
+        Raises:
+            :class:`.FlexLoggerError`: if starting the test session fails.
+        """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             startTestSessionResponse = stub.Start(TestSession_pb2.StartTestSessionRequest())
@@ -53,6 +84,14 @@ class TestSession:
             raise FlexLoggerError("Failed to start test session") from rpc_error
 
     def stop(self) -> bool:
+        """Stop the test session, if possible.
+
+        Returns:
+            True if the test was stopped, otherwise False.
+
+        Raises:
+            :class:`.FlexLoggerError`: if stopping the test session fails.
+        """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             stopTestSessionResponse = stub.Stop(TestSession_pb2.StopTestSessionRequest())

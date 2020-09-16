@@ -25,12 +25,16 @@ _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 
 
 class Application:
+    """Represents the FlexLogger application."""
+
     def __init__(self, server_port: int) -> None:
         """Connect to an already running instance of FlexLogger.
 
         Args:
             server_port: The port that the automation server is listening to
 
+        Raises:
+            :class:`.FlexLoggerError`: if connecting fails.
         """
         self._server_port = server_port
         self._connect()
@@ -47,7 +51,7 @@ class Application:
 
     @property
     def server_port(self) -> int:
-        """Get the port that the automation server is listening to."""
+        """The port that the automation server is listening to."""
         return self._server_port
 
     @classmethod
@@ -56,7 +60,7 @@ class Application:
 
         Note that if this method is used to initialize a "with" statement, when
         it goes out of scope FlexLogger will be closed.  To prevent this, you can
-        explicitly call disconnect() instead.
+        explicitly call :meth:`~.Application.disconnect()` instead.
 
         Args:
             timeout: How long to wait for FlexLogger to launch before an exception is raised.
@@ -66,6 +70,9 @@ class Application:
 
         Returns:
             The created Application object
+
+        Raises:
+            :class:`.FlexLoggerError`: if launching FlexLogger or connecting to it fails.
         """
         if isinstance(path, str):
             path = Path(path)
@@ -111,6 +118,9 @@ class Application:
 
         Returns:
             The opened project.
+
+        Raises:
+            :class:`.FlexLoggerError`: if opening the project fails.
         """
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
         try:

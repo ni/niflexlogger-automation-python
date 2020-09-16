@@ -14,13 +14,26 @@ from .proto.Identifiers_pb2 import ProjectIdentifier
 
 
 class Project:
+    """Represents a FlexLogger project.
+
+    This should not be created directly; instead, the return value of
+    :meth:`.Application.open_project` should be used.
+    """
+
     def __init__(self, channel: Channel, identifier: ProjectIdentifier) -> None:
         self._channel = channel
         self._identifier = identifier
         self._test_session = TestSession(self._channel)
 
     def open_channel_specification_document(self) -> ChannelSpecificationDocument:
-        """Open the channel specification document in the project."""
+        """Open the channel specification document in the project.
+
+        Returns:
+            The opened document.
+
+        Raises:
+            :class:`.FlexLoggerError`: if opening the document fails.
+        """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenChannelSpecificationDocument(
@@ -31,7 +44,14 @@ class Project:
             raise FlexLoggerError("Failed to open channel specification document") from rpc_error
 
     def open_logging_specification_document(self) -> LoggingSpecificationDocument:
-        """Open the logging specification document in the project."""
+        """Open the logging specification document in the project.
+
+        Returns:
+            The opened document.
+
+        Raises:
+            :class:`.FlexLoggerError`: if opening the document fails.
+        """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenLoggingSpecificationDocument(
@@ -47,6 +67,13 @@ class Project:
         Args:
             filename: The name of the screen document to open.  Including
                 the .flxscr extension in this argument is optional.
+
+        Returns:
+            The opened document.
+
+        Raises:
+            :class:`.FlexLoggerError`: if a screen document of the specified name does
+                not exist, or if opening the document fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
@@ -60,7 +87,14 @@ class Project:
             raise FlexLoggerError("Failed to open screen document") from rpc_error
 
     def open_test_specification_document(self) -> TestSpecificationDocument:
-        """Open the test specification document in the project."""
+        """Open the test specification document in the project.
+
+        Returns:
+            The opened document.
+
+        Raises:
+            :class:`.FlexLoggerError`: if opening the document fails.
+        """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             response = stub.OpenTestSpecificationDocument(
@@ -77,6 +111,9 @@ class Project:
             allow_prompts: Whether to allow prompts asking the user to save the project
                 if it has changed.  If this is set to false, any changes to the project will
                 be discarded.
+
+        Raises:
+            :class:`.FlexLoggerError`: if closing the project fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
