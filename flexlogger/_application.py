@@ -34,7 +34,7 @@ class Application:
             server_port: The port that the automation server is listening to
 
         Raises:
-            :class:`.FlexLoggerError`: if connecting fails.
+            FlexLoggerError: if connecting fails.
         """
         self._server_port = server_port
         self._connect()
@@ -72,7 +72,7 @@ class Application:
             The created Application object
 
         Raises:
-            :class:`.FlexLoggerError`: if launching FlexLogger or connecting to it fails.
+            FlexLoggerError: if launching FlexLogger or connecting to it fails.
         """
         if isinstance(path, str):
             path = Path(path)
@@ -120,7 +120,7 @@ class Application:
             The opened project.
 
         Raises:
-            :class:`.FlexLoggerError`: if opening the project fails.
+            FlexLoggerError: if opening the project fails.
         """
         stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
         try:

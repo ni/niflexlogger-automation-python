@@ -39,7 +39,7 @@ class TestSession:
             note: The note to add to the log file.
 
         Raises:
-            :class:`.FlexLoggerError`: if the test session is not in the
+            FlexLoggerError: if the test session is not in the
                 :attr:`.TestSessionState.RUNNING` state, or if adding the note fails.
         """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
@@ -53,7 +53,7 @@ class TestSession:
         """Get the current state of the test session.
 
         Raises:
-            :class:`.FlexLoggerError`: if getting the current state fails.
+            FlexLoggerError: if getting the current state fails.
         """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
@@ -74,7 +74,7 @@ class TestSession:
             True if the test was started, otherwise False.
 
         Raises:
-            :class:`.FlexLoggerError`: if starting the test session fails.
+            FlexLoggerError: if starting the test session fails.
         """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
@@ -90,7 +90,7 @@ class TestSession:
             True if the test was stopped, otherwise False.
 
         Raises:
-            :class:`.FlexLoggerError`: if stopping the test session fails.
+            FlexLoggerError: if stopping the test session fails.
         """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:

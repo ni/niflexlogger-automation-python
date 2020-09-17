@@ -26,7 +26,7 @@ class ChannelSpecificationDocument:
         """Get all the channel names in the document.
 
         Raises:
-            :class:`.FlexLoggerError`: if getting the channel names fails.
+            FlexLoggerError: if getting the channel names fails.
         """
         stub = ChannelSpecificationDocument_pb2_grpc.ChannelSpecificationDocumentStub(self._channel)
         try:
@@ -46,7 +46,7 @@ class ChannelSpecificationDocument:
             channel_name: The name of the channel to get the current value of
 
         Raises:
-            :class:`.FlexLoggerError`: if getting the channel value fails.
+            FlexLoggerError: if getting the channel value fails.
         """
         stub = ChannelSpecificationDocument_pb2_grpc.ChannelSpecificationDocumentStub(self._channel)
         try:
@@ -69,7 +69,7 @@ class ChannelSpecificationDocument:
             channel_value: The value to set the channel to
 
         Raises:
-            :class:`.FlexLoggerError`: if setting the channel value fails.
+            FlexLoggerError: if setting the channel value fails.
         """
         stub = ChannelSpecificationDocument_pb2_grpc.ChannelSpecificationDocumentStub(self._channel)
         try:

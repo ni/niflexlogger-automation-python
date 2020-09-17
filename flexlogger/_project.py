@@ -32,7 +32,7 @@ class Project:
             The opened document.
 
         Raises:
-            :class:`.FlexLoggerError`: if opening the document fails.
+            FlexLoggerError: if opening the document fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
@@ -50,7 +50,7 @@ class Project:
             The opened document.
 
         Raises:
-            :class:`.FlexLoggerError`: if opening the document fails.
+            FlexLoggerError: if opening the document fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
@@ -72,7 +72,7 @@ class Project:
             The opened document.
 
         Raises:
-            :class:`.FlexLoggerError`: if a screen document of the specified name does
+            FlexLoggerError: if a screen document of the specified name does
                 not exist, or if opening the document fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
@@ -93,7 +93,7 @@ class Project:
             The opened document.
 
         Raises:
-            :class:`.FlexLoggerError`: if opening the document fails.
+            FlexLoggerError: if opening the document fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
@@ -113,7 +113,7 @@ class Project:
                 be discarded.
 
         Raises:
-            :class:`.FlexLoggerError`: if closing the project fails.
+            FlexLoggerError: if closing the project fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
