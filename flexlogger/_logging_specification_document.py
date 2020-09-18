@@ -1,4 +1,4 @@
-from typing import List
+from typing import Callable, List
 
 from grpc import Channel, RpcError
 
@@ -15,8 +15,14 @@ class LoggingSpecificationDocument:
     :meth:`.Project.open_logging_specification_document` should be used.
     """
 
-    def __init__(self, channel: Channel, identifier: ElementIdentifier) -> None:
+    def __init__(
+        self,
+        channel: Channel,
+        raise_if_application_closed: Callable[[], None],
+        identifier: ElementIdentifier,
+    ) -> None:
         self._channel = channel
+        self._raise_if_application_closed = raise_if_application_closed
         self._identifier = identifier
 
     def get_log_file_base_path(self) -> str:
@@ -36,8 +42,9 @@ class LoggingSpecificationDocument:
                 )
             )
             return response.log_file_base_path
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get log file base path") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get log file base path") from error
 
     def set_log_file_base_path(self, log_file_base_path: str) -> None:
         """Set the log file base path.
@@ -55,8 +62,9 @@ class LoggingSpecificationDocument:
                     document_identifier=self._identifier, log_file_base_path=log_file_base_path
                 )
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to set log file base path") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set log file base path") from error
 
     def get_log_file_name(self) -> str:
         """Get the log file name.
@@ -75,8 +83,9 @@ class LoggingSpecificationDocument:
                 )
             )
             return response.log_file_name
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get log file name") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get log file name") from error
 
     def set_log_file_name(self, log_file_name: str) -> None:
         """Set the log file name.
@@ -94,8 +103,9 @@ class LoggingSpecificationDocument:
                     document_identifier=self._identifier, log_file_name=log_file_name
                 )
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to set log file name") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set log file name") from error
 
     def _convert_to_test_property(
         self, test_property: LoggingSpecificationDocument_pb2.TestProperty
@@ -132,8 +142,9 @@ class LoggingSpecificationDocument:
                 )
             )
             return [self._convert_to_test_property(x) for x in response.test_properties]
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get test properties") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get test properties") from error
 
     def get_test_property(self, test_property_name: str) -> TestProperty:
         """Get the test property with the specified name.
@@ -159,8 +170,9 @@ class LoggingSpecificationDocument:
                 )
             )
             return self._convert_to_test_property(response.test_property)
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get test property") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get test property") from error
 
     def set_test_property(self, test_property: TestProperty) -> None:
         """Set the information for a test property.
@@ -185,8 +197,9 @@ class LoggingSpecificationDocument:
                     test_property=self._convert_from_test_property(test_property),
                 )
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to set test property") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set test property") from error
 
     def remove_test_property(self, test_property_name: str) -> None:
         """Removes the test property with the specified name.
@@ -205,5 +218,6 @@ class LoggingSpecificationDocument:
                     document_identifier=self._identifier, property_name=test_property_name
                 )
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to remove test property") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to remove test property") from error

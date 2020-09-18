@@ -5,7 +5,7 @@ from typing import Iterator
 import pytest  # type: ignore
 from flexlogger import Application, ChannelSpecificationDocument, FlexLoggerError
 
-from .utils import open_project
+from .utils import get_project_path, open_project
 
 
 @pytest.fixture(scope="module")
@@ -89,3 +89,13 @@ class TestChannelSpecificationDocument:
         channel_specification = channels_with_produced_data
         with pytest.raises(FlexLoggerError):
             channel_specification.set_channel_value("Channel 1", 42)
+
+    @pytest.mark.integration  # type: ignore
+    def test__close_project_with_channels__get_value__exception_raised(
+        self, app: Application
+    ) -> None:
+        project = app.open_project(get_project_path("ProjectWithProducedData"))
+        channel_specification = project.open_channel_specification_document()
+        project.close(allow_prompts=False)
+        with pytest.raises(FlexLoggerError):
+            channel_specification.get_channel_value("Channel 1")

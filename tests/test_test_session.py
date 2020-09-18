@@ -6,7 +6,7 @@ import pytest  # type: ignore
 from flexlogger import Application, FlexLoggerError, Project, TestSessionState
 from nptdms import TdmsFile  # type: ignore
 
-from .utils import open_project
+from .utils import get_project_path, open_project
 
 
 @pytest.fixture(scope="module")
@@ -128,3 +128,10 @@ class TestTestSession:
     ) -> None:
         with pytest.raises(FlexLoggerError):
             project_with_produced_data.test_session.add_note("Nope")
+
+    @pytest.mark.integration  # type: ignore
+    def test__close_project__start_test__exception_raised(self, app: Application) -> None:
+        project = app.open_project(get_project_path("ProjectWithProducedData"))
+        project.close(allow_prompts=False)
+        with pytest.raises(FlexLoggerError):
+            project.test_session.start()

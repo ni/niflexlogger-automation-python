@@ -7,10 +7,10 @@ import uuid
 from pathlib import Path
 from typing import Any, List, Optional, Union
 
-import grpc  # type: ignore
 import win32api  # type: ignore
 import win32event  # type: ignore
 import winreg  # type: ignore
+from grpc import insecure_channel, RpcError
 
 from ._flexlogger_error import FlexLoggerError
 from ._project import Project
@@ -99,8 +99,8 @@ class Application:
         if self._server_port <= 0:
             raise ValueError("Tried to connect to invalid port number %d" % self._server_port)
         try:
-            self._channel = grpc.insecure_channel("localhost:%d" % self._server_port)
-        except grpc.RpcError as error:
+            self._channel = insecure_channel("localhost:%d" % self._server_port)
+        except RpcError as error:
             raise FlexLoggerError("Failed to connect to FlexLogger") from error
 
     def _disconnect(self, exit_application: bool) -> None:
@@ -109,6 +109,10 @@ class Application:
             stub.Disconnect(Application_pb2.DisconnectRequest(exit_application=exit_application))
             self._channel.close()
             self._channel = None
+
+    def _raise_exception_if_closed(self) -> None:
+        if self._channel is None:
+            raise FlexLoggerError("Application has already been disconnected") from None
 
     def open_project(self, path: Union[str, Path]) -> Project:
         """Open a project.
@@ -122,13 +126,20 @@ class Application:
         Raises:
             FlexLoggerError: if opening the project fails.
         """
-        stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
         try:
+            stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
             response = stub.OpenProject(
                 FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
             )
-            return Project(self._channel, response.project)
-        except grpc.RpcError as rpc_error:
+            return Project(self._channel, self._raise_exception_if_closed, response.project)
+        # For most methods, catching ValueError is sufficient to detect whether the Application
+        # has been closed, and avoids race conditions where another thread closes the Application
+        # in the middle of the first thread's call.
+        #
+        # This method passes self._channel directly to a stub, and this raises an AttributeError
+        # if self._channel is None, so catch this as well.
+        except (RpcError, ValueError, AttributeError) as rpc_error:
+            self._raise_exception_if_closed()
             raise FlexLoggerError("Failed to open project") from rpc_error
 
     @classmethod

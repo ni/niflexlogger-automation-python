@@ -1,4 +1,4 @@
-from typing import List
+from typing import Callable, List
 
 from grpc import Channel, RpcError
 
@@ -18,8 +18,14 @@ class ChannelSpecificationDocument:
     :meth:`.Project.open_channel_specification_document` should be used.
     """
 
-    def __init__(self, channel: Channel, identifier: ElementIdentifier) -> None:
+    def __init__(
+        self,
+        channel: Channel,
+        raise_if_application_closed: Callable[[], None],
+        identifier: ElementIdentifier,
+    ) -> None:
         self._channel = channel
+        self._raise_if_application_closed = raise_if_application_closed
         self._identifier = identifier
 
     def get_channel_names(self) -> List[str]:
@@ -36,8 +42,9 @@ class ChannelSpecificationDocument:
                 )
             )
             return response.channel_names
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get channel names") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get channel names") from error
 
     def get_channel_value(self, channel_name: str) -> ChannelDataPoint:
         """Get the current value of the specified channel.
@@ -58,8 +65,9 @@ class ChannelSpecificationDocument:
             return ChannelDataPoint(
                 channel_name, response.channel_value, response.value_timestamp.ToDatetime()
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get channel value") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get channel value") from error
 
     def set_channel_value(self, channel_name: str, channel_value: float) -> None:
         """Set the current value of the specified channel.
@@ -80,5 +88,6 @@ class ChannelSpecificationDocument:
                     channel_value=channel_value,
                 )
             )
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to set channel value") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set channel value") from error

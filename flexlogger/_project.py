@@ -1,3 +1,5 @@
+from typing import Callable
+
 from flexlogger._channel_specification_document import ChannelSpecificationDocument
 from flexlogger._logging_specification_document import LoggingSpecificationDocument
 from flexlogger._screen_document import ScreenDocument
@@ -20,10 +22,16 @@ class Project:
     :meth:`.Application.open_project` should be used.
     """
 
-    def __init__(self, channel: Channel, identifier: ProjectIdentifier) -> None:
+    def __init__(
+        self,
+        channel: Channel,
+        raise_if_application_closed: Callable[[], None],
+        identifier: ProjectIdentifier,
+    ) -> None:
         self._channel = channel
+        self._raise_if_application_closed = raise_if_application_closed
         self._identifier = identifier
-        self._test_session = TestSession(self._channel)
+        self._test_session = TestSession(self._channel, raise_if_application_closed)
 
     def open_channel_specification_document(self) -> ChannelSpecificationDocument:
         """Open the channel specification document in the project.
@@ -39,9 +47,12 @@ class Project:
             response = stub.OpenChannelSpecificationDocument(
                 Project_pb2.OpenChannelSpecificationDocumentRequest(project=self._identifier)
             )
-            return ChannelSpecificationDocument(self._channel, response.document_identifier)
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to open channel specification document") from rpc_error
+            return ChannelSpecificationDocument(
+                self._channel, self._raise_if_application_closed, response.document_identifier
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to open channel specification document") from error
 
     def open_logging_specification_document(self) -> LoggingSpecificationDocument:
         """Open the logging specification document in the project.
@@ -57,9 +68,12 @@ class Project:
             response = stub.OpenLoggingSpecificationDocument(
                 Project_pb2.OpenLoggingSpecificationDocumentRequest(project=self._identifier)
             )
-            return LoggingSpecificationDocument(self._channel, response.document_identifier)
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to open logging specification document") from rpc_error
+            return LoggingSpecificationDocument(
+                self._channel, self._raise_if_application_closed, response.document_identifier
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to open logging specification document") from error
 
     def open_screen_document(self, filename: str) -> ScreenDocument:
         """Open the specified screen document in the project.
@@ -82,9 +96,12 @@ class Project:
                     project=self._identifier, screen_name=filename
                 )
             )
-            return ScreenDocument(self._channel, response.document_identifier)
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to open screen document") from rpc_error
+            return ScreenDocument(
+                self._channel, self._raise_if_application_closed, response.document_identifier
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to open screen document") from error
 
     def open_test_specification_document(self) -> TestSpecificationDocument:
         """Open the test specification document in the project.
@@ -100,9 +117,12 @@ class Project:
             response = stub.OpenTestSpecificationDocument(
                 Project_pb2.OpenTestSpecificationDocumentRequest(project=self._identifier)
             )
-            return TestSpecificationDocument(self._channel, response.document_identifier)
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to open test specification document") from rpc_error
+            return TestSpecificationDocument(
+                self._channel, self._raise_if_application_closed, response.document_identifier
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to open test specification document") from error
 
     def close(self, allow_prompts: bool) -> None:
         """Close the project.
@@ -118,8 +138,9 @@ class Project:
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
             stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=allow_prompts))
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to close project") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to close project") from error
 
     @property
     def test_session(self) -> TestSession:

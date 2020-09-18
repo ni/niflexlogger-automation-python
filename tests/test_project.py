@@ -48,3 +48,52 @@ class TestProject:
         finally:
             if server_port != -1:
                 Application(server_port=server_port).close()
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__open_different_project__using_original_project_raises_exception(
+        self,
+    ) -> None:
+        project_path = get_project_path("DefaultProject")
+        second_project_path = get_project_path("ProjectWithTestProperties")
+        with Application.launch() as app:
+            first_project = app.open_project(project_path)
+            app.open_project(second_project_path)
+            with pytest.raises(FlexLoggerError):
+                first_project.open_channel_specification_document()
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__close_project__using_original_project_raises_exception(self) -> None:
+        project_path = get_project_path("DefaultProject")
+        with Application.launch() as app:
+            first_project = app.open_project(project_path)
+            first_project.close(allow_prompts=False)
+            with pytest.raises(FlexLoggerError):
+                first_project.open_channel_specification_document()
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__close_application__using_application_raises_exception(
+        self,
+    ) -> None:
+        app = Application.launch()
+        app.close()
+        with pytest.raises(FlexLoggerError):
+            app.open_project(get_project_path("DefaultProject"))
+
+    @pytest.mark.integration  # type: ignore
+    def test__disconnect_application__using_application_raises_exception(self) -> None:
+        original_app = Application.launch()
+        try:
+            new_app = Application(server_port=original_app.server_port)
+            new_app.disconnect()
+            with pytest.raises(FlexLoggerError):
+                new_app.open_project(get_project_path("DefaultProject"))
+        finally:
+            original_app.close()
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__close_application__using_project_raises_exception(self) -> None:
+        app = Application.launch()
+        project = app.open_project(get_project_path("DefaultProject"))
+        app.close()
+        with pytest.raises(FlexLoggerError):
+            project.open_channel_specification_document()

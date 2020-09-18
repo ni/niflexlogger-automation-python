@@ -1,3 +1,5 @@
+from typing import Callable
+
 from flexlogger._flexlogger_error import FlexLoggerError
 from flexlogger._test_session_state import TestSessionState
 from flexlogger.proto import (
@@ -26,8 +28,9 @@ class TestSession:
     :attr:`.Project.test_session` should be used.
     """
 
-    def __init__(self, channel: Channel) -> None:
+    def __init__(self, channel: Channel, raise_if_application_closed: Callable[[], None]) -> None:
         self._channel = channel
+        self._raise_if_application_closed = raise_if_application_closed
 
     def add_note(self, note: str) -> None:
         """Add a note to the current log file.
@@ -45,8 +48,9 @@ class TestSession:
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             stub.AddNote(TestSession_pb2.AddNoteRequest(note=note))
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to add note") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to add note") from error
 
     @property
     def state(self) -> TestSessionState:
@@ -55,6 +59,7 @@ class TestSession:
         Raises:
             FlexLoggerError: if getting the current state fails.
         """
+        self._raise_if_application_closed()
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
             getTestSessionStateResponse = stub.GetState(
@@ -64,8 +69,9 @@ class TestSession:
             if state is None:
                 raise RuntimeError("The test session is in an undefined state.")
             return state
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to get test session state") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get test session state") from error
 
     def start(self) -> bool:
         """Start the test session, if possible.
@@ -80,8 +86,9 @@ class TestSession:
         try:
             startTestSessionResponse = stub.Start(TestSession_pb2.StartTestSessionRequest())
             return startTestSessionResponse.test_session_started
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to start test session") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to start test session") from error
 
     def stop(self) -> bool:
         """Stop the test session, if possible.
@@ -96,5 +103,6 @@ class TestSession:
         try:
             stopTestSessionResponse = stub.Stop(TestSession_pb2.StopTestSessionRequest())
             return stopTestSessionResponse.test_session_stopped
-        except RpcError as rpc_error:
-            raise FlexLoggerError("Failed to stop test session") from rpc_error
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to stop test session") from error

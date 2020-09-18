@@ -3,7 +3,7 @@ from typing import Iterator
 import pytest  # type: ignore
 from flexlogger import Application, FlexLoggerError, LoggingSpecificationDocument, TestProperty
 
-from .utils import open_project
+from .utils import get_project_path, open_project
 
 
 @pytest.fixture(scope="module")
@@ -11,7 +11,7 @@ def logging_spec_with_test_properties(app: Application) -> Iterator[LoggingSpeci
     """Fixture for opening the logging specification document for ProjectWithProducedData.
 
     This is useful to improve test time by not opening/closing this project in every test.
-    Note that using this fixture means the test may not modify the project
+    Note that using this fixture means the test may not modify the project.
     """
     with open_project(app, "ProjectWithTestProperties") as project:
         yield project.open_logging_specification_document()
@@ -210,6 +210,14 @@ class TestLoggingSpecificationDocument:
 
             with pytest.raises(FlexLoggerError):
                 logging_specification.remove_test_property("Property")
+
+    @pytest.mark.integration  # type: ignore
+    def test__close_project__get_test_properties__exception_raised(self, app: Application) -> None:
+        project = app.open_project(get_project_path("ProjectWithProducedData"))
+        logging_specification = project.open_logging_specification_document()
+        project.close(allow_prompts=False)
+        with pytest.raises(FlexLoggerError):
+            logging_specification.get_test_properties()
 
     def assert_property_matches(
         self,
