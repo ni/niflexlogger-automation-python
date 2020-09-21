@@ -9,7 +9,7 @@ PROTO_PATHS = [
     "DiagramSdk/Automation/DiagramSdk.Automation.Protocols",
 ]
 
-DEST_DIR = Path("./flexlogger/proto")
+DEST_DIR = Path("./flexlogger/automation/proto")
 
 
 def _main(*args: str) -> int:
@@ -38,28 +38,31 @@ def _fixup_proto_file(src: Path, dst: Path) -> None:
     for proto_path in PROTO_PATHS:
         # We want the generated classes to import other generated classes with
         # something like
-        #    from flexlogger.proto import Identifiers
+        #    from flexlogger.automation.proto import Identifiers
         # So we need the "import" statement in the .proto file to match this
-        contents = contents.replace('import "' + proto_path + "/", 'import "flexlogger/proto/')
+        contents = contents.replace(
+            'import "' + proto_path + "/", 'import "flexlogger/automation/proto/'
+        )
     dst.write_text(contents)
 
 
 def _move_generated_files() -> None:
-    source_dir = DEST_DIR / "flexlogger/proto"
+    source_dir = DEST_DIR / "flexlogger/automation/proto"
     for source_path in source_dir.glob("*.py"):
         dest_path = DEST_DIR / source_path.name
         source_path.rename(dest_path)
     source_dir.rmdir()
+    (DEST_DIR / "flexlogger/automation").rmdir()
     (DEST_DIR / "flexlogger").rmdir()
 
 
 def _call_protoc() -> int:
-    Path("./flexlogger/proto").mkdir(exist_ok=True)
+    Path("./flexlogger/automation/proto").mkdir(exist_ok=True)
     args = [
         "--proto_path=.",
-        "--python_out=flexlogger/proto",
-        "--grpc_python_out=flexlogger/proto",
-        "flexlogger/proto/*.proto",
+        "--python_out=flexlogger/automation/proto",
+        "--grpc_python_out=flexlogger/automation/proto",
+        "flexlogger/automation/proto/*.proto",
     ]
     return subprocess.run([sys.executable, "-m", "grpc_tools.protoc"] + args).returncode
 

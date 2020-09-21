@@ -3,7 +3,7 @@ from time import sleep
 from typing import Iterator
 
 import pytest  # type: ignore
-from flexlogger import Application, ChannelSpecificationDocument, FlexLoggerError
+from flexlogger.automation import Application, ChannelSpecificationDocument, FlexLoggerError
 
 from .utils import get_project_path, open_project
 

@@ -2,11 +2,11 @@ import os
 import sys
 from typing import Any, List
 
+# Note: you must "pip install console-menu" for this example to work.
 from consolemenu import ConsoleMenu
 from consolemenu import Screen
 from consolemenu.items import FunctionItem
-from flexlogger import Application, TestSession
-from flexlogger import TestSessionState
+from flexlogger.automation import Application, TestSession, TestSessionState
 
 
 def main(argv: List[str] = None) -> int:

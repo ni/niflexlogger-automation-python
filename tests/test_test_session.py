@@ -3,7 +3,7 @@ from tempfile import TemporaryDirectory
 from typing import Iterator
 
 import pytest  # type: ignore
-from flexlogger import Application, FlexLoggerError, Project, TestSessionState
+from flexlogger.automation import Application, FlexLoggerError, Project, TestSessionState
 from nptdms import TdmsFile  # type: ignore
 
 from .utils import get_project_path, open_project

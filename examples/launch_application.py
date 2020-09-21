@@ -2,7 +2,7 @@ import os
 import sys
 from typing import List
 
-from flexlogger import Application
+from flexlogger.automation import Application
 
 
 def main(argv: List[str] = None) -> int:

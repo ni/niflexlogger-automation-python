@@ -8,7 +8,7 @@ API Reference
    :caption: Table of Contents
 
 
-.. automodule:: flexlogger
+.. automodule:: flexlogger.automation
    :members:
    :imported-members:
 

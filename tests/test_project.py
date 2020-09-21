@@ -1,5 +1,5 @@
 import pytest  # type: ignore
-from flexlogger import Application, FlexLoggerError
+from flexlogger.automation import Application, FlexLoggerError
 
 from .utils import get_project_path, open_project
 

@@ -4,7 +4,7 @@ from shutil import copy, rmtree
 from tempfile import TemporaryDirectory
 from typing import Iterator
 
-from flexlogger import Application, Project
+from flexlogger.automation import Application, Project
 
 
 def get_project_path(project_name: str) -> Path:

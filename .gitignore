@@ -109,6 +109,6 @@ venv.bak/
 .vscode/
 
 # Generated protobuf files
-flexlogger/proto/*.proto
-flexlogger/proto/*.py
-!flexlogger/proto/__init__.py
+flexlogger/automation/proto/*.proto
+flexlogger/automation/proto/*.py
+!flexlogger/automation/proto/__init__.py

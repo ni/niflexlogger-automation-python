@@ -3,7 +3,7 @@
 max-line-length = 100
 # - use "black" to auto-format
 
-exclude = flexlogger/proto
+exclude = flexlogger/automation/proto
 
 ignore =
     # D400 and D205 are because we sometimes split the first line of the docstring

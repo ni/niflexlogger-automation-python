@@ -1,7 +1,7 @@
 from typing import Iterator
 
 import pytest
-from flexlogger import Application
+from flexlogger.automation import Application
 
 
 @pytest.fixture(scope="session")

@@ -1,13 +1,13 @@
 from typing import Callable
 
-from flexlogger._channel_specification_document import ChannelSpecificationDocument
-from flexlogger._logging_specification_document import LoggingSpecificationDocument
-from flexlogger._screen_document import ScreenDocument
-from flexlogger._test_session import TestSession
-from flexlogger._test_specification_document import TestSpecificationDocument
 from grpc import Channel, RpcError
 
+from ._channel_specification_document import ChannelSpecificationDocument
 from ._flexlogger_error import FlexLoggerError
+from ._logging_specification_document import LoggingSpecificationDocument
+from ._screen_document import ScreenDocument
+from ._test_session import TestSession
+from ._test_specification_document import TestSpecificationDocument
 from .proto import (
     Project_pb2,  # type: ignore
     Project_pb2_grpc,  # type: ignore

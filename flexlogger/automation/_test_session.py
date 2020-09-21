@@ -1,13 +1,14 @@
 from typing import Callable
 
-from flexlogger._flexlogger_error import FlexLoggerError
-from flexlogger._test_session_state import TestSessionState
-from flexlogger.proto import (
+from grpc import Channel, RpcError
+
+from ._flexlogger_error import FlexLoggerError
+from ._test_session_state import TestSessionState
+from .proto import (
     TestSession_pb2,
     TestSession_pb2_grpc,
 )
-from flexlogger.proto.TestSessionState_pb2 import TestSessionState as TestSessionState_pb2
-from grpc import Channel, RpcError
+from .proto.TestSessionState_pb2 import TestSessionState as TestSessionState_pb2
 
 STATE_MAP = {
     TestSessionState_pb2.TEST_SESSION_STATE_IDLE: TestSessionState.IDLE,

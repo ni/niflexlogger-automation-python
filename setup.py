@@ -1,13 +1,20 @@
 import subprocess
 import sys
+from typing import List
 
-from setuptools import find_packages, setup  # type: ignore
+from setuptools import find_namespace_packages, setup  # type: ignore
 from setuptools.command.build_py import build_py as BuildPyCommand  # type: ignore
 from setuptools.command.test import test as TestCommand  # type: ignore
 
 pypi_name = "niflexlogger"
 
-packages = find_packages(include=["flexlogger*"])
+packages = find_namespace_packages(include=["flexlogger.*"])
+
+PROTO_PATHS = [
+    "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols",
+    "Core/Automation/Core.Automation.Protocols",
+    "DiagramSdk/Automation/DiagramSdk.Automation.Protocols",
+]
 
 
 class GenerateProtobufAndBuildPyCommand(BuildPyCommand):
@@ -61,6 +68,14 @@ def _read_contents(file_to_read):
         return f.read()
 
 
+def _build_protobuf_paths() -> List[str]:
+    # The package_data member does not support recursive ** globbing,
+    # so build up the paths here.
+    # Note that this path is relative to the flexlogger.automation package
+    # directory
+    return ["../../protobuf/" + x + "/*.proto" for x in PROTO_PATHS]
+
+
 setup(
     name=pypi_name,
     version=_get_version(pypi_name),
@@ -92,5 +107,5 @@ setup(
         "Topic :: System :: Hardware",
     ],
     cmdclass={"test": PyTest, "build_py": GenerateProtobufAndBuildPyCommand},
-    package_data={"": ["VERSION", "*.pyi", "py.typed", "*.proto"]},
+    package_data={"": ["VERSION", "*.pyi", "py.typed"] + _build_protobuf_paths()},
 )
