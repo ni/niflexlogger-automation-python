@@ -18,12 +18,12 @@ PROTO_PATHS = [
 
 
 class GenerateProtobufAndBuildPyCommand(BuildPyCommand):
-    def run(self):
+    def run(self) -> None:
         _generate_protobuf_classes()
         super().run()
 
 
-def _generate_protobuf_classes():
+def _generate_protobuf_classes() -> None:
     proc = subprocess.Popen(
         [sys.executable, "generate_protobuf_classes.py"],
         universal_newlines=True,
@@ -38,18 +38,18 @@ def _generate_protobuf_classes():
 
 
 class PyTest(TestCommand):
-    def finalize_options(self):
+    def finalize_options(self) -> None:
         TestCommand.finalize_options(self)
-        self.test_args = []
+        self.test_args = []  # type: List[str]
         self.test_suite = True
 
-    def run_tests(self):
+    def run_tests(self) -> None:
         import pytest  # type: ignore
 
         pytest.main(self.test_args)
 
 
-def _get_version(name):
+def _get_version(name: str) -> str:
     import os
 
     version = None
@@ -63,7 +63,7 @@ def _get_version(name):
     return version
 
 
-def _read_contents(file_to_read):
+def _read_contents(file_to_read: str) -> str:
     with open(file_to_read, "r") as f:
         return f.read()
 
