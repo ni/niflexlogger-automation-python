@@ -88,7 +88,7 @@ setup(
     license="MIT",
     packages=packages,
     scripts=["generate_protobuf_classes.py"],
-    install_requires=["typing-extensions", "grpcio", "grpcio-tools", "pywin32"],
+    install_requires=["typing-extensions", "grpcio", "grpcio-tools", "psutil", "pywin32"],
     setup_requires=["grpcio", "grpcio-tools"],
     tests_require=["pytest", "mypy", "npTDMS"],
     classifiers=[

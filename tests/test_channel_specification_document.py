@@ -8,7 +8,7 @@ from flexlogger.automation import Application, ChannelSpecificationDocument, Fle
 from .utils import get_project_path, open_project
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="class")
 def channels_with_produced_data(app: Application) -> Iterator[ChannelSpecificationDocument]:
     """Fixture for opening the channel specification document for ProjectWithProducedData.
 

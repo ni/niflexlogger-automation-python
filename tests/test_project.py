@@ -1,7 +1,12 @@
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
 
-from .utils import get_project_path, open_project
+from .utils import (
+    assert_no_flexloggers_running,
+    get_project_path,
+    kill_all_open_flexloggers,
+    open_project,
+)
 
 
 class TestProject:
@@ -35,6 +40,7 @@ class TestProject:
     def test__launch_flexlogger_and_disconnect__connect_to_existing_and_open_project__is_not_None(
         self,
     ) -> None:
+        kill_all_open_flexloggers()
         project_path = get_project_path("DefaultProject")
         server_port = -1
         try:
@@ -53,6 +59,7 @@ class TestProject:
     def test__open_project__open_different_project__using_original_project_raises_exception(
         self,
     ) -> None:
+        kill_all_open_flexloggers()
         project_path = get_project_path("DefaultProject")
         second_project_path = get_project_path("ProjectWithTestProperties")
         with Application.launch() as app:
@@ -63,6 +70,7 @@ class TestProject:
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__close_project__using_original_project_raises_exception(self) -> None:
+        kill_all_open_flexloggers()
         project_path = get_project_path("DefaultProject")
         with Application.launch() as app:
             first_project = app.open_project(project_path)
@@ -74,6 +82,7 @@ class TestProject:
     def test__launch_application__close_application__using_application_raises_exception(
         self,
     ) -> None:
+        kill_all_open_flexloggers()
         app = Application.launch()
         app.close()
         with pytest.raises(FlexLoggerError):
@@ -81,6 +90,7 @@ class TestProject:
 
     @pytest.mark.integration  # type: ignore
     def test__disconnect_application__using_application_raises_exception(self) -> None:
+        kill_all_open_flexloggers()
         original_app = Application.launch()
         try:
             new_app = Application(server_port=original_app.server_port)
@@ -92,8 +102,46 @@ class TestProject:
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__close_application__using_project_raises_exception(self) -> None:
+        kill_all_open_flexloggers()
         app = Application.launch()
         project = app.open_project(get_project_path("DefaultProject"))
         app.close()
         with pytest.raises(FlexLoggerError):
             project.open_channel_specification_document()
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__launch_application_again__raises_exception(self) -> None:
+        kill_all_open_flexloggers()
+        with Application.launch():
+            # We expect this to fail because we don't support multiple instances of FlexLogger
+            # running at the same time.
+            new_app = None
+            try:
+                with pytest.raises(RuntimeError):
+                    new_app = Application.launch(timeout=20)
+            finally:
+                # if the test fails, try not to mess up future tests
+                if new_app is not None:
+                    new_app.close()
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__close_application__application_has_closed(self) -> None:
+        kill_all_open_flexloggers()
+
+        with Application.launch() as app:
+            # Opening a project will make closing the application take longer
+            app.open_project(get_project_path("DefaultProject"))
+
+        assert_no_flexloggers_running()
+
+    @pytest.mark.integration  # type: ignore
+    def test__connect_to_application__close_application__application_has_closed(self) -> None:
+        kill_all_open_flexloggers()
+        app = Application.launch()
+        # Opening a project will make closing the application take longer
+        app.open_project(get_project_path("DefaultProject"))
+
+        app2 = Application(app.server_port)
+        app2.close()
+
+        assert_no_flexloggers_running()

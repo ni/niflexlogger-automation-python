@@ -1,12 +1,15 @@
 import mmap
+import os
 import re
 import struct
 import subprocess
 import time
 import uuid
 from pathlib import Path
+from socket import SOCK_STREAM
 from typing import Any, List, Optional, Union
 
+import psutil  # type: ignore
 import win32api  # type: ignore
 import win32event  # type: ignore
 import winreg  # type: ignore
@@ -22,6 +25,8 @@ from .proto import (
 )
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
+_FLEXLOGGER_EXE_NAME = "FlexLogger.exe"
+_APP_CLOSE_TIMEOUT = 60
 
 
 class Application:
@@ -106,9 +111,47 @@ class Application:
     def _disconnect(self, exit_application: bool) -> None:
         if self._channel is not None:
             stub = Application_pb2_grpc.ApplicationStub(self._channel)
-            stub.Disconnect(Application_pb2.DisconnectRequest(exit_application=exit_application))
-            self._channel.close()
-            self._channel = None
+            pid_to_wait_for = None
+            if exit_application:
+                # Find the application that's using this port
+                pid_candidates = set(
+                    x.pid
+                    for x in psutil.net_connections()
+                    if x.type == SOCK_STREAM
+                    and x.laddr[1] == self._server_port
+                    and x.pid != os.getpid()
+                )
+                for pid in pid_candidates:
+                    if psutil.Process(pid).name().lower() == _FLEXLOGGER_EXE_NAME.lower():
+                        pid_to_wait_for = pid
+                        break
+            try:
+                stub.Disconnect(
+                    Application_pb2.DisconnectRequest(exit_application=exit_application)
+                )
+                if pid_to_wait_for is not None:
+                    # Wait 60 seconds for the process to exit
+                    timeout_end_time = time.time() + _APP_CLOSE_TIMEOUT
+                    process_still_running = True
+                    while time.time() < timeout_end_time and process_still_running:
+                        # Only wait for 200 ms at a time so we can still be responsive to Ctrl-C
+                        time.sleep(0.2)
+                        try:
+                            # This will raise an exception if the process doesn't exist.
+                            # But it's also possible the PID has been reused, so see if
+                            # the name is the same.
+                            process_still_running = (
+                                psutil.Process(pid_to_wait_for).name().lower()
+                                == _FLEXLOGGER_EXE_NAME.lower()
+                            )
+                        except psutil.Error:
+                            process_still_running = False
+            except (RpcError, ValueError, AttributeError) as rpc_error:
+                self._raise_exception_if_closed()
+                raise FlexLoggerError("Failed to disconnect") from rpc_error
+            finally:
+                self._channel.close()
+                self._channel = None
 
     def _raise_exception_if_closed(self) -> None:
         if self._channel is None:
@@ -131,6 +174,9 @@ class Application:
             response = stub.OpenProject(
                 FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
             )
+            # FlexLogger can hang if you open and then immediately close a project,
+            # this seems sufficient to prevent that.
+            time.sleep(1.0)
             return Project(self._channel, self._raise_exception_if_closed, response.project)
         # For most methods, catching ValueError is sufficient to detect whether the Application
         # has been closed, and avoids race conditions where another thread closes the Application
@@ -145,7 +191,7 @@ class Application:
     @classmethod
     def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
         if path is not None and not path.name.lower().endswith(".exe"):
-            path = path / "FlexLogger.exe"
+            path = path / _FLEXLOGGER_EXE_NAME
         if path is None:
             path = cls._get_latest_installed_flexlogger_path()
         if path is None:
@@ -159,7 +205,7 @@ class Application:
             "-mappedFileIsReadyEventName=" + event_name,
             "-mappedFileName=" + mapped_name,
         ]
-        args += ["-enableAutomationServer", "-allowPrototype", "-newProcess"]
+        args += ["-enableAutomationServer", "-allowPrototype"]
 
         try:
             subprocess.Popen(args)
@@ -175,7 +221,10 @@ class Application:
                         % object_signaled
                     )
                 if time.time() >= timeout_end_time:
-                    raise RuntimeError("Timed out waiting for FlexLogger to launch.")
+                    raise RuntimeError(
+                        "Timed out waiting for FlexLogger to launch.  This might mean an "
+                        "instance of FlexLogger was already running."
+                    )
         finally:
             win32api.CloseHandle(event)
 
@@ -193,7 +242,7 @@ class Application:
                 with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
                     return (
                         Path(winreg.QueryValueEx(latest_flexLogger_key, "Path")[0])
-                        / "FlexLogger.exe"
+                        / _FLEXLOGGER_EXE_NAME
                     )
         except EnvironmentError:
             return None

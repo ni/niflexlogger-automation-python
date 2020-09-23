@@ -11,7 +11,7 @@ from flexlogger.automation import (
 from .utils import get_project_path, open_project
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="class")
 def logging_spec_with_test_properties(app: Application) -> Iterator[LoggingSpecificationDocument]:
     """Fixture for opening the logging specification document for ProjectWithProducedData.
 

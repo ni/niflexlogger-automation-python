@@ -9,7 +9,7 @@ from nptdms import TdmsFile  # type: ignore
 from .utils import get_project_path, open_project
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="class")
 def project_with_produced_data(app: Application) -> Iterator[Project]:
     """Fixture for opening ProjectWithProducedData.
 
