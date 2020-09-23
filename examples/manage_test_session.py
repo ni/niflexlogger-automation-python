@@ -3,14 +3,14 @@ import sys
 from typing import Any, List
 
 # Note: you must "pip install console-menu" for this example to work.
-from consolemenu import ConsoleMenu
-from consolemenu import Screen
+from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
 from flexlogger.automation import Application, TestSession, TestSessionState
 
 
 def main(argv: List[str] = None) -> int:
-    """Launch FlexLogger, opens the specified project and provides an interactive console
+    """
+    Launch FlexLogger, open the specified project and provides an interactive console
     experience for managing the state of the FlexLogger project test session.
     """
     if argv is None:
@@ -26,24 +26,24 @@ def main(argv: List[str] = None) -> int:
         project = app.open_project(path=project_path)
         test_session = project.test_session
 
-        __show_interactive_menu(test_session)
+        _show_interactive_menu(test_session)
 
         print("Closing FlexLogger project . . .")
         project.close(allow_prompts=False)
     return 0
 
 
-def __show_interactive_menu(test_session: TestSession) -> None:
+def _show_interactive_menu(test_session: TestSession) -> None:
     """Display an interactive menu based on the current test session state.
 
     This will return when the user invokes one of the exit menu items.
     """
     # A menu item for all menus, so that test_session.state is checked again
     refresh_test_session_state = FunctionItem(
-        "Refresh test session state", __no_op, should_exit=True
+        "Refresh test session state", _no_op, should_exit=True
     )
 
-    def __create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
         console_menu = ConsoleMenu("Test Session API Demo", desc, epilogue_text=epilogue_text)
         console_menu.append_item(refresh_test_session_state)
         for name, fn, args, opts in menu_items:
@@ -60,23 +60,23 @@ def __show_interactive_menu(test_session: TestSession) -> None:
         "Review and address the errors in FlexLogger and then refresh the test session state."
     )
     menus = {
-        TestSessionState.IDLE: __create_menu(
+        TestSessionState.IDLE: _create_menu(
             "The test session is currently idle.",
             "",
-            [("Start Test", __start_test, [test_session], {"should_exit": True})],
+            [("Start Test", _start_test, [test_session], {"should_exit": True})],
         ),
-        TestSessionState.RUNNING: __create_menu(
+        TestSessionState.RUNNING: _create_menu(
             "The test session is currently running.",
             "",
             [
-                ("Add note", __add_note, [test_session], {}),
-                ("Stop Test", __stop_test, [test_session], {"should_exit": True}),
+                ("Add note", _add_note, [test_session], {}),
+                ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
             ],
         ),
-        TestSessionState.NO_VALID_LOGGED_CHANNELS: __create_menu(
+        TestSessionState.NO_VALID_LOGGED_CHANNELS: _create_menu(
             "The project has no channels to log.", no_channel_to_log_text, []
         ),
-        TestSessionState.INVALID_CONFIGURATION: __create_menu(
+        TestSessionState.INVALID_CONFIGURATION: _create_menu(
             "The project has one or more errors.", invalid_configuration_text, []
         ),
     }
@@ -88,26 +88,26 @@ def __show_interactive_menu(test_session: TestSession) -> None:
             break
 
 
-def __start_test(test_session: TestSession) -> None:
+def _start_test(test_session: TestSession) -> None:
     print("Starting test. . . ")
     test_session.start()
     Screen().input("Test started. Press [Enter] to continue")
 
 
-def __add_note(test_session: TestSession) -> None:
+def _add_note(test_session: TestSession) -> None:
     note = Screen().input("Input the note to log and press [Enter] when the note is complete: ")
     print("Adding note. . . ")
     test_session.add_note(note)
     Screen().input("Note added. Press [Enter] to continue")
 
 
-def __stop_test(test_session: TestSession) -> None:
+def _stop_test(test_session: TestSession) -> None:
     print("Stopping test. . . ")
     test_session.stop()
     Screen().input("Test stopped. Press [Enter] to continue")
 
 
-def __no_op() -> None:
+def _no_op() -> None:
     return
 
 
