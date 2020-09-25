@@ -27,14 +27,10 @@ class TestChannelSpecificationDocument:
         with open_project(app, "ProjectWithTestProperties") as project:
             channel_specification = project.open_channel_specification_document()
             test_properties_channel_names = channel_specification.get_channel_names()
-        # TODO - these names include a bunch of names (from simulated HW?0)
-        # C# tests don't have this problem, what's going on?
         assert "Channel 1" in produced_data_channel_names
         assert "Channel 2" in produced_data_channel_names
-        assert "df60b754-abb5-442a-9a36-d6d3051ecb46" in produced_data_channel_names
         produced_data_channel_names.remove("Channel 1")
         produced_data_channel_names.remove("Channel 2")
-        produced_data_channel_names.remove("df60b754-abb5-442a-9a36-d6d3051ecb46")
         assert sorted(produced_data_channel_names) == sorted(test_properties_channel_names)
 
     @pytest.mark.integration  # type: ignore
