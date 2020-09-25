@@ -108,11 +108,11 @@ def _show_interactive_menu(
     while True:
         # Edits to the logging specification are not allowed while the test is running
         if test_session.state == TestSessionState.RUNNING:
-            state_menu = edits_not_allowed_menu
+            active_menu = edits_not_allowed_menu
         else:
-            state_menu = edits_allowed_menu
-        state_menu.show()
-        if state_menu.selected_item == state_menu.exit_item:
+            active_menu = edits_allowed_menu
+        active_menu.show()
+        if active_menu.selected_item == active_menu.exit_item:
             break
 
 
