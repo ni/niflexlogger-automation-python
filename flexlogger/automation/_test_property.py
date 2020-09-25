@@ -26,7 +26,9 @@ class TestProperty:
 
     @property
     def prompt_on_start(self) -> bool:
-        """Whether the operator should be prompted to define this property
+        """Whether this property should be set when the test session starts.
+
+        If this is set to true, the operator should be prompted to define this property
         when the test session starts.
         """
         return self._prompt_on_start

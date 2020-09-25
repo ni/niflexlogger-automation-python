@@ -9,9 +9,10 @@ from flexlogger.automation import Application, TestSession, TestSessionState
 
 
 def main(argv: List[str] = None) -> int:
-    """
-    Launch FlexLogger, open the specified project and provides an interactive console
-    experience for managing the state of the FlexLogger project test session.
+    """Interactively manage the state of the FlexLogger project test session.
+
+    Launch FlexLogger, open the specified project and interactively
+    manage the state of the FlexLogger project test session.
     """
     if argv is None:
         argv = sys.argv

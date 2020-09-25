@@ -6,7 +6,7 @@ from flexlogger.automation import Application
 
 
 def main(argv: List[str] = None) -> int:
-    """Launch FlexLogger and open a project"""
+    """Launch FlexLogger and open a project."""
     if argv is None:
         argv = sys.argv
     if len(argv) < 2:

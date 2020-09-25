@@ -18,9 +18,10 @@ from prettytable import PrettyTable
 
 
 def main(argv: List[str] = None) -> int:
-    """
-    Launch FlexLogger, open the specified project and provides an interactive console
-    experience for configuring the FlexLogger logging specification.
+    """Interactively configure the FlexLogger logging specification.
+
+    Launch FlexLogger, open the specified project and interactively
+    configuring the FlexLogger logging specification.
     """
     if argv is None:
         argv = sys.argv
