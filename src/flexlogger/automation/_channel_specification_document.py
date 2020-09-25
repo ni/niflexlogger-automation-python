@@ -1,3 +1,4 @@
+from datetime import timezone
 from typing import Callable, List
 
 from grpc import Channel, RpcError
@@ -62,8 +63,11 @@ class ChannelSpecificationDocument:
                     document_identifier=self._identifier, channel_name=channel_name
                 )
             )
+            # Timestamps come back from FlexLogger in UTC
             return ChannelDataPoint(
-                channel_name, response.channel_value, response.value_timestamp.ToDatetime()
+                channel_name,
+                response.channel_value,
+                response.value_timestamp.ToDatetime().replace(tzinfo=timezone.utc),
             )
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()

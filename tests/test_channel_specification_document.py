@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from time import sleep
 from typing import Iterator
 
@@ -61,7 +61,7 @@ class TestChannelSpecificationDocument:
     ) -> None:
         with open_project(app, "ProjectWithSwitchboard") as project:
             channel_specification = project.open_channel_specification_document()
-            now = datetime.now()
+            now = datetime.now(timezone.utc)
             channel_specification.set_channel_value("Switch 42", 84.5)
 
             updated_value = channel_specification.get_channel_value("Switch 42")
@@ -69,6 +69,7 @@ class TestChannelSpecificationDocument:
             assert "Switch 42" == updated_value.channel_name
             assert 84.5 == updated_value.channel_value
             assert updated_value.timestamp >= now
+            assert updated_value.timestamp - now < timedelta(minutes=1)
 
     @pytest.mark.integration  # type: ignore
     def test__set_channel_value_for_channel_that_does_not_exist__exception_raised(
