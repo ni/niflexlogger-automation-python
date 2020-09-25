@@ -9,7 +9,18 @@ PROTO_PATHS = [
     "DiagramSdk/Automation/DiagramSdk.Automation.Protocols",
 ]
 
-DEST_DIR = Path("./flexlogger/automation/proto")
+RELATIVE_DEST_DIR = Path("./flexlogger/automation/proto")
+
+
+def _has_src_dir() -> bool:
+    return Path("./src/").exists()
+
+
+def _get_dest_dir() -> Path:
+    dest_dir = Path("./src" / RELATIVE_DEST_DIR)
+    if dest_dir.exists():
+        return dest_dir
+    return RELATIVE_DEST_DIR
 
 
 def _main(*args: str) -> int:
@@ -23,14 +34,16 @@ def _main(*args: str) -> int:
 
 
 def _prepare_dest_dir() -> None:
-    for existing_generated_file in chain(DEST_DIR.glob("*_pb2.py"), DEST_DIR.glob("*_pb2_grpc.py")):
+    for existing_generated_file in chain(
+        _get_dest_dir().glob("*_pb2.py"), _get_dest_dir().glob("*_pb2_grpc.py")
+    ):
         existing_generated_file.unlink()
 
 
 def _fixup_proto_files() -> None:
     for path_str in PROTO_PATHS:
         for proto_file in (Path("./protobuf") / path_str).glob("*.proto"):
-            _fixup_proto_file(proto_file, DEST_DIR / proto_file.name)
+            _fixup_proto_file(proto_file, _get_dest_dir() / proto_file.name)
 
 
 def _fixup_proto_file(src: Path, dst: Path) -> None:
@@ -47,24 +60,25 @@ def _fixup_proto_file(src: Path, dst: Path) -> None:
 
 
 def _move_generated_files() -> None:
-    source_dir = DEST_DIR / "flexlogger/automation/proto"
+    source_dir = _get_dest_dir() / "flexlogger/automation/proto"
     for source_path in source_dir.glob("*.py"):
-        dest_path = DEST_DIR / source_path.name
+        dest_path = _get_dest_dir() / source_path.name
         source_path.rename(dest_path)
     source_dir.rmdir()
-    (DEST_DIR / "flexlogger/automation").rmdir()
-    (DEST_DIR / "flexlogger").rmdir()
+    (_get_dest_dir() / "flexlogger/automation").rmdir()
+    (_get_dest_dir() / "flexlogger").rmdir()
 
 
 def _call_protoc() -> int:
-    Path("./flexlogger/automation/proto").mkdir(exist_ok=True)
     args = [
         "--proto_path=.",
-        "--python_out=flexlogger/automation/proto",
-        "--grpc_python_out=flexlogger/automation/proto",
-        "flexlogger/automation/proto/*.proto",
+        "--python_out=" + str(RELATIVE_DEST_DIR),
+        "--grpc_python_out=" + str(RELATIVE_DEST_DIR),
+        str(RELATIVE_DEST_DIR) + "/*.proto",
     ]
-    return subprocess.run([sys.executable, "-m", "grpc_tools.protoc"] + args).returncode
+
+    cwd = "./src" if _has_src_dir() else None
+    return subprocess.run([sys.executable, "-m", "grpc_tools.protoc"] + args, cwd=cwd).returncode
 
 
 if __name__ == "__main__":

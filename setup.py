@@ -8,7 +8,7 @@ from setuptools.command.test import test as TestCommand  # type: ignore
 
 pypi_name = "niflexlogger"
 
-packages = find_namespace_packages(include=["flexlogger.*"])
+packages = find_namespace_packages(where="src", include=["flexlogger.*"])
 
 PROTO_PATHS = [
     "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols",
@@ -73,7 +73,7 @@ def _build_protobuf_paths() -> List[str]:
     # so build up the paths here.
     # Note that this path is relative to the flexlogger.automation package
     # directory
-    return ["../../protobuf/" + x + "/*.proto" for x in PROTO_PATHS]
+    return ["../../../protobuf/" + x + "/*.proto" for x in PROTO_PATHS]
 
 
 setup(
@@ -108,4 +108,5 @@ setup(
     ],
     cmdclass={"test": PyTest, "build_py": GenerateProtobufAndBuildPyCommand},
     package_data={"": ["VERSION", "*.pyi", "py.typed"] + _build_protobuf_paths()},
+    package_dir={"": "src"},
 )
