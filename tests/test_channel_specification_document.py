@@ -3,7 +3,12 @@ from time import sleep
 from typing import Iterator
 
 import pytest  # type: ignore
-from flexlogger.automation import Application, ChannelSpecificationDocument, FlexLoggerError
+from flexlogger.automation import (
+    Application,
+    ChannelDataPoint,
+    ChannelSpecificationDocument,
+    FlexLoggerError,
+)
 
 from .utils import get_project_path, open_project
 
@@ -42,9 +47,9 @@ class TestChannelSpecificationDocument:
         sleep(0.5)
         second_channel_value = channel_specification.get_channel_value("Channel 1")
 
-        assert "Channel 1" == first_channel_value.channel_name
-        assert "Channel 1" == second_channel_value.channel_name
-        assert first_channel_value.channel_value != second_channel_value.channel_value
+        assert "Channel 1" == first_channel_value.name
+        assert "Channel 1" == second_channel_value.name
+        assert first_channel_value.value != second_channel_value.value
         assert first_channel_value.timestamp < second_channel_value.timestamp
 
     @pytest.mark.integration  # type: ignore
@@ -66,8 +71,8 @@ class TestChannelSpecificationDocument:
 
             updated_value = channel_specification.get_channel_value("Switch 42")
 
-            assert "Switch 42" == updated_value.channel_name
-            assert 84.5 == updated_value.channel_value
+            assert "Switch 42" == updated_value.name
+            assert 84.5 == updated_value.value
             assert updated_value.timestamp >= now
             assert updated_value.timestamp - now < timedelta(minutes=1)
 
@@ -96,3 +101,11 @@ class TestChannelSpecificationDocument:
         project.close(allow_prompts=False)
         with pytest.raises(FlexLoggerError):
             channel_specification.get_channel_value("Channel 1")
+
+    @pytest.mark.integration  # type: ignore
+    def test__channeldatapoint_repr__returns_correct_string(self) -> None:
+        channel_data_point = ChannelDataPoint("Channel", 2.5, datetime.now())
+        expected_repr = 'flexlogger.automation.ChannelDataPoint("Channel", 2.500000, %s)' % repr(
+            channel_data_point.timestamp
+        )
+        assert expected_repr == repr(channel_data_point)

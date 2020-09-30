@@ -4,20 +4,27 @@ from datetime import datetime
 class ChannelDataPoint:
     """The value for a channel that occurred at the specified timestamp."""
 
-    def __init__(self, channel_name: str, channel_value: float, timestamp: datetime):
-        self._channel_name = channel_name
-        self._channel_value = channel_value
+    def __init__(self, name: str, value: float, timestamp: datetime):
+        self._name = name
+        self._value = value
         self._timestamp = timestamp
 
-    @property
-    def channel_name(self) -> str:
-        """The name of the channel."""
-        return self._channel_name
+    def __repr__(self) -> str:
+        return 'flexlogger.automation.ChannelDataPoint("%s", %f, %s)' % (
+            self._name,
+            self._value,
+            repr(self._timestamp),
+        )
 
     @property
-    def channel_value(self) -> float:
+    def name(self) -> str:
+        """The name of the channel."""
+        return self._name
+
+    @property
+    def value(self) -> float:
         """The value of the channel."""
-        return self._channel_value
+        return self._value
 
     @property
     def timestamp(self) -> datetime:

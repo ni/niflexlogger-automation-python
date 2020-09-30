@@ -112,10 +112,8 @@ class TestLoggingSpecificationDocument:
         properties = logging_spec_with_test_properties.get_test_properties()
 
         for prop in properties:
-            actual_prop = logging_spec_with_test_properties.get_test_property(prop.property_name)
-            self.assert_property_matches(
-                actual_prop, prop.property_name, prop.property_value, prop.prompt_on_start
-            )
+            actual_prop = logging_spec_with_test_properties.get_test_property(prop.name)
+            self.assert_property_matches(actual_prop, prop.name, prop.value, prop.prompt_on_start)
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__get_test_property_that_does_not_exist__exception_raised(
@@ -134,9 +132,7 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
             assert 5 == len(logging_specification.get_test_properties())
 
-            logging_specification.set_test_property(
-                TestProperty("Property", "New Property Value", True)
-            )
+            logging_specification.set_test_property("Property", "New Property Value", True)
 
             assert 5 == len(logging_specification.get_test_properties())
             new_prop = logging_specification.get_test_property("Property")
@@ -150,9 +146,7 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
             assert 5 == len(logging_specification.get_test_properties())
 
-            logging_specification.set_test_property(
-                TestProperty("New Property", "some value", False)
-            )
+            logging_specification.set_test_property("New Property", "some value", False)
 
             assert 6 == len(logging_specification.get_test_properties())
             new_prop = logging_specification.get_test_property("New Property")
@@ -167,7 +161,7 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
 
             with pytest.raises(FlexLoggerError):
-                logging_specification.set_test_property(TestProperty("Nope", "Sorry", True))
+                logging_specification.set_test_property("Nope", "Sorry", True)
 
     @pytest.mark.integration  # type: ignore
     @pytest.mark.parametrize("name", ["", "12UCannotDoThat", "@!:.#IllegalChars"])  # type: ignore
@@ -178,7 +172,7 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
 
             with pytest.raises(FlexLoggerError):
-                logging_specification.set_test_property(TestProperty(name, "nope", False))
+                logging_specification.set_test_property(name, "nope", False)
 
     @pytest.mark.integration  # type: ignore
     def test__remove_test_property__test_property_removed(self, app: Application) -> None:
@@ -186,13 +180,13 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
             existing_properties = logging_specification.get_test_properties()
             assert 5 == len(existing_properties)
-            assert "Property" in (prop.property_name for prop in existing_properties)
+            assert "Property" in (prop.name for prop in existing_properties)
 
             logging_specification.remove_test_property("Property")
 
             new_properties = logging_specification.get_test_properties()
             assert 4 == len(new_properties)
-            assert "Property" not in (prop.property_name for prop in new_properties)
+            assert "Property" not in (prop.name for prop in new_properties)
             with pytest.raises(FlexLoggerError):
                 logging_specification.get_test_property("Property")
 
@@ -224,6 +218,13 @@ class TestLoggingSpecificationDocument:
         with pytest.raises(FlexLoggerError):
             logging_specification.get_test_properties()
 
+    @pytest.mark.integration  # type: ignore
+    def test__testproperty_repr__returns_correct_string(self) -> None:
+        test_property = TestProperty("Property", "New Value", True)
+        assert 'flexlogger.automation.TestProperty("Property", "New Value", True)' == repr(
+            test_property
+        )
+
     def assert_property_matches(
         self,
         test_property: TestProperty,
@@ -231,6 +232,6 @@ class TestLoggingSpecificationDocument:
         expected_value: str,
         expected_prompt_on_start: bool,
     ) -> None:
-        assert expected_name == test_property.property_name
-        assert expected_value == test_property.property_value
+        assert expected_name == test_property.name
+        assert expected_value == test_property.value
         assert expected_prompt_on_start == test_property.prompt_on_start

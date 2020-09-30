@@ -116,15 +116,6 @@ class LoggingSpecificationDocument:
             test_property.prompt_on_start,
         )
 
-    def _convert_from_test_property(
-        self, test_property: TestProperty
-    ) -> LoggingSpecificationDocument_pb2.TestProperty:
-        return LoggingSpecificationDocument_pb2.TestProperty(
-            property_name=test_property.property_name,
-            property_value=test_property.property_value,
-            prompt_on_start=test_property.prompt_on_start,
-        )
-
     def get_test_properties(self) -> List[TestProperty]:
         """Get all test properties.
 
@@ -174,27 +165,39 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get test property") from error
 
-    def set_test_property(self, test_property: TestProperty) -> None:
+    def set_test_property(
+        self, property_name: str, property_value: str, prompt_on_start: bool = False
+    ) -> None:
         """Set the information for a test property.
 
         This method can be used to add a new test property or to modify an existing
         test property.
 
         Args:
-            test_property: Information defining the test property to set. If a test property
-                already exists with the same :attr:`~TestProperty.property_name`, that test property
-                will be updated with the other test property's information. Otherwise, a new
+            property_name: The name of the test property. If a test property
+                already exists with the same :attr:`~TestProperty.name`, that test property
+                will be updated with the new information passed to this method. Otherwise, a new
                 test property will be created to reflect the specified test information.
+
+            property_value: The property value to set.
+
+            prompt_on_start: Whether this property should be set when the test session starts.
+                Defaults to False. If this is set to True, the operator should be prompted to
+                define this property when the test session starts.
 
         Raises:
             FlexLoggerError: if setting the property fails.
         """
         stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
         try:
+            test_property = LoggingSpecificationDocument_pb2.TestProperty(
+                property_name=property_name,
+                property_value=property_value,
+                prompt_on_start=prompt_on_start,
+            )
             stub.SetTestProperty(
                 LoggingSpecificationDocument_pb2.SetTestPropertyRequest(
-                    document_identifier=self._identifier,
-                    test_property=self._convert_from_test_property(test_property),
+                    document_identifier=self._identifier, test_property=test_property
                 )
             )
         except (RpcError, ValueError) as error:

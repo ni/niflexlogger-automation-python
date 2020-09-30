@@ -77,11 +77,7 @@ def _show_channel_values(channel_specification_document: ChannelSpecificationDoc
         try:
             channel_data_point = channel_specification_document.get_channel_value(channel_name)
             table.add_row(
-                [
-                    channel_data_point.channel_name,
-                    channel_data_point.channel_value,
-                    channel_data_point.timestamp,
-                ]
+                [channel_data_point.name, channel_data_point.value, channel_data_point.timestamp]
             )
         except FlexLoggerError:
             # Getting a channel that is not available, configured or enabled will raise

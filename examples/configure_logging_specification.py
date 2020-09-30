@@ -10,7 +10,6 @@ from flexlogger.automation import (
     Application,
     FlexLoggerError,
     LoggingSpecificationDocument,
-    TestProperty,
     TestSession,
     TestSessionState,
 )
@@ -136,13 +135,7 @@ def _show_test_properties(logging_specification_document: LoggingSpecificationDo
     test_properties = logging_specification_document.get_test_properties()
     table = PrettyTable(["Name", "Value", "Prompt on start"])
     for test_property in test_properties:
-        table.add_row(
-            [
-                test_property.property_name,
-                test_property.property_value,
-                test_property.prompt_on_start,
-            ]
-        )
+        table.add_row([test_property.name, test_property.value, test_property.prompt_on_start])
     print(table)
     Screen().input("Press [Enter] to continue")
 
@@ -153,8 +146,8 @@ def _show_test_property(logging_specification_document: LoggingSpecificationDocu
     )
     try:
         test_property = logging_specification_document.get_test_property(test_property_name)
-        print("The test property name is: " + test_property.property_name)
-        print("The test property value is: " + test_property.property_value)
+        print("The test property name is: " + test_property.name)
+        print("The test property value is: " + test_property.value)
         if test_property.prompt_on_start:
             print("The user will be prompted to set the value of this property on test start.")
         else:
@@ -186,8 +179,7 @@ def _set_test_property(logging_specification_document: LoggingSpecificationDocum
         prompt_on_start = True
     else:
         prompt_on_start = False
-    test_property = TestProperty(property_name, property_value, prompt_on_start)
-    logging_specification_document.set_test_property(test_property)
+    logging_specification_document.set_test_property(property_name, property_value, prompt_on_start)
     Screen().input("Test property set. Press [Enter] to continue")
 
 

@@ -1,28 +1,35 @@
 class TestProperty:
     """Information about a test property."""
 
-    def __init__(self, property_name: str, property_value: str, prompt_on_start: bool):
+    def __init__(self, name: str, value: str, prompt_on_start: bool):
         """Create a new TestProperty.
 
         Args:
-            property_name: The name of the property.
-            property_value: The value of the property.
+            name: The name of the property.
+            value: The value of the property.
             prompt_on_start: Whether the operator should be prompted to define this
                 property when the test session starts.
         """
-        self._property_name = property_name
-        self._property_value = property_value
+        self._name = name
+        self._value = value
         self._prompt_on_start = prompt_on_start
 
-    @property
-    def property_name(self) -> str:
-        """The name of the property."""
-        return self._property_name
+    def __repr__(self) -> str:
+        return 'flexlogger.automation.TestProperty("%s", "%s", %s)' % (
+            self._name,
+            self._value,
+            str(self._prompt_on_start),
+        )
 
     @property
-    def property_value(self) -> str:
+    def name(self) -> str:
+        """The name of the property."""
+        return self._name
+
+    @property
+    def value(self) -> str:
         """The value of the property."""
-        return self._property_value
+        return self._value
 
     @property
     def prompt_on_start(self) -> bool:
