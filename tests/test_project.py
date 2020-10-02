@@ -97,7 +97,7 @@ class TestProject:
         project_path = get_project_path("DefaultProject")
         with Application.launch() as app:
             first_project = app.open_project(project_path)
-            first_project.close(allow_prompts=False)
+            first_project.close()
             with pytest.raises(FlexLoggerError):
                 first_project.open_channel_specification_document()
 

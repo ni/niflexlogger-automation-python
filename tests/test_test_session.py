@@ -132,6 +132,6 @@ class TestTestSession:
     @pytest.mark.integration  # type: ignore
     def test__close_project__start_test__exception_raised(self, app: Application) -> None:
         project = app.open_project(get_project_path("ProjectWithProducedData"))
-        project.close(allow_prompts=False)
+        project.close()
         with pytest.raises(FlexLoggerError):
             project.test_session.start()

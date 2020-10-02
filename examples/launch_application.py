@@ -18,7 +18,7 @@ def main(argv: List[str] = None) -> int:
         project = app.open_project(path=project_path)
         print("Press Enter to close project...")
         input()
-        project.close(allow_prompts=False)
+        project.close()
     return 0
 
 

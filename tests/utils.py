@@ -51,7 +51,7 @@ def open_project(application: Application, project_name: str) -> Iterator[Projec
         try:
             yield project
         finally:
-            project.close(allow_prompts=False)
+            project.close()
 
 
 @contextmanager

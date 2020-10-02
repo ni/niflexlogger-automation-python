@@ -124,20 +124,15 @@ class Project:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to open test specification document") from error
 
-    def close(self, allow_prompts: bool) -> None:
+    def close(self) -> None:
         """Close the project.
-
-        Args:
-            allow_prompts: Whether to allow prompts asking the user to save the project
-                if it has changed.  If this is set to false, any changes to the project will
-                be discarded.
 
         Raises:
             FlexLoggerError: if closing the project fails.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
-            stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=allow_prompts))
+            stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=False))
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to close project") from error

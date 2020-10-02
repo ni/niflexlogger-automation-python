@@ -98,7 +98,7 @@ class TestChannelSpecificationDocument:
     ) -> None:
         project = app.open_project(get_project_path("ProjectWithProducedData"))
         channel_specification = project.open_channel_specification_document()
-        project.close(allow_prompts=False)
+        project.close()
         with pytest.raises(FlexLoggerError):
             channel_specification.get_channel_value("Channel 1")
 

@@ -36,7 +36,7 @@ def main(argv: List[str] = None) -> int:
         _show_interactive_menu(channel_specification_document)
 
         print("Closing FlexLogger project . . .")
-        project.close(allow_prompts=False)
+        project.close()
     return 0
 
 

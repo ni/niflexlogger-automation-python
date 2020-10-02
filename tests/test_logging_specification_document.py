@@ -214,7 +214,7 @@ class TestLoggingSpecificationDocument:
     def test__close_project__get_test_properties__exception_raised(self, app: Application) -> None:
         project = app.open_project(get_project_path("ProjectWithProducedData"))
         logging_specification = project.open_logging_specification_document()
-        project.close(allow_prompts=False)
+        project.close()
         with pytest.raises(FlexLoggerError):
             logging_specification.get_test_properties()
 
