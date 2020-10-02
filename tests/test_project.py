@@ -1,8 +1,11 @@
+from shutil import rmtree
+
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
 
 from .utils import (
     assert_no_flexloggers_running,
+    copy_project,
     get_project_path,
     kill_all_open_flexloggers,
     open_project,
@@ -35,6 +38,26 @@ class TestProject:
         with open_project(app, "DefaultProject") as project:
             with pytest.raises(FlexLoggerError):
                 project.open_screen_document("Not a Screen")
+
+    # This test can hang if the API doesn't handle this error correctly, so set a
+    # timeout
+    @pytest.mark.timeout(120)  # type: ignore
+    @pytest.mark.integration  # type: ignore
+    def test__remove_channel_specification_file__open_project__raises_exception(
+        self, app: Application
+    ) -> None:
+        with copy_project("DefaultProject") as project_path:
+            cache_dir = project_path.parent / ".cache"
+            if cache_dir.exists():
+                rmtree(cache_dir)
+            (project_path.parent / "Channel Specification.flxio").unlink()
+            project = None
+            try:
+                with pytest.raises(FlexLoggerError):
+                    project = app.open_project(project_path)
+            finally:
+                if project is not None:
+                    project.close(allow_prompts=False)
 
     @pytest.mark.integration  # type: ignore
     def test__launch_flexlogger_and_disconnect__connect_to_existing_and_open_project__is_not_None(

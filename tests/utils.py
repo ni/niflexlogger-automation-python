@@ -13,8 +13,8 @@ from flexlogger.automation import Application, Project
 def get_project_path(project_name: str) -> Path:
     """Get the assets project path for the given project name (with no ".flxproj").
 
-    If you want to open the project, please use open_project() instead, as it will copy
-    the project to a temporary directory and clean it up afterwards.
+    If you want to open the project, please use open_project() or copy_project() instead,
+    as they will copy the project to a temporary directory and clean it up afterwards.
     """
     return Path(__file__).parent / ("assets/%s/%s.flxproj" % (project_name, project_name))
 
@@ -41,10 +41,28 @@ def assert_no_flexloggers_running() -> None:
 
 @contextmanager
 def open_project(application: Application, project_name: str) -> Iterator[Project]:
-    """Copy the project in assets with the given name to a temporary directory.
+    """Copy the project with name project_name in the assets directory to a temp directory and open it.
 
     This function returns a ContextManager, so it should be used in a `with` statement,
     and when it goes out of scope it will close the project and delete the temporary directory.
+    """
+    with copy_project(project_name) as project_path:
+        project = application.open_project(project_path)
+        try:
+            yield project
+        finally:
+            project.close(allow_prompts=False)
+
+
+@contextmanager
+def copy_project(project_name: str) -> Iterator[Path]:
+    """Copy a project with name project_name from the assets directory to a temp directory.
+
+    This function returns a ContextManager, so it should be used in a `with` statement,
+    and when it goes out of scope it will delete the temporary directory.
+
+    Returns:
+        The new project's path.
     """
     project_path = get_project_path(project_name)
     project_filename = project_path.name
@@ -55,11 +73,9 @@ def open_project(application: Application, project_name: str) -> Iterator[Projec
     for source_file in source_files:
         if source_file.is_file():
             copy(str(source_file), tmp_directory.name)
-    project = application.open_project(Path(tmp_directory.name) / project_filename)
     try:
-        yield project
+        yield Path(tmp_directory.name) / project_filename
     finally:
-        project.close(allow_prompts=False)
         rmtree(tmp_directory.name)
 
 
