@@ -236,15 +236,26 @@ class Application:
             ) as flexLoggerKey:
                 number_of_subkeys = winreg.QueryInfoKey(flexLoggerKey)[0]
                 subkey_names = [winreg.EnumKey(flexLoggerKey, i) for i in range(number_of_subkeys)]
-                latest_subkey = cls._get_latest_subkey_name(subkey_names)
-                if latest_subkey is None:
-                    return None
-                with winreg.OpenKey(flexLoggerKey, latest_subkey) as latest_flexLogger_key:
+                # Try the newer "CurrentVerison" subkey first,
+                # then the older version specific subkeys
+                subkey = cls._get_current_version_subkey_name(subkey_names)
+                if subkey is None:
+                    subkey = cls._get_latest_subkey_name(subkey_names)
+                    if subkey is None:
+                        return None
+                with winreg.OpenKey(flexLoggerKey, subkey) as latest_flexLogger_key:
                     return (
                         Path(winreg.QueryValueEx(latest_flexLogger_key, "Path")[0])
                         / _FLEXLOGGER_EXE_NAME
                     )
         except EnvironmentError:
+            return None
+
+    @classmethod
+    def _get_current_version_subkey_name(cls, names: List[str]) -> Optional[str]:
+        if "CurrentVersion" in names:
+            return "CurrentVersion"
+        else:
             return None
 
     @classmethod

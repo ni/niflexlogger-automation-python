@@ -57,7 +57,7 @@ class TestProject:
                     project = app.open_project(project_path)
             finally:
                 if project is not None:
-                    project.close(allow_prompts=False)
+                    project.close()
 
     @pytest.mark.integration  # type: ignore
     def test__launch_flexlogger_and_disconnect__connect_to_existing_and_open_project__is_not_None(
