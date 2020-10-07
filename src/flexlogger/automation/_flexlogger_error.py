@@ -1,3 +1,9 @@
+import re
+from typing import cast
+
+from grpc import RpcError
+
+
 class FlexLoggerError(Exception):
     """Represents errors that occur when calling FlexLogger APIs."""
 
@@ -13,4 +19,12 @@ class FlexLoggerError(Exception):
     @property
     def message(self) -> str:
         """The error message."""
-        return self._message
+        message = self._message
+        if isinstance(self.__cause__, RpcError):
+            cause = cast(RpcError, self.__cause__)
+            search_result = re.search(r"\(([^)]+)", cause.details())
+            inner_details = search_result.group(1)  # type: ignore
+            if len(inner_details) >= 0:
+                message += ". Additional error details: " + inner_details
+
+        return message
