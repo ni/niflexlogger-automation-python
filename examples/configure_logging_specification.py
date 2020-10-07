@@ -106,9 +106,17 @@ def _show_interactive_menu(
 
     while True:
         # Edits to the logging specification are not allowed while the test is running
-        if test_session.state == TestSessionState.RUNNING:
+        state = test_session.state
+        if state == TestSessionState.RUNNING:
             active_menu = edits_not_allowed_menu
+        elif state == TestSessionState.IDLE:
+            edits_allowed_menu.subtitle = "The test session is currently idle."
+            active_menu = edits_allowed_menu
+        elif state == TestSessionState.NO_VALID_LOGGED_CHANNELS:
+            edits_allowed_menu.subtitle = "The project has no channels to log."
+            active_menu = edits_allowed_menu
         else:
+            edits_allowed_menu.subtitle = "The project has one or more errors."
             active_menu = edits_allowed_menu
         active_menu.show()
         if active_menu.selected_item == active_menu.exit_item:
