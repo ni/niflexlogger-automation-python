@@ -48,3 +48,15 @@ Start and stop a test
 .. literalinclude:: ../examples/manage_test_session.py
    :language: python
    :linenos:
+
+Configure logging
+
+.. literalinclude:: ../examples/configure_logging_specification.py
+   :language: python
+   :linenos:
+
+Get and set channel values
+
+.. literalinclude:: ../examples/getting_and_setting_channel_values.py
+   :language: python
+   :linenos:
