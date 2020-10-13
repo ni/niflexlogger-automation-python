@@ -125,9 +125,17 @@ def _show_interactive_menu(
 
 def _show_log_file_path(logging_specification_document: LoggingSpecificationDocument) -> None:
     log_file_base_path = logging_specification_document.get_log_file_base_path()
-    log_file_name = logging_specification_document.get_log_file_name()
     print("The log file base path is: " + log_file_base_path)
+    if "{" in log_file_base_path:
+        resolved_log_file_base_path = (
+            logging_specification_document.get_resolved_log_file_base_path()
+        )
+        print("The resolved log file base path is: " + resolved_log_file_base_path)
+    log_file_name = logging_specification_document.get_log_file_name()
     print("The log file name is: " + log_file_name)
+    if "{" in log_file_name:
+        resolved_log_file_name = logging_specification_document.get_resolved_log_file_name()
+        print("The resolved log file file name is: " + resolved_log_file_name)
     Screen().input("Press [Enter] to continue")
 
 

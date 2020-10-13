@@ -22,6 +22,10 @@ service LoggingSpecificationDocument {
     rpc SetTestProperty(SetTestPropertyRequest) returns (SetTestPropertyResponse) {}
     // RPC call to remove a specific test property
     rpc RemoveTestProperty(RemoveTestPropertyRequest) returns (RemoveTestPropertyResponse) {}
+    // RPC call to get the resolved log file base path
+    rpc GetResolvedLogFileBasePath(GetResolvedLogFileBasePathRequest) returns (GetResolvedLogFileBasePathResponse) {}
+    // RPC call to get the resolved log file name
+    rpc GetResolvedLogFileName(GetResolvedLogFileNameRequest) returns (GetResolvedLogFileNameResponse) {}
 }
 
 // Request object for getting the log file base path
@@ -127,5 +131,29 @@ message RemoveTestPropertyRequest {
 
 // Response object for removing a specific test property
 message RemoveTestPropertyResponse {
+}
+
+// Request object for getting the resolved log file base path
+message GetResolvedLogFileBasePathRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a get resolved log file base path request
+message GetResolvedLogFileBasePathResponse {
+    // The resolved log file base path. The resolved base path has all placeholders converted to actual values.
+    string resolved_log_file_base_path = 1;
+}
+
+// Request object for getting the resolved log file name
+message GetResolvedLogFileNameRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a get resolved log file name request
+message GetResolvedLogFileNameResponse {
+    // The resolved log file name.  The resolved file name has all placeholders converted to actual values.
+    string resolved_log_file_name = 1;
 }
 

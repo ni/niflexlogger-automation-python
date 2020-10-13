@@ -45,6 +45,21 @@ class TestLoggingSpecificationDocument:
             assert r"EvenMoreData.tdms" == logging_specification.get_log_file_name()
 
     @pytest.mark.integration  # type: ignore
+    def test__open_project__set_logging_path__resolved_logging_path_updates(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithTestProperties") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            logging_specification.set_log_file_base_path(r"C:\{Operator}")
+            logging_specification.set_log_file_name(
+                r"{Best Configuration Based Data Logging Software}.tdms"
+            )
+
+            assert r"C:\bparrott" == logging_specification.get_resolved_log_file_base_path()
+            assert r"FlexLogger.tdms" == logging_specification.get_resolved_log_file_name()
+
+    @pytest.mark.integration  # type: ignore
     def test__start_test_session__set_logging_base_path__exception_raised(
         self, app: Application
     ) -> None:

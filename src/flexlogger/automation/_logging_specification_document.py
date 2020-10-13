@@ -46,6 +46,31 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get log file base path") from error
 
+    def get_resolved_log_file_base_path(self) -> str:
+        """Get the resolved log file base path.
+
+        Returns:
+            The resolved base path for the log file.
+            The resolved base path will have any placeholders replaced with
+            actual values. Note that time sourced placeholders such as
+            {Second} are resolved at the time of the call, and may resolve
+            to a different time on a subsequent call or when a log file is created.
+
+        Raises:
+            FlexLoggerError: if getting the resolved log file base path fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetResolvedLogFileBasePath(
+                LoggingSpecificationDocument_pb2.GetResolvedLogFileBasePathRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            return response.resolved_log_file_base_path
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get resolved log file base path") from error
+
     def set_log_file_base_path(self, log_file_base_path: str) -> None:
         """Set the log file base path.
 
@@ -86,6 +111,31 @@ class LoggingSpecificationDocument:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get log file name") from error
+
+    def get_resolved_log_file_name(self) -> str:
+        """Get the resolved log file name.
+
+        Returns:
+            The resolved file name that will be logged to.
+            The resolved file name will have any placeholders replaced with
+            actual values. Note that time sourced placeholders such as
+            {Second} are resolved at the time of the call, and may resolve
+            to a different time on a subsequent call or when a log file is created.
+
+        Raises:
+            FlexLoggerError: if getting the resolved log file name fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetResolvedLogFileName(
+                LoggingSpecificationDocument_pb2.GetResolvedLogFileNameRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            return response.resolved_log_file_name
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get resolved log file name") from error
 
     def set_log_file_name(self, log_file_name: str) -> None:
         """Set the log file name.

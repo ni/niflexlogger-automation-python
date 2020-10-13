@@ -8,6 +8,8 @@ import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto"
 service FlexLoggerApplication {
   // RPC call to open an existing project on the server.
   rpc OpenProject(OpenProjectRequest) returns (OpenProjectResponse) {}
+  // RPC call to get the currently active (open) project from the server.
+  rpc GetActiveProject(GetActiveProjectRequest) returns (GetActiveProjectResponse) {}
 }
 
 // Information necessary to open an existing Project.
@@ -21,4 +23,16 @@ message OpenProjectRequest {
 message OpenProjectResponse {
     // The id of the project that was opened.
     national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}
+
+// Information needed to request the active project.
+message GetActiveProjectRequest {
+}
+
+// Response object for the get active project request.
+message GetActiveProjectResponse {
+    // Indicates if there is an active project. If true, the project id will be valid. If false, the project id is not valid.
+    bool active_project_available = 1;
+    // The id of the active project. Should not be used if active_project_available is false.
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 2;
 }
