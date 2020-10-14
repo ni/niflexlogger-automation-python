@@ -168,3 +168,27 @@ class TestProject:
         app2.close()
 
         assert_no_flexloggers_running()
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__active_project_is_none(self) -> None:
+        kill_all_open_flexloggers()
+        with Application.launch() as app:
+            active_project = app.get_active_project()
+            assert active_project is None
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__open_and_close_project__active_project_is_none(self) -> None:
+        kill_all_open_flexloggers()
+        with Application.launch() as app:
+            project = app.open_project(get_project_path("DefaultProject"))
+            project.close()
+            active_project = app.get_active_project()
+            assert active_project is None
+
+    @pytest.mark.integration  # type: ignore
+    def test__launch_application__open_project__active_project_matches_open_project(self) -> None:
+        kill_all_open_flexloggers()
+        with Application.launch() as app:
+            project = app.open_project(get_project_path("DefaultProject"))
+            active_project = app.get_active_project()
+            assert project._identifier == active_project._identifier
