@@ -1,6 +1,5 @@
 import os
 import sys
-from datetime import timezone
 from typing import Any, List
 
 # Note: you must "pip install console-menu" for this example to work.
