@@ -1,5 +1,6 @@
 import os
 import sys
+from datetime import timezone
 from typing import Any, List
 
 # Note: you must "pip install console-menu" for this example to work.
@@ -77,7 +78,12 @@ def _show_channel_values(channel_specification_document: ChannelSpecificationDoc
         try:
             channel_data_point = channel_specification_document.get_channel_value(channel_name)
             table.add_row(
-                [channel_data_point.name, channel_data_point.value, channel_data_point.timestamp]
+                [
+                    channel_data_point.name,
+                    channel_data_point.value,
+                    # Convert the timestamp from UTC to local time
+                    channel_data_point.timestamp.astimezone(None),
+                ]
             )
         except FlexLoggerError:
             # Getting a channel that is not available, configured or enabled will raise
