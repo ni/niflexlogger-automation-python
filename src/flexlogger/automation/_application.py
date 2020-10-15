@@ -14,6 +14,7 @@ import win32api  # type: ignore
 import win32event  # type: ignore
 import winreg  # type: ignore
 from grpc import insecure_channel, RpcError
+from win32com.shell import shell, shellcon  # type: ignore
 
 from ._flexlogger_error import FlexLoggerError
 from ._project import Project
@@ -26,22 +27,24 @@ from .proto import (
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
 _FLEXLOGGER_EXE_NAME = "FlexLogger.exe"
+_FLEXLOGGER_PORT_FILE_PATH = Path(r"National Instruments\FlexLogger\LastAutomationPort.txt")
 _APP_CLOSE_TIMEOUT = 60
 
 
 class Application:
     """Represents the FlexLogger application."""
 
-    def __init__(self, server_port: int) -> None:
+    def __init__(self, server_port: int = None) -> None:
         """Connect to an already running instance of FlexLogger.
 
         Args:
-            server_port: The port that the automation server is listening to.
+            server_port: The port that the automation server is listening to.  Omit this
+                argument or pass None to detect the port of a running FlexLogger automatically.
 
         Raises:
             FlexLoggerError: if connecting fails.
         """
-        self._server_port = server_port
+        self._server_port = server_port if server_port is not None else self._detect_server_port()
         self._connect()
         self._launched = False
 
@@ -254,6 +257,27 @@ class Application:
                     )
         finally:
             win32api.CloseHandle(event)
+
+    @classmethod
+    def _get_server_port_file_path(cls) -> Path:
+        program_data_path = Path(shell.SHGetFolderPath(0, shellcon.CSIDL_COMMON_APPDATA, 0, 0))
+        return program_data_path / _FLEXLOGGER_PORT_FILE_PATH
+
+    def _detect_server_port(self) -> int:
+        """Detect the server_port of a running FlexLogger."""
+        port_file_path = Application._get_server_port_file_path()
+        if not port_file_path.exists():
+            raise RuntimeError(
+                "No running FlexLogger detected.  If FlexLogger is running, this might mean the "
+                "automation server is not enabled.  To turn on the automation server, see the "
+                "General tab of the Preferences in FlexLogger."
+            )
+        try:
+            with open(str(port_file_path), "r") as f:
+                text = f.read().strip()
+                return int(text)
+        except Exception as ex:
+            raise RuntimeError("Failed to read automation port from running FlexLogger.") from ex
 
     @classmethod
     def _get_latest_installed_flexlogger_path(cls) -> Optional[Path]:

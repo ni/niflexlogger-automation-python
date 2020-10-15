@@ -1,4 +1,5 @@
 from shutil import rmtree
+from time import sleep
 
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
@@ -193,3 +194,26 @@ class TestProject:
             active_project = app.get_active_project()
             assert active_project is not None
             assert project._identifier == active_project._identifier
+
+    # This test can hang if the server port file never gets created, so set a
+    # timeout
+    @pytest.mark.timeout(120)  # type: ignore
+    @pytest.mark.integration  # type: ignore
+    def test__launch_flexlogger_separately__connect_to_existing_and_close__application_has_closed(
+        self,
+    ) -> None:
+        kill_all_open_flexloggers()
+        # Launch the way that Application.launch() does, but don't connect
+        real_server_port = Application._launch_flexlogger(60)
+        # The port file doesn't get written out until slightly after the mapped file
+        # that _launch_flexlogger() is waiting for.
+        # So wait for the file to exist before proceeding with the test.
+        server_port_file_path = Application._get_server_port_file_path()
+        while not server_port_file_path.exists():
+            sleep(1)
+
+        app = Application()
+        assert real_server_port == app.server_port
+        app.close()
+
+        assert_no_flexloggers_running()
