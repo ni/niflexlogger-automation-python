@@ -11,8 +11,8 @@ from .proto.Identifiers_pb2 import ElementIdentifier
 class LoggingSpecificationDocument:
     """Represents a document that describes how data is logged.
 
-    This should not be created directly; instead, the return value of
-    :meth:`.Project.open_logging_specification_document` should be used.
+    Do not create this class directly; instead, use the return value of
+    :meth:`.Project.open_logging_specification_document`.
     """
 
     def __init__(
@@ -75,7 +75,7 @@ class LoggingSpecificationDocument:
         """Set the log file base path.
 
         Args:
-            log_file_base_path: The log file base path to set
+            log_file_base_path: The log file base path.
 
         Raises:
             FlexLoggerError: if setting the log file base path fails.
@@ -141,7 +141,7 @@ class LoggingSpecificationDocument:
         """Set the log file name.
 
         Args:
-            log_file_name: The log file name to set
+            log_file_name: The log file name.
 
         Raises:
             FlexLoggerError: if setting the log file name fails.
@@ -194,7 +194,7 @@ class LoggingSpecificationDocument:
         specified name does not exist.
 
         Args:
-            test_property_name: The name of the test property to get information about.
+            test_property_name: The name of the test property.
 
         Returns:
             The :class:`TestProperty` with the specified name.
@@ -220,7 +220,7 @@ class LoggingSpecificationDocument:
     ) -> None:
         """Set the information for a test property.
 
-        This method can be used to add a new test property or to modify an existing
+        Use this method to add a new test property or to modify an existing
         test property.
 
         Args:
@@ -258,7 +258,7 @@ class LoggingSpecificationDocument:
         """Removes the test property with the specified name.
 
         Args:
-            test_property_name: The name of the test property to remove.
+            test_property_name: The name of the test property.
 
         Raises:
             FlexLoggerError: if a property with the specified name does not

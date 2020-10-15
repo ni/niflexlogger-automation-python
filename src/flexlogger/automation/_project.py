@@ -18,8 +18,8 @@ from .proto.Identifiers_pb2 import ProjectIdentifier
 class Project:
     """Represents a FlexLogger project.
 
-    This should not be created directly; instead, the return value of
-    :meth:`.Application.open_project` should be used.
+    Do not create this class directly; instead, use the return value of
+    :meth:`.Application.open_project`.
     """
 
     def __init__(

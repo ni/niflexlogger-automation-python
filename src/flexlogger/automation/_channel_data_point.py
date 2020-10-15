@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 class ChannelDataPoint:
-    """The value for a channel that occurred at the specified timestamp."""
+    """The value for a channel at the specified timestamp."""
 
     def __init__(self, name: str, value: float, timestamp: datetime):
         self._name = name

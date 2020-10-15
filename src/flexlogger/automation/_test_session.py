@@ -25,8 +25,8 @@ STATE_MAP = {
 class TestSession:
     """Represents a test session for a project.
 
-    This should not be created directly; instead, the property
-    :attr:`.Project.test_session` should be used.
+    Do not create this class directly; instead, use the property
+    :attr:`.Project.test_session`.
     """
 
     def __init__(self, channel: Channel, raise_if_application_closed: Callable[[], None]) -> None:

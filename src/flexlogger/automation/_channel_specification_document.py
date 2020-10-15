@@ -15,8 +15,8 @@ from .proto.Identifiers_pb2 import ElementIdentifier
 class ChannelSpecificationDocument:
     """Represents the document that describes data channels.
 
-    This should not be created directly; instead, the return value of
-    :meth:`.Project.open_channel_specification_document` should be used.
+    Do not create this class directly; instead, use the return value of
+    :meth:`.Project.open_channel_specification_document`.
     """
 
     def __init__(
@@ -51,7 +51,7 @@ class ChannelSpecificationDocument:
         """Get the current value of the specified channel.
 
         Args:
-            channel_name: The name of the channel to get the current value of
+            channel_name: The name of the channel.
 
         Raises:
             FlexLoggerError: if getting the channel value fails.
@@ -77,8 +77,8 @@ class ChannelSpecificationDocument:
         """Set the current value of the specified channel.
 
         Args:
-            channel_name: The name of the channel to set the current value of
-            channel_value: The value to set the channel to
+            channel_name: The name of the channel.
+            channel_value: The value to set the channel to.
 
         Raises:
             FlexLoggerError: if setting the channel value fails.

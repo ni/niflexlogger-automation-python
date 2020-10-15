@@ -3,14 +3,15 @@
 Getting Started
 ===============
 
-The first step is to create an instance of the :class:`.Application` class.  To launch a new
-FlexLogger application, call :meth:`.Application.launch()`. Or, to connect to an already-running
-FlexLogger application, use the standard initializer.  Note that to connect to an already-running
-application the port number of the automation server is required; this is available
-at :attr:`~.Application.server_port` for existing :class:`.Application` instances.
+1. Create an instance of the :class:`.Application` class.  There are two ways to do this:
 
-The next step is to call :meth:`.Application.open_project()` to open a project.  After this,
-here's how to do several common tasks:
+  * To launch a new FlexLogger application, call :meth:`.Application.launch()`.
+  * To connect to an already-running FlexLogger application, use the standard initializer
+    :class:`.Application()`.
+
+2. Call :meth:`.Application.open_project()` to open a project.
+
+After this, here's how to do several common tasks:
 
 * **Start and stop a test**: The :attr:`.Project.test_session` property returns a
   :class:`.TestSession` object which has :meth:`~.TestSession.start()` and

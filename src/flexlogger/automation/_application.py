@@ -36,7 +36,7 @@ class Application:
         """Connect to an already running instance of FlexLogger.
 
         Args:
-            server_port: The port that the automation server is listening to
+            server_port: The port that the automation server is listening to.
 
         Raises:
             FlexLoggerError: if connecting fails.
@@ -64,13 +64,14 @@ class Application:
         """Launch a new instance of FlexLogger.
 
         Note that if this method is used to initialize a "with" statement, when
-        it goes out of scope FlexLogger will be closed.  To prevent this, you can
-        explicitly call :meth:`~.Application.disconnect()` instead.
+        the Application goes out of scope FlexLogger will be closed.  To prevent this,
+        call :meth:`~.Application.disconnect()`.
 
         Args:
-            timeout: How long to wait for FlexLogger to launch before an exception is raised.
+            timeout: The length of time, in seconds, to wait for FlexLogger to launch
+                before raising an exception.
                 Defaults to 60.
-            path: The path to the FlexLogger exe to launch.
+            path: The path to the FlexLogger executable to launch.
                 Defaults to None, meaning the latest installed version will be launched.
 
         Returns:
@@ -161,7 +162,7 @@ class Application:
         """Open a project.
 
         Args:
-            path: The path to the project to open.
+            path: The path to the project you want to open.
 
         Returns:
             The opened project.

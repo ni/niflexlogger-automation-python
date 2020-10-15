@@ -24,15 +24,15 @@ Installation
 ============
 To install **niflexlogger**, use one of the following methods:
 
-1. `pip <https://pypi.python.org/pypi/pip>`_::
+* `pip <https://pypi.python.org/pypi/pip>`_::
 
    $ python -m pip install niflexlogger
 
-2. **easy_install** from `setuptools <https://pypi.python.org/pypi/setuptools>`_::
+* **easy_install** from `setuptools <https://pypi.python.org/pypi/setuptools>`_::
 
    $ python -m easy_install niflexlogger
 
-3. Download the project source and run::
+* Download the project source and run::
 
    $ python setup.py install
 

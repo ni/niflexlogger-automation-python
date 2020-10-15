@@ -52,7 +52,7 @@ def _show_interactive_menu(test_session: TestSession) -> None:
             console_menu.append_item(menu_item)
         return console_menu
 
-    # Set up the command line menus, based on the current TestSessionState
+    # Set up the command line menus based on the current TestSessionState
     no_channel_to_log_text = (
         "Configure at least one channel that can be logged (such as a DAQ input channel) and then "
         "refresh the test session state. "
@@ -62,15 +62,15 @@ def _show_interactive_menu(test_session: TestSession) -> None:
     )
     menus = {
         TestSessionState.IDLE: _create_menu(
-            "The test session is currently idle.",
+            "The test session is idle.",
             "",
             [("Start Test", _start_test, [test_session], {"should_exit": True})],
         ),
         TestSessionState.RUNNING: _create_menu(
-            "The test session is currently running.",
+            "The test session is running.",
             "",
             [
-                ("Add note", _add_note, [test_session], {}),
+                ("Add Note", _add_note, [test_session], {}),
                 ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
             ],
         ),
