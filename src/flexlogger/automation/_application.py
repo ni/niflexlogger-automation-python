@@ -189,7 +189,7 @@ class Application:
             self._raise_exception_if_closed()
             raise FlexLoggerError("Failed to open project") from rpc_error
 
-    def get_active_project(self) -> Project:
+    def get_active_project(self) -> Optional[Project]:
         """Gets the currently active (open) project.
 
         Returns:
@@ -200,9 +200,7 @@ class Application:
         """
         try:
             stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
-            response = stub.GetActiveProject(
-                FlexLoggerApplication_pb2.GetActiveProjectRequest()
-            )
+            response = stub.GetActiveProject(FlexLoggerApplication_pb2.GetActiveProjectRequest())
             if response.active_project_available:
                 return Project(self._channel, self._raise_exception_if_closed, response.project)
             else:

@@ -191,4 +191,5 @@ class TestProject:
         with Application.launch() as app:
             project = app.open_project(get_project_path("DefaultProject"))
             active_project = app.get_active_project()
+            assert active_project is not None
             assert project._identifier == active_project._identifier
