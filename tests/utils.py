@@ -35,8 +35,15 @@ def kill_all_open_flexloggers() -> None:
 
 def assert_no_flexloggers_running() -> None:
     """Assert that no FlexLogger.exe processes are running."""
+    assert not any_flexloggers_running()
+
+
+def any_flexloggers_running() -> bool:
+    """Returns whether any FlexLogger.exe processes are running."""
     for proc in psutil.process_iter(["pid", "name"]):
-        assert proc.info["name"].lower() != "flexlogger.exe"
+        if proc.info["name"].lower() == "flexlogger.exe":
+            return True
+    return False
 
 
 @contextmanager

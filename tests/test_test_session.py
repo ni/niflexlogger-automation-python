@@ -1,12 +1,26 @@
+import os
+import subprocess
+import sys
+import time
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Iterator
 
 import pytest  # type: ignore
-from flexlogger.automation import Application, FlexLoggerError, Project, TestSessionState
+from flexlogger.automation import (
+    Application,
+    FlexLoggerError,
+    Project,
+    TestSessionState,
+)
 from nptdms import TdmsFile  # type: ignore
 
-from .utils import get_project_path, open_project
+from .utils import (
+    copy_project,
+    get_project_path,
+    kill_all_open_flexloggers,
+    open_project,
+)
 
 
 @pytest.fixture(scope="class")
@@ -135,3 +149,36 @@ class TestTestSession:
         project.close()
         with pytest.raises(FlexLoggerError):
             project.test_session.start()
+
+    @pytest.mark.integration  # type: ignore
+    def test__add_prompt_on_start_property__start_test__app_pops_dialog(self) -> None:
+        # We are testing that if a property is "prompt on start" then FlexLogger should
+        # pop up the dialog to set that property when we start a test.
+        # This is tricky to test because this means the call to test_session.start() will
+        # hang waiting for the dialog to finish.  This is as intended.
+        #
+        # Since we need to kill the call after we're done, it's safer to run this in a separate
+        # process, and we keep track of the results in this test.
+        with TemporaryDirectory() as temp_dir:
+            script_path = (
+                Path(os.path.dirname(os.path.realpath(__file__))) / "start_test_separate_process.py"
+            )
+
+            with copy_project("ProjectWithProducedData") as new_project_path:
+                process = None
+                try:
+                    process = subprocess.Popen(
+                        [sys.executable, str(script_path), str(new_project_path), str(temp_dir)]
+                    )
+                    # We need to allow time for FlexLogger to launch and the project to open,
+                    # so make sure this timeout is relatively high.
+                    end_timeout_time = time.time() + 40
+                    while time.time() < end_timeout_time:
+                        # process.poll() will return a number if the process has exited
+                        assert process.poll() is None
+                    # Make sure the test hasn't started (so we haven't written any data)
+                    assert (Path(temp_dir) / "ShouldNotExist.tdms").exists() is False
+                finally:
+                    kill_all_open_flexloggers()
+                    if process is not None:
+                        process.kill()
