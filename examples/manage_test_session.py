@@ -2,7 +2,6 @@ import os
 import sys
 from typing import Any, List
 
-# Note: you must "pip install console-menu" for this example to work.
 from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
 from flexlogger.automation import Application, TestSession, TestSessionState
