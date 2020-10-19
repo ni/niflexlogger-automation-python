@@ -217,3 +217,17 @@ class TestProject:
         app.close()
 
         assert_no_flexloggers_running()
+
+    # This test can hang if the application pops a "save changes" dialog box, so set a
+    # timeout
+    @pytest.mark.timeout(120)  # type: ignore
+    @pytest.mark.integration  # type: ignore
+    def test__make_change_to_project__close_application__no_save_dialog_box(self) -> None:
+        kill_all_open_flexloggers()
+        with copy_project("ProjectWithProducedData") as new_project_path:
+            with Application.launch() as app:
+                project = app.open_project(new_project_path)
+                logging_specification = project.open_logging_specification_document()
+                logging_specification.set_log_file_name("SomeNewName")
+        # Just verify that closing the app doesn't prompt to save the project (this test
+        # will timeout if it does)

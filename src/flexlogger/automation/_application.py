@@ -130,6 +130,12 @@ class Application:
                         pid_to_wait_for = pid
                         break
             try:
+                if exit_application:
+                    # If there is an active project, close it so closing the
+                    # app won't prompt to save it.
+                    active_project = self.get_active_project()
+                    if active_project is not None:
+                        active_project.close()
                 stub.Disconnect(
                     Application_pb2.DisconnectRequest(exit_application=exit_application)
                 )
