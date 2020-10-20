@@ -1,20 +1,17 @@
 import os
 import sys
-from typing import Any, List
 
 from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
 from flexlogger.automation import (
     Application,
     FlexLoggerError,
-    LoggingSpecificationDocument,
-    TestSession,
     TestSessionState,
 )
 from prettytable import PrettyTable
 
 
-def main(project_path) -> int:
+def main(project_path):
     """Interactively configure the FlexLogger logging specification.
 
     Launch FlexLogger, open the specified project and interactively
@@ -34,7 +31,7 @@ def main(project_path) -> int:
     return 0
 
 
-def _show_log_file_path(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _show_log_file_path(logging_specification_document):
     log_file_base_path = logging_specification_document.get_log_file_base_path()
     print("The log file base path is: " + log_file_base_path)
     if "{" in log_file_base_path:
@@ -50,7 +47,7 @@ def _show_log_file_path(logging_specification_document: LoggingSpecificationDocu
     Screen().input("Press [Enter] to continue")
 
 
-def _set_log_file_path(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _set_log_file_path(logging_specification_document):
     log_file_base_path = Screen().input("Input the log file base path and press [Enter]: ")
     log_file_name = Screen().input("Input the log file name and [Enter]: ")
     logging_specification_document.set_log_file_base_path(log_file_base_path)
@@ -58,7 +55,7 @@ def _set_log_file_path(logging_specification_document: LoggingSpecificationDocum
     Screen().input("Log file path updated. Press [Enter] to continue")
 
 
-def _show_test_properties(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _show_test_properties(logging_specification_document):
     test_properties = logging_specification_document.get_test_properties()
     table = PrettyTable(["Name", "Value", "Prompt on start"])
     for test_property in test_properties:
@@ -67,7 +64,7 @@ def _show_test_properties(logging_specification_document: LoggingSpecificationDo
     Screen().input("Press [Enter] to continue")
 
 
-def _show_test_property(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _show_test_property(logging_specification_document):
     test_property_name = Screen().input(
         "Input the name of the test property to show and press [Enter]: "
     )
@@ -88,7 +85,7 @@ def _show_test_property(logging_specification_document: LoggingSpecificationDocu
         )
 
 
-def _set_test_property(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _set_test_property(logging_specification_document):
     property_name = Screen().input(
         "Input the name of the test property to create or modify and press [Enter]: "
     )
@@ -110,7 +107,7 @@ def _set_test_property(logging_specification_document: LoggingSpecificationDocum
     Screen().input("Test property set. Press [Enter] to continue")
 
 
-def _remove_test_property(logging_specification_document: LoggingSpecificationDocument) -> None:
+def _remove_test_property(logging_specification_document):
     test_property_name = Screen().input(
         "Input the name of the test property to remove and press [Enter]: "
     )
@@ -125,9 +122,7 @@ def _remove_test_property(logging_specification_document: LoggingSpecificationDo
         )
 
 
-def _show_interactive_menu(
-    test_session: TestSession, logging_specification_document: LoggingSpecificationDocument
-) -> None:
+def _show_interactive_menu(test_session, logging_specification_document):
     """Display an interactive menu for configuring the logging specification.
 
     Some configuration options are not available if the test session is running.
@@ -139,7 +134,7 @@ def _show_interactive_menu(
         "Refresh test session state", _no_op, should_exit=True
     )
 
-    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+    def _create_menu(desc, epilogue_text, menu_items):
         console_menu = ConsoleMenu(
             "Logging Specification Document API Demo", desc, epilogue_text=epilogue_text
         )
@@ -205,7 +200,7 @@ def _show_interactive_menu(
             break
 
 
-def _no_op() -> None:
+def _no_op():
     return
 
 

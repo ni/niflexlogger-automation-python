@@ -1,13 +1,12 @@
 import os
 import sys
-from typing import Any, List
 
 from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
-from flexlogger.automation import Application, TestSession, TestSessionState
+from flexlogger.automation import Application, TestSessionState
 
 
-def main(project_path) -> int:
+def main(project_path):
     """Interactively manage the state of the FlexLogger project test session.
 
     Launch FlexLogger, open the specified project and interactively
@@ -26,26 +25,26 @@ def main(project_path) -> int:
     return 0
 
 
-def _start_test(test_session: TestSession) -> None:
+def _start_test(test_session):
     print("Starting test. . . ")
     test_session.start()
     Screen().input("Test started. Press [Enter] to continue")
 
 
-def _add_note(test_session: TestSession) -> None:
+def _add_note(test_session):
     note = Screen().input("Input the note to log and press [Enter] when the note is complete: ")
     print("Adding note. . . ")
     test_session.add_note(note)
     Screen().input("Note added. Press [Enter] to continue")
 
 
-def _stop_test(test_session: TestSession) -> None:
+def _stop_test(test_session):
     print("Stopping test. . . ")
     test_session.stop()
     Screen().input("Test stopped. Press [Enter] to continue")
 
 
-def _show_interactive_menu(test_session: TestSession) -> None:
+def _show_interactive_menu(test_session):
     """Display an interactive menu based on the current test session state.
 
     This will return when the user invokes one of the exit menu items.
@@ -55,7 +54,7 @@ def _show_interactive_menu(test_session: TestSession) -> None:
         "Refresh test session state", _no_op, should_exit=True
     )
 
-    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+    def _create_menu(desc, epilogue_text, menu_items):
         console_menu = ConsoleMenu("Test Session API Demo", desc, epilogue_text=epilogue_text)
         console_menu.append_item(refresh_test_session_state)
         for name, fn, args, opts in menu_items:
@@ -100,7 +99,7 @@ def _show_interactive_menu(test_session: TestSession) -> None:
             break
 
 
-def _no_op() -> None:
+def _no_op():
     return
 
 

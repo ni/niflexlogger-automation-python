@@ -50,7 +50,7 @@ class TestProject:
         with copy_project("DefaultProject") as project_path:
             cache_dir = project_path.parent / ".cache"
             if cache_dir.exists():
-                rmtree(cache_dir)
+                rmtree(str(cache_dir))
             (project_path.parent / "Channel Specification.flxio").unlink()
             project = None
             try:

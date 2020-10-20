@@ -1,18 +1,16 @@
 import os
 import sys
-from typing import Any, List
 
 from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
 from flexlogger.automation import (
     Application,
-    ChannelSpecificationDocument,
     FlexLoggerError,
 )
 from prettytable import PrettyTable
 
 
-def main(project_path) -> int:
+def main(project_path):
     """Interactively get and set FlexLogger channel values.
 
     Launch FlexLogger, open the specified project and interactively
@@ -31,7 +29,7 @@ def main(project_path) -> int:
     return 0
 
 
-def _show_channel_values(channel_specification_document: ChannelSpecificationDocument) -> None:
+def _show_channel_values(channel_specification_document):
     channel_names = channel_specification_document.get_channel_names()
     table = PrettyTable(["Channel name", "Value", "Timestamp"])
     for channel_name in channel_names:
@@ -53,7 +51,7 @@ def _show_channel_values(channel_specification_document: ChannelSpecificationDoc
     Screen().input("Press [Enter] to continue")
 
 
-def _set_channel_value(channel_specification_document: ChannelSpecificationDocument) -> None:
+def _set_channel_value(channel_specification_document):
     channel_name = Screen().input("Input the name of the channel to set and press [Enter]: ")
     channel_value = Screen().input("Input the value for the channel and press [Enter]: ")
     try:
@@ -76,13 +74,13 @@ def _set_channel_value(channel_specification_document: ChannelSpecificationDocum
         )
 
 
-def _show_interactive_menu(channel_specification_document: ChannelSpecificationDocument) -> None:
+def _show_interactive_menu(channel_specification_document):
     """Display an interactive menu for getting and setting channel values.
 
     This will return when the user invokes the exit menu item.
     """
 
-    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+    def _create_menu(desc, epilogue_text, menu_items):
         console_menu = ConsoleMenu(
             "Getting and Setting Channel Values API Demo", desc, epilogue_text=epilogue_text
         )

@@ -4,7 +4,7 @@ import sys
 from flexlogger.automation import Application
 
 
-def main(project_path) -> int:
+def main(project_path):
     """Launch FlexLogger, open a project, and gets the log file base path and name."""
     with Application.launch() as app:
         project = app.open_project(path=project_path)
