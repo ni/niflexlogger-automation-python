@@ -7,19 +7,12 @@ from consolemenu.items import FunctionItem
 from flexlogger.automation import Application, TestSession, TestSessionState
 
 
-def main(argv: List[str] = None) -> int:
+def main(project_path) -> int:
     """Interactively manage the state of the FlexLogger project test session.
 
     Launch FlexLogger, open the specified project and interactively
     manage the state of the FlexLogger project test session.
     """
-    if argv is None:
-        argv = sys.argv
-    if len(argv) < 2:
-        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
-        return 1
-
-    project_path = argv[1]
     print("Launching FlexLogger . . .")
     with Application.launch() as app:
         print("Loading FlexLogger project . . .")
@@ -31,6 +24,25 @@ def main(argv: List[str] = None) -> int:
         print("Closing FlexLogger project . . .")
         project.close()
     return 0
+
+
+def _start_test(test_session: TestSession) -> None:
+    print("Starting test. . . ")
+    test_session.start()
+    Screen().input("Test started. Press [Enter] to continue")
+
+
+def _add_note(test_session: TestSession) -> None:
+    note = Screen().input("Input the note to log and press [Enter] when the note is complete: ")
+    print("Adding note. . . ")
+    test_session.add_note(note)
+    Screen().input("Note added. Press [Enter] to continue")
+
+
+def _stop_test(test_session: TestSession) -> None:
+    print("Stopping test. . . ")
+    test_session.stop()
+    Screen().input("Test stopped. Press [Enter] to continue")
 
 
 def _show_interactive_menu(test_session: TestSession) -> None:
@@ -88,28 +100,14 @@ def _show_interactive_menu(test_session: TestSession) -> None:
             break
 
 
-def _start_test(test_session: TestSession) -> None:
-    print("Starting test. . . ")
-    test_session.start()
-    Screen().input("Test started. Press [Enter] to continue")
-
-
-def _add_note(test_session: TestSession) -> None:
-    note = Screen().input("Input the note to log and press [Enter] when the note is complete: ")
-    print("Adding note. . . ")
-    test_session.add_note(note)
-    Screen().input("Note added. Press [Enter] to continue")
-
-
-def _stop_test(test_session: TestSession) -> None:
-    print("Stopping test. . . ")
-    test_session.stop()
-    Screen().input("Test stopped. Press [Enter] to continue")
-
-
 def _no_op() -> None:
     return
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    argv = sys.argv
+    if len(argv) < 2:
+        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
+        sys.exit()
+    project_path_arg = argv[1]
+    sys.exit(main(project_path_arg))

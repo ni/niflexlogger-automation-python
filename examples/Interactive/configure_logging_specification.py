@@ -14,19 +14,12 @@ from flexlogger.automation import (
 from prettytable import PrettyTable
 
 
-def main(argv: List[str] = None) -> int:
+def main(project_path) -> int:
     """Interactively configure the FlexLogger logging specification.
 
     Launch FlexLogger, open the specified project and interactively
     configuring the FlexLogger logging specification.
     """
-    if argv is None:
-        argv = sys.argv
-    if len(argv) < 2:
-        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
-        return 1
-
-    project_path = argv[1]
     print("Launching FlexLogger . . .")
     with Application.launch() as app:
         print("Loading FlexLogger project . . .")
@@ -39,86 +32,6 @@ def main(argv: List[str] = None) -> int:
         print("Closing FlexLogger project . . .")
         project.close()
     return 0
-
-
-def _show_interactive_menu(
-    test_session: TestSession, logging_specification_document: LoggingSpecificationDocument
-) -> None:
-    """Display an interactive menu for configuring the logging specification.
-
-    Some configuration options are not available if the test session is running.
-
-    This will return when the user invokes one of the exit menu items.
-    """
-    # A menu item for all menus, so that test_session.state is checked again
-    refresh_test_session_state = FunctionItem(
-        "Refresh test session state", _no_op, should_exit=True
-    )
-
-    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
-        console_menu = ConsoleMenu(
-            "Logging Specification Document API Demo", desc, epilogue_text=epilogue_text
-        )
-        console_menu.append_item(refresh_test_session_state)
-        for name, fn, args, opts in menu_items:
-            menu_item = FunctionItem(name, fn, args, **opts)
-            console_menu.append_item(menu_item)
-        return console_menu
-
-    edits_allowed_menu = _create_menu(
-        "The test session is currently idle.",
-        "",
-        [
-            ("Show the log file path", _show_log_file_path, [logging_specification_document], {}),
-            ("Set the log file path", _set_log_file_path, [logging_specification_document], {}),
-            (
-                "Show all test properties",
-                _show_test_properties,
-                [logging_specification_document],
-                {},
-            ),
-            ("Show a test property", _show_test_property, [logging_specification_document], {}),
-            ("Set a test property", _set_test_property, [logging_specification_document], {}),
-            (
-                "Remove a test property",
-                _remove_test_property,
-                [logging_specification_document],
-                {},
-            ),
-        ],
-    )
-    edits_not_allowed_menu = _create_menu(
-        "The test session is currently running.",
-        "",
-        [
-            ("Show the log file path", _show_log_file_path, [logging_specification_document], {}),
-            (
-                "Show all test properties",
-                _show_test_properties,
-                [logging_specification_document],
-                {},
-            ),
-            ("Show a test property", _show_test_property, [logging_specification_document], {}),
-        ],
-    )
-
-    while True:
-        # Edits to the logging specification are not allowed while the test is running
-        state = test_session.state
-        if state == TestSessionState.RUNNING:
-            active_menu = edits_not_allowed_menu
-        elif state == TestSessionState.IDLE:
-            edits_allowed_menu.subtitle = "The test session is currently idle."
-            active_menu = edits_allowed_menu
-        elif state == TestSessionState.NO_VALID_LOGGED_CHANNELS:
-            edits_allowed_menu.subtitle = "The project has no channels to log."
-            active_menu = edits_allowed_menu
-        else:
-            edits_allowed_menu.subtitle = "The project has one or more errors."
-            active_menu = edits_allowed_menu
-        active_menu.show()
-        if active_menu.selected_item == active_menu.exit_item:
-            break
 
 
 def _show_log_file_path(logging_specification_document: LoggingSpecificationDocument) -> None:
@@ -212,9 +125,94 @@ def _remove_test_property(logging_specification_document: LoggingSpecificationDo
         )
 
 
+def _show_interactive_menu(
+    test_session: TestSession, logging_specification_document: LoggingSpecificationDocument
+) -> None:
+    """Display an interactive menu for configuring the logging specification.
+
+    Some configuration options are not available if the test session is running.
+
+    This will return when the user invokes one of the exit menu items.
+    """
+    # A menu item for all menus, so that test_session.state is checked again
+    refresh_test_session_state = FunctionItem(
+        "Refresh test session state", _no_op, should_exit=True
+    )
+
+    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+        console_menu = ConsoleMenu(
+            "Logging Specification Document API Demo", desc, epilogue_text=epilogue_text
+        )
+        console_menu.append_item(refresh_test_session_state)
+        for name, fn, args, opts in menu_items:
+            menu_item = FunctionItem(name, fn, args, **opts)
+            console_menu.append_item(menu_item)
+        return console_menu
+
+    edits_allowed_menu = _create_menu(
+        "The test session is currently idle.",
+        "",
+        [
+            ("Show the log file path", _show_log_file_path, [logging_specification_document], {}),
+            ("Set the log file path", _set_log_file_path, [logging_specification_document], {}),
+            (
+                "Show all test properties",
+                _show_test_properties,
+                [logging_specification_document],
+                {},
+            ),
+            ("Show a test property", _show_test_property, [logging_specification_document], {}),
+            ("Set a test property", _set_test_property, [logging_specification_document], {}),
+            (
+                "Remove a test property",
+                _remove_test_property,
+                [logging_specification_document],
+                {},
+            ),
+        ],
+    )
+    edits_not_allowed_menu = _create_menu(
+        "The test session is currently running.",
+        "",
+        [
+            ("Show the log file path", _show_log_file_path, [logging_specification_document], {}),
+            (
+                "Show all test properties",
+                _show_test_properties,
+                [logging_specification_document],
+                {},
+            ),
+            ("Show a test property", _show_test_property, [logging_specification_document], {}),
+        ],
+    )
+
+    while True:
+        # Edits to the logging specification are not allowed while the test is running
+        state = test_session.state
+        if state == TestSessionState.RUNNING:
+            active_menu = edits_not_allowed_menu
+        elif state == TestSessionState.IDLE:
+            edits_allowed_menu.subtitle = "The test session is currently idle."
+            active_menu = edits_allowed_menu
+        elif state == TestSessionState.NO_VALID_LOGGED_CHANNELS:
+            edits_allowed_menu.subtitle = "The project has no channels to log."
+            active_menu = edits_allowed_menu
+        else:
+            edits_allowed_menu.subtitle = "The project has one or more errors."
+            active_menu = edits_allowed_menu
+        active_menu.show()
+        if active_menu.selected_item == active_menu.exit_item:
+            break
+
+
 def _no_op() -> None:
     return
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    argv = sys.argv
+    if len(argv) < 2:
+        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
+        sys.exit()
+    project_path_arg = argv[1]
+    sys.exit(main(project_path_arg))

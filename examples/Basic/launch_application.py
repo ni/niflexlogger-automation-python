@@ -1,19 +1,11 @@
 import os
 import sys
-from typing import List
 
 from flexlogger.automation import Application
 
 
-def main(argv: List[str] = None) -> int:
+def main(project_path) -> int:
     """Launch FlexLogger and open a project."""
-    if argv is None:
-        argv = sys.argv
-    if len(argv) < 2:
-        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
-        return 1
-
-    project_path = argv[1]
     with Application.launch() as app:
         project = app.open_project(path=project_path)
         print("Press Enter to close project...")
@@ -23,4 +15,9 @@ def main(argv: List[str] = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    argv = sys.argv
+    if len(argv) < 2:
+        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
+        sys.exit()
+    project_path_arg = argv[1]
+    sys.exit(main(project_path_arg))

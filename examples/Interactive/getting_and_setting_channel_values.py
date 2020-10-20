@@ -12,19 +12,12 @@ from flexlogger.automation import (
 from prettytable import PrettyTable
 
 
-def main(argv: List[str] = None) -> int:
+def main(project_path) -> int:
     """Interactively get and set FlexLogger channel values.
 
     Launch FlexLogger, open the specified project and interactively
     get and set FlexLogger channel values.
     """
-    if argv is None:
-        argv = sys.argv
-    if len(argv) < 2:
-        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
-        return 1
-
-    project_path = argv[1]
     print("Launching FlexLogger . . .")
     with Application.launch() as app:
         print("Loading FlexLogger project . . .")
@@ -36,36 +29,6 @@ def main(argv: List[str] = None) -> int:
         print("Closing FlexLogger project . . .")
         project.close()
     return 0
-
-
-def _show_interactive_menu(channel_specification_document: ChannelSpecificationDocument) -> None:
-    """Display an interactive menu for getting and setting channel values.
-
-    This will return when the user invokes the exit menu item.
-    """
-
-    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
-        console_menu = ConsoleMenu(
-            "Getting and Setting Channel Values API Demo", desc, epilogue_text=epilogue_text
-        )
-        for name, fn, args, opts in menu_items:
-            menu_item = FunctionItem(name, fn, args, **opts)
-            console_menu.append_item(menu_item)
-        return console_menu
-
-    get_set_channel_values_menu = _create_menu(
-        "",
-        "",
-        [
-            ("Show all channel values", _show_channel_values, [channel_specification_document], {}),
-            ("Set a channel value", _set_channel_value, [channel_specification_document], {}),
-        ],
-    )
-
-    while True:
-        get_set_channel_values_menu.show()
-        if get_set_channel_values_menu.selected_item == get_set_channel_values_menu.exit_item:
-            break
 
 
 def _show_channel_values(channel_specification_document: ChannelSpecificationDocument) -> None:
@@ -113,5 +76,40 @@ def _set_channel_value(channel_specification_document: ChannelSpecificationDocum
         )
 
 
+def _show_interactive_menu(channel_specification_document: ChannelSpecificationDocument) -> None:
+    """Display an interactive menu for getting and setting channel values.
+
+    This will return when the user invokes the exit menu item.
+    """
+
+    def _create_menu(desc: str, epilogue_text: str, menu_items: List[Any]) -> ConsoleMenu:
+        console_menu = ConsoleMenu(
+            "Getting and Setting Channel Values API Demo", desc, epilogue_text=epilogue_text
+        )
+        for name, fn, args, opts in menu_items:
+            menu_item = FunctionItem(name, fn, args, **opts)
+            console_menu.append_item(menu_item)
+        return console_menu
+
+    get_set_channel_values_menu = _create_menu(
+        "",
+        "",
+        [
+            ("Show all channel values", _show_channel_values, [channel_specification_document], {}),
+            ("Set a channel value", _set_channel_value, [channel_specification_document], {}),
+        ],
+    )
+
+    while True:
+        get_set_channel_values_menu.show()
+        if get_set_channel_values_menu.selected_item == get_set_channel_values_menu.exit_item:
+            break
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    argv = sys.argv
+    if len(argv) < 2:
+        print("Usage: %s <path of project to open>" % os.path.basename(__file__))
+        sys.exit()
+    project_path_arg = argv[1]
+    sys.exit(main(project_path_arg))

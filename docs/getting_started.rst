@@ -36,28 +36,76 @@ After this, here's how to do several common tasks:
   :meth:`~.ChannelSpecificationDocument.set_channel_value()` methods.
 
 Examples
---------
+========
+
+Communicating with FlexLogger
+-----------------------------
 
 Launch FlexLogger and open a project
 
-.. literalinclude:: ../examples/launch_application.py
+.. literalinclude:: ../examples/basic/launch_application.py
    :language: python
    :linenos:
+
+Connect to FlexLogger when it is already running
+
+.. literalinclude:: ../examples/basic/connect_to_application.py
+   :language: python
+   :linenos:
+
+Test Session
+------------
 
 Start and stop a test
 
-.. literalinclude:: ../examples/manage_test_session.py
+.. literalinclude:: ../examples/basic/start_and_stop_test_session.py
    :language: python
    :linenos:
 
-Configure logging
+Adding a note to a log file
 
-.. literalinclude:: ../examples/configure_logging_specification.py
+.. literalinclude:: ../examples/basic/add_note.py
    :language: python
    :linenos:
 
-Get and set channel values
+Channels
+--------
 
-.. literalinclude:: ../examples/getting_and_setting_channel_values.py
+Getting the value of a channel
+
+.. literalinclude:: ../examples/basic/get_channel_value.py
+   :language: python
+   :linenos:
+
+Setting the value of a channel
+
+.. literalinclude:: ../examples/basic/set_channel_value.py
+   :language: python
+   :linenos:
+
+Logging
+-------
+
+Getting the log file base path and name
+
+.. literalinclude:: ../examples/basic/get_log_file_path_and_name.py
+   :language: python
+   :linenos:
+
+Setting the log file base path and name
+
+.. literalinclude:: ../examples/basic/set_log_file_path_and_name.py
+   :language: python
+   :linenos:
+
+Getting a test property
+
+.. literalinclude:: ../examples/basic/get_test_property.py
+   :language: python
+   :linenos:
+
+Setting a test property
+
+.. literalinclude:: ../examples/basic/set_test_property.py
    :language: python
    :linenos:
