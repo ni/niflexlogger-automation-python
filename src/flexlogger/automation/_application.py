@@ -241,7 +241,7 @@ class Application:
             "-mappedFileIsReadyEventName=" + event_name,
             "-mappedFileName=" + mapped_name,
         ]
-        args += ["-enableAutomationServer", "-allowPrototype"]
+        args += ["-enableAutomationServer"]
 
         try:
             subprocess.Popen(args)
