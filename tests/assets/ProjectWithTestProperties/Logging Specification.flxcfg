@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SourceFile Checksum="5715C1630C77B4BF563612D8553362DFE5DB4F30676E7479931A7BF754E87943B7DB994DAD2D10119FB8021956D70ADAF7B56975B4E48D12476A689247821572" Timestamp="1D66D08CD380759" xmlns="http://www.ni.com/PlatformFramework">
+<SourceFile Checksum="D8E2D2BE7E8017AF0A0F355416483DCFD9B06B9592ED94F3C87D6A8E07DBAE8DC6D1205F2373CD5FDECD40D2BBC79487902C33B16E2046B47FFE87838F828BD1" Timestamp="1D6A7CA4D2E8771" xmlns="http://www.ni.com/PlatformFramework">
 	<SourceModelFeatureSet>
 		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
 		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
-		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="20.3.0.0" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="21.0.0.0" />
 	</SourceModelFeatureSet>
 	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
 		<LoggingConfigurationModel Id="f576f7d45bbb483f97eacfe876781021">
 			<ProcessingElementModelOwner Id="c36b0f6a1de341ae9f08823dadc39637">
 				<TriggeredLoggingProvider Id="ec1b3bf619aa46ba85486b6ccf47c414" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-08-07T09:47:00.485542799999999999979553855222746960862423293292522430419921875-05:00" />
-				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="44c2378b093f4dbaa9f3e2ea9ada589f" LogFileBasePath="&quot;C:\\Users\\bparrott\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="44c2378b093f4dbaa9f3e2ea9ada589f" LogFileBackupPath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data\\backups&quot;" LogFileBasePath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
 					<UserDefinedMetadata Id="95a7203a63e64a3e8ffd855f313486c1">
 						<UserDefinedMetadataItem DataType="String" Id="30ca61a875934f46a512289cd69f7df2" Name="Operator">
 							<p.Value>bparrott</p.Value>
