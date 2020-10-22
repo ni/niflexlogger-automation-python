@@ -16,7 +16,7 @@ Requirements
 **niflexlogger** has the following requirements:
 
 * FlexLogger 2021 R1+
-* CPython 3.5+
+* CPython 3.6 - 3.8
 
 .. _installation_section:
 
