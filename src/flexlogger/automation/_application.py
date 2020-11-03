@@ -3,6 +3,7 @@ import os
 import re
 import struct
 import subprocess
+import sys
 import time
 import uuid
 from pathlib import Path
@@ -44,6 +45,7 @@ class Application:
         Raises:
             FlexLoggerError: if connecting fails.
         """
+        Application._raise_if_unsupported_platform()
         self._server_port = server_port if server_port is not None else self._detect_server_port()
         self._connect()
         self._launched = False
@@ -83,6 +85,7 @@ class Application:
         Raises:
             FlexLoggerError: if launching FlexLogger or connecting to it fails.
         """
+        Application._raise_if_unsupported_platform()
         if isinstance(path, str):
             path = Path(path)
         server_port = Application._launch_flexlogger(timeout_in_seconds=timeout, path=path)
@@ -103,6 +106,11 @@ class Application:
         Further calls to this object will fail.
         """
         self._disconnect(exit_application=False)
+
+    @classmethod
+    def _raise_if_unsupported_platform(cls) -> None:
+        if sys.maxsize != 2 ** 63 - 1:
+            raise FlexLoggerError("This API only supports 64-bit versions of Python.")
 
     def _connect(self) -> None:
         if self._server_port <= 0:
