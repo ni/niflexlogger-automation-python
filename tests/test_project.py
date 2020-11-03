@@ -93,6 +93,14 @@ class TestProject:
                 first_project.open_channel_specification_document()
 
     @pytest.mark.integration  # type: ignore
+    def test__open_project_that_does_not_exist__raises_exception(self) -> None:
+        kill_all_open_flexloggers()
+        project_path = get_project_path("DoesNotExist")
+        with Application.launch() as app:
+            with pytest.raises(FlexLoggerError):
+                app.open_project(project_path)
+
+    @pytest.mark.integration  # type: ignore
     def test__open_project__close_project__using_original_project_raises_exception(self) -> None:
         kill_all_open_flexloggers()
         project_path = get_project_path("DefaultProject")

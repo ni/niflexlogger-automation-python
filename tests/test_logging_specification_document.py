@@ -1,4 +1,7 @@
-from typing import Iterator
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from time import sleep
+from typing import Iterator, Optional
 
 import pytest  # type: ignore
 from flexlogger.automation import (
@@ -7,6 +10,7 @@ from flexlogger.automation import (
     LoggingSpecificationDocument,
     TestProperty,
 )
+from nptdms import TdmsFile  # type: ignore
 
 from .utils import get_project_path, open_project
 
@@ -152,6 +156,77 @@ class TestLoggingSpecificationDocument:
             assert 5 == len(logging_specification.get_test_properties())
             new_prop = logging_specification.get_test_property("Property")
             self.assert_property_matches(new_prop, "Property", "New Property Value", True)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_test_property_that_does_exist__property_is_updated_in_tdms(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("PropertyThatExists.tdms")
+
+                logging_specification.set_test_property("Operator", "A new operator", False)
+                # Run the test so the TDMS file gets written
+                project.test_session.start()
+                sleep(5)
+                project.test_session.stop()
+
+                new_value = self._get_tdms_file_property(
+                    temp_dir, "PropertyThatExists.tdms", "Operator"
+                )
+                assert new_value == "A new operator"
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_test_property_that_does_not_exist__property_exists_in_tdms(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("PropertyThatDoesNotExist.tdms")
+
+                logging_specification.set_test_property("Something new", "I'm new!", False)
+                # Run the test so the TDMS file gets written
+                project.test_session.start()
+                sleep(5)
+                project.test_session.stop()
+
+                new_value = self._get_tdms_file_property(
+                    temp_dir, "PropertyThatDoesNotExist.tdms", "Something new"
+                )
+                assert new_value == "I'm new!"
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__remove_test_property___property_does_not_exist_in_tdms(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("PropertyThatWasRemoved.tdms")
+
+                logging_specification.remove_test_property("Operator")
+                # Run the test so the TDMS file gets written
+                project.test_session.start()
+                sleep(5)
+                project.test_session.stop()
+
+                new_value = self._get_tdms_file_property(
+                    temp_dir, "PropertyThatWasRemoved.tdms", "Operator"
+                )
+                assert new_value is None
+
+    def _get_tdms_file_property(
+        self, log_file_base_path: str, log_file_name: str, property_name: str
+    ) -> Optional[str]:
+        log_file_path = Path(log_file_base_path) / log_file_name
+        with TdmsFile.open(str(log_file_path)) as tdms_file:
+            real_property_name = f"Test_properties~{property_name}"
+            return tdms_file.properties.get(real_property_name)
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__set_test_property_that_does_not_exist__property_is_added(
