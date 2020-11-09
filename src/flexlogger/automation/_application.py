@@ -118,7 +118,10 @@ class Application:
         try:
             self._channel = insecure_channel("localhost:%d" % self._server_port)
         except RpcError as error:
-            raise FlexLoggerError("Failed to connect to FlexLogger") from error
+            raise FlexLoggerError(
+                'Failed to connect to FlexLogger. Ensure the "Automation server" preference is '
+                'enabled in the application. '
+            ) from error
 
     def _disconnect(self, exit_application: bool) -> None:
         if self._channel is not None:

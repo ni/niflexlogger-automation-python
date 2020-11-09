@@ -7,7 +7,9 @@ Getting Started
 
   * To launch a new FlexLogger application, call :meth:`.Application.launch()`.
   * To connect to an already-running FlexLogger application, use the standard initializer
-    :class:`.Application()`.
+    :class:`.Application()`. Note that before connecting to an already running instance of FlexLogger,
+    the Automation server preference must be enabled. You can enable this preference by opening the
+    "File>>Preferences" menu item, and then enabling the "Automation server" preference in the "General" tab.
 
 2. Call :meth:`.Application.open_project()` to open a project.
 

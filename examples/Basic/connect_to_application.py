@@ -4,7 +4,13 @@ from flexlogger.automation import Application
 
 
 def main():
-    """Connect to an already running instance of FlexLogger with an open project"""
+    """Connect to an already running instance of FlexLogger with an open project
+
+    Note that before connecting to an already running instance of FlexLogger,
+    the Automation server preference must be enabled. You can enable this preference by opening the
+    "File>>Preferences" menu item, and then enabling the "Automation server" preference in the
+    "General" tab.
+    """
     app = Application()
     project = app.get_active_project()
     if project is None:
