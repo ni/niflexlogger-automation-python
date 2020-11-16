@@ -120,7 +120,7 @@ class Application:
         except RpcError as error:
             raise FlexLoggerError(
                 'Failed to connect to FlexLogger. Ensure the "Automation server" preference is '
-                'enabled in the application. '
+                "enabled in the application. "
             ) from error
 
     def _disconnect(self, exit_application: bool) -> None:

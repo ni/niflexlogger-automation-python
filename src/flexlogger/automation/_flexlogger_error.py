@@ -28,3 +28,9 @@ class FlexLoggerError(Exception):
                 message += ". Additional error details: " + inner_details
 
         return message
+
+    def __repr__(self) -> str:
+        return f"FlexLoggerError({repr(self.message)})"
+
+    def __str__(self) -> str:
+        return self.message

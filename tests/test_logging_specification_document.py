@@ -277,8 +277,15 @@ class TestLoggingSpecificationDocument:
             new_properties = logging_specification.get_test_properties()
             assert 4 == len(new_properties)
             assert "Property" not in (prop.name for prop in new_properties)
-            with pytest.raises(FlexLoggerError):
+            try:
                 logging_specification.get_test_property("Property")
+                assert False  # did not throw exception
+            except FlexLoggerError as err:
+                # Ensure the FlexLoggerError shows a description of what went wrong
+                # Note that repr(err) is what gets displayed in the interactive console
+                displayed_string = repr(err)
+                assert "Failed to get" in displayed_string
+                assert "The requested test property is not defined" in displayed_string
 
     @pytest.mark.integration  # type: ignore
     def test__remove_test_property_that_does_not_exist__exception_raised(
