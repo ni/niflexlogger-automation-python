@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="7F92B1AA7857AE8C59499FC60B4DB57BA378DF21379D8E64691070A1E66ED2959BD0815E11AABD657D3990E9535DFDCE9FA1E57BCBB4EA81F941134E0FCCDA0B" Timestamp="1D65A079F2F5394" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.1766" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.1766" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.1766" Name="FlexLogger" Version="20.2.0.0" />
+	</SourceModelFeatureSet>
+	<ChannelSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<ChannelConfigurationModel Id="4c425b929f8842e1a3f1582cdc2e86aa">
+			<ProcessingElementModelOwner Id="46b3f2a0b29a42a98c9abc0c4e4d077a">
+				<SinewaveProvider Id="e647b19e3d3542ee85b1cd8c4779222e" ModelTypeId="[string]b5d5f126-935f-411f-9661-2fe99c581bf2">
+					<ProviderParameter Id="2b000c5efe7468db5eaaf6934ef30ab" ParameterName="[string]Amplitude" Type="[Type]Double" Value="[double]1" />
+					<ProviderParameter Id="5ba60435dbac4d09946a5a72a7eae096" ParameterName="[string]Frequency" Type="[Type]Double" Value="[double]0.5" />
+					<ProviderParameter Id="5fcf5de3d0e0415fa0708e2b5a446b1b" ParameterName="[string]Phase" Type="[Type]Double" Value="[double]0" />
+					<ProviderParameter Id="a86a106799bf4139a36a615ad0d5a211" ParameterName="[string]SampleRate" Type="[Type]Double" Value="[double]1000" />
+					<ProviderParameter Id="d57c71ac92447f4b5bc8ffa2fe4b5b7" ParameterName="[string]TimeShift" Type="[Type]Double" Value="[double]0" />
+					<ProviderParameter Id="8a6aac11798e41e0a0fade4d6e7ad580" ParameterName="[string]DriftFactor" Type="[Type]Double" Value="[double]1" />
+					<SineWaveChannel Alias="sinewaveA" CriticalAlarm="a02ce1109a0a41dbaf73c1399680cd34" DataType="[Type]Wfm(Double)" Id="9c3e74e4a6b841189f623c0866d3b438" SampleRate="[double]1000" Source="Output/sineA" Units="[string]V" WarningAlarm="42d630f061e440b1849c0c822818c591">
+						<AlarmModel Id="42d630f061e440b1849c0c822818c591" Severity="[AlarmSeverity]Warning" TriggerModel="af2b71f3dc884996aad81120509a66e0">
+							<ChannelMonitorTriggerModel Alias="[string]51f0bb3d-faa9-4ccd-8dd1-66bcc6d2525e" AliasToMonitor="[string]sinewaveA" Id="af2b71f3dc884996aad81120509a66e0">
+								<AboveValueTriggerModel Id="1f6c21396aab44de862e98bdc82aa3f1" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="a02ce1109a0a41dbaf73c1399680cd34" Severity="[AlarmSeverity]Critical" TriggerModel="f9ef9842cbb846ad86f2173b193c33e4">
+							<ChannelMonitorTriggerModel Alias="[string]008fade2-e9b8-4ff1-8efd-0f8ee017fd1f" AliasToMonitor="[string]sinewaveA" Id="f9ef9842cbb846ad86f2173b193c33e4">
+								<AboveValueTriggerModel Id="d49faba6054345ac90e3f782935f1f0e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</SineWaveChannel>
+					<SineWaveChannel Alias="sinewaveB" CriticalAlarm="52ceb896226048b1a5c4c716fc5bdf0d" DataType="[Type]Wfm(Double)" Id="fa5461c65f824fe9962b2818e4129ddf" SampleRate="[double]1000" Source="Output/sineB" Units="[string]V" WarningAlarm="4f6c15ef3a2d43b096e0ec72053aaca4">
+						<AlarmModel Id="4f6c15ef3a2d43b096e0ec72053aaca4" Severity="[AlarmSeverity]Warning" TriggerModel="f19630417724930b4eb65c700caf99d">
+							<ChannelMonitorTriggerModel Alias="[string]11b6ebc0-1aea-497e-af7d-0d3b41c4d766" AliasToMonitor="[string]sinewaveB" Id="f19630417724930b4eb65c700caf99d">
+								<AboveValueTriggerModel Id="c88d702cc964e7eada2fca19192a259" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="52ceb896226048b1a5c4c716fc5bdf0d" Severity="[AlarmSeverity]Critical" TriggerModel="84883b4ff24747b69ed9c6fbb3a2b281">
+							<ChannelMonitorTriggerModel Alias="[string]e6da330a-79c6-465b-9fb3-9b914640082e" AliasToMonitor="[string]sinewaveB" Id="84883b4ff24747b69ed9c6fbb3a2b281">
+								<AboveValueTriggerModel Id="2d2639ca027942beb819e3ef5910bf7f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</SineWaveChannel>
+				</SinewaveProvider>
+			</ProcessingElementModelOwner>
+		</ChannelConfigurationModel>
+		<ChassisModelOwner Id="d99723bd5f174c98b72e9521d14e7edd" />
+	</ChannelSpecification>
+</SourceFile>

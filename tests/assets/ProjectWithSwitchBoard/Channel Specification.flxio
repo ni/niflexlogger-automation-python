@@ -1,0 +1,1544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="1625D6A442FAE89AC3E057038D8D88CB8A84769F0E13489A85EA660FA554433CA76D60D04BBABF06E27FE0119B95AE746AE47ECE3E984EA4898302A1733CD8D1" Timestamp="1D674BC82AF580F" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="20.3.0.0" />
+	</SourceModelFeatureSet>
+	<ChannelSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<ChannelConfigurationModel Id="642750e180394b15a51d337037420b7c">
+			<ProcessingElementModelOwner Id="8a031b5176ae4ca9becdbfa2f06de6b7">
+				<AddonModel AddonCustomIconPath="[string]" AddonIcon="[AddonIconType]Output" AddonInstanceName="[string]SwitchBoard" AddonType="[string]499DD1BA-7ACC-4B7A-E3C8-AB7C12 1352C" DisplayName="[string]SwitchBoard" Id="354dab974d44764b027e86d9e825222" UserDisplayName="[string]SwitchBoard">
+					<PeAddonOutputInfo Alias="c12c3940-26dd-4609-9983-25e9839f3896" CriticalAlarm="dedf022bb7444daba3392aef13ab88b3" DataType="[Type]@a39c785150f24ef9bb779edaf8bee0c5" HasLiveData="[bool]False" Id="8b42b88c61f148d683e9caf4822143c0" SampleRate="[double]1" Source="LogEvents" Units="[string]" WarningAlarm="913d627ed98e415e86e99b6e4479b825">
+						<AlarmModel Id="913d627ed98e415e86e99b6e4479b825" Severity="[AlarmSeverity]Warning" TriggerModel="4f62b7491a2a406f88c56ba4b259c95a">
+							<ChannelMonitorTriggerModel Alias="[string]c11d2880-97f4-4ad3-b55e-e79c712648df" AliasToMonitor="[string]c12c3940-26dd-4609-9983-25e9839f3896" Id="4f62b7491a2a406f88c56ba4b259c95a">
+								<AboveValueTriggerModel Id="b8ed5647615b4579a1116ff69a3de52a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="dedf022bb7444daba3392aef13ab88b3" Severity="[AlarmSeverity]Critical" TriggerModel="6a7cfa47e86f45c5ba6d97fb47e3e3fd">
+							<ChannelMonitorTriggerModel Alias="[string]993461fa-0578-415a-a8ac-a3645832bea1" AliasToMonitor="[string]c12c3940-26dd-4609-9983-25e9839f3896" Id="6a7cfa47e86f45c5ba6d97fb47e3e3fd">
+								<AboveValueTriggerModel Id="93e12d6380c6429aaf131fd901e23e42" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<Keyword Id="51fb5c99ec364e66a0be8fe6159251fa" Name="DoNotTriggerChannel" />
+					</PeAddonOutputInfo>
+					<ProviderParameter Id="5657d2b8905645dbb6e09211704f0865" ParameterName="[string]FilePath" Type="[Type]String" Value="[string]" />
+					<PeAddonInputInfo Alias="Switch 0" CanDisable="[bool]False" GroupName="[string]" Id="c02e6918ec5e403e9ce0f5badea7c01d" IsUserVisible="[bool]True" MappingAlias="[string]9361a5cd-2d53-4673-8707-e0e79256908c" Source="s0" Units="[string]V" Value="[double]0">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 1" CanDisable="[bool]False" GroupName="[string]" Id="8d276b2eae3f4c33ae1a8c739f660b0f" IsUserVisible="[bool]True" MappingAlias="[string]5b754490-1fc0-4537-8618-6fb16ae0f2f5" Source="s1" Units="[string]V" Value="[double]1">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 2" CanDisable="[bool]False" GroupName="[string]" Id="ba3f31ef1801448aaaba53a9e675014d" IsUserVisible="[bool]True" MappingAlias="[string]de219334-373e-42b8-84dc-5750a2be7881" Source="s2" Units="[string]V" Value="[double]2">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 3" CanDisable="[bool]False" GroupName="[string]" Id="2fe7fafd8d8a4b77bbb1128059386dba" IsUserVisible="[bool]True" MappingAlias="[string]0ea2c4c1-7316-4da3-9709-9f3e1d9f28b5" Source="s3" Units="[string]V" Value="[double]3">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 4" CanDisable="[bool]False" GroupName="[string]" Id="9972cc9ab3af4a72bf560a145c178d56" IsUserVisible="[bool]True" MappingAlias="[string]a1589b27-a33b-4b55-8b60-5a8f78e80a40" Source="s4" Units="[string]V" Value="[double]4">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 5" CanDisable="[bool]False" GroupName="[string]" Id="88cf8f96b52648db9b199ee5a7dc48f3" IsUserVisible="[bool]True" MappingAlias="[string]1889f5a4-8d67-4a87-b243-a4655196e271" Source="s5" Units="[string]V" Value="[double]5">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 6" CanDisable="[bool]False" GroupName="[string]" Id="b1bdf8e1bb174db3b016df57de17f4d6" IsUserVisible="[bool]True" MappingAlias="[string]6cc7149f-c408-4c22-991f-a28271d79ad1" Source="s6" Units="[string]V" Value="[double]6">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 7" CanDisable="[bool]False" GroupName="[string]" Id="c1b1c9c22160416885f03ceae77d98b9" IsUserVisible="[bool]True" MappingAlias="[string]4ead545c-e9b4-4ef3-89d1-0ea15d84f152" Source="s7" Units="[string]V" Value="[double]7">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 8" CanDisable="[bool]False" GroupName="[string]" Id="f64b2d1bbaca40fd872f776b8a251992" IsUserVisible="[bool]True" MappingAlias="[string]3f7fbce3-f584-42fb-9050-7762d1a7c5eb" Source="s8" Units="[string]V" Value="[double]8">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 9" CanDisable="[bool]False" GroupName="[string]" Id="ef7faeb6f45747a88338334305481311" IsUserVisible="[bool]True" MappingAlias="[string]8b0fe554-f328-420a-9295-7b92c95a08cd" Source="s9" Units="[string]V" Value="[double]9">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 10" CanDisable="[bool]False" GroupName="[string]" Id="316220ee0559494ea97d968d4b6a623c" IsUserVisible="[bool]True" MappingAlias="[string]54bfa5d7-f7a3-46b8-831a-cbd0734af723" Source="s10" Units="[string]V" Value="[double]10">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 11" CanDisable="[bool]False" GroupName="[string]" Id="6e2496b97c914cd2b99fdbac4277fb19" IsUserVisible="[bool]True" MappingAlias="[string]28b52620-923f-4979-9965-3ceb3fa9e65e" Source="s11" Units="[string]V" Value="[double]11">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 12" CanDisable="[bool]False" GroupName="[string]" Id="38311363ad1481e80c3429da55bd7e4" IsUserVisible="[bool]True" MappingAlias="[string]93df29f2-fc6e-4447-968d-cb5e08b2e8c8" Source="s12" Units="[string]V" Value="[double]12">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 13" CanDisable="[bool]False" GroupName="[string]" Id="d607064cc79540d08cdd74b093b00bf5" IsUserVisible="[bool]True" MappingAlias="[string]ad0707c3-897e-4a47-b67b-554eb34211a3" Source="s13" Units="[string]V" Value="[double]13">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 14" CanDisable="[bool]False" GroupName="[string]" Id="fd79fa420cb848d78d460dd2ddb731a7" IsUserVisible="[bool]True" MappingAlias="[string]2ea9b782-da0f-4a05-8ded-4d911bca25d1" Source="s14" Units="[string]V" Value="[double]14">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 15" CanDisable="[bool]False" GroupName="[string]" Id="59dacc0384e5469782dcfd947906c33c" IsUserVisible="[bool]True" MappingAlias="[string]bd472742-1148-4169-bf23-7f2d8521a928" Source="s15" Units="[string]V" Value="[double]15">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 16" CanDisable="[bool]False" GroupName="[string]" Id="6f905fe8c30f449d83ab2f00e034bc5a" IsUserVisible="[bool]True" MappingAlias="[string]1fec9d80-1c6f-40eb-a481-45e12989dd36" Source="s16" Units="[string]V" Value="[double]16">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 17" CanDisable="[bool]False" GroupName="[string]" Id="8610ee7b228e4e70a17b250f8e0975c5" IsUserVisible="[bool]True" MappingAlias="[string]c3513b22-5678-4050-bd99-b3946836fcfd" Source="s17" Units="[string]V" Value="[double]17">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 18" CanDisable="[bool]False" GroupName="[string]" Id="bf58068b268a432eaa5bf53664fc5012" IsUserVisible="[bool]True" MappingAlias="[string]621932d9-c260-4f04-b6d3-ab5807d15579" Source="s18" Units="[string]V" Value="[double]18">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 19" CanDisable="[bool]False" GroupName="[string]" Id="5c01154afd2c43bab39c8c616a02258f" IsUserVisible="[bool]True" MappingAlias="[string]43d45084-3230-4ee8-9145-f1d000311e50" Source="s19" Units="[string]V" Value="[double]19">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 20" CanDisable="[bool]False" GroupName="[string]" Id="e78bae2187aa4d558d14e38caac9ad53" IsUserVisible="[bool]True" MappingAlias="[string]ee2812c0-41f6-47c4-8f1f-0dda92cdda01" Source="s20" Units="[string]V" Value="[double]20">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 21" CanDisable="[bool]False" GroupName="[string]" Id="fac2499f78e54ab0ae9ac209a8f00181" IsUserVisible="[bool]True" MappingAlias="[string]ff97e4bf-6e1f-42bf-ab5b-aaff7d105057" Source="s21" Units="[string]V" Value="[double]21">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 22" CanDisable="[bool]False" GroupName="[string]" Id="d01e9208eab43e1bc938b73e08ece4e" IsUserVisible="[bool]True" MappingAlias="[string]9e03bd16-7d12-43c2-9d51-967baf679338" Source="s22" Units="[string]V" Value="[double]22">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 23" CanDisable="[bool]False" GroupName="[string]" Id="fdf41afc8f144287b216d0b91e63bb05" IsUserVisible="[bool]True" MappingAlias="[string]09057d19-b0ff-44bd-b472-ac968f55b166" Source="s23" Units="[string]V" Value="[double]23">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 24" CanDisable="[bool]False" GroupName="[string]" Id="d95fe1f2555d4d4baad6ce1f9d75ce52" IsUserVisible="[bool]True" MappingAlias="[string]49113055-0a5b-47cb-acb4-67b40117fb38" Source="s24" Units="[string]V" Value="[double]24">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 25" CanDisable="[bool]False" GroupName="[string]" Id="8945b51b6c7d44578e9cb9beeb806b12" IsUserVisible="[bool]True" MappingAlias="[string]33d0501b-b796-4288-a54e-22c6b6268b5e" Source="s25" Units="[string]V" Value="[double]25">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 26" CanDisable="[bool]False" GroupName="[string]" Id="a37b089506e34acd9d2b02b4b322266d" IsUserVisible="[bool]True" MappingAlias="[string]d802c4e9-6819-424f-8a92-188d88bc82c4" Source="s26" Units="[string]V" Value="[double]26">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 27" CanDisable="[bool]False" GroupName="[string]" Id="c5a83f76683f4e63bc7cae2c29d4c422" IsUserVisible="[bool]True" MappingAlias="[string]76a8c976-1f7b-4d20-9a8f-b2190364f5ed" Source="s27" Units="[string]V" Value="[double]27">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 28" CanDisable="[bool]False" GroupName="[string]" Id="7688617fdb8b461fb8b452978d879582" IsUserVisible="[bool]True" MappingAlias="[string]57d325c1-b450-414c-a098-57a31839be2f" Source="s28" Units="[string]V" Value="[double]28">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 29" CanDisable="[bool]False" GroupName="[string]" Id="97d19a352fea471d8f2c453f8465c223" IsUserVisible="[bool]True" MappingAlias="[string]608b251f-6ac3-41db-8aa9-f9550030a735" Source="s29" Units="[string]V" Value="[double]29">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 30" CanDisable="[bool]False" GroupName="[string]" Id="5681a4b406984c448db857a0b78367fd" IsUserVisible="[bool]True" MappingAlias="[string]6a412d58-463e-42ca-bb2f-206137474434" Source="s30" Units="[string]V" Value="[double]30">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 31" CanDisable="[bool]False" GroupName="[string]" Id="645f4e5c68a848ef80b56f8e67369ae7" IsUserVisible="[bool]True" MappingAlias="[string]7a022add-32c2-4b8a-b917-a276b4fca7c7" Source="s31" Units="[string]V" Value="[double]31">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 32" CanDisable="[bool]False" GroupName="[string]" Id="b32b6153bb134547bac614f2ea8c9d89" IsUserVisible="[bool]True" MappingAlias="[string]af46f798-54ac-4b8b-abfa-e5cb4d6aff72" Source="s32" Units="[string]V" Value="[double]32">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 33" CanDisable="[bool]False" GroupName="[string]" Id="f6b6ab3a40b4435faab66191240c8f86" IsUserVisible="[bool]True" MappingAlias="[string]cb969a15-840e-4fc6-a589-84f94094b29b" Source="s33" Units="[string]V" Value="[double]33">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 34" CanDisable="[bool]False" GroupName="[string]" Id="36ce8cf6d7f04975935106d49e2f1ced" IsUserVisible="[bool]True" MappingAlias="[string]9a0923fc-f5a9-42b7-a4d1-d7253793baef" Source="s34" Units="[string]V" Value="[double]34">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 35" CanDisable="[bool]False" GroupName="[string]" Id="7e7ebd607bb4447ca41098fcf7b8bb62" IsUserVisible="[bool]True" MappingAlias="[string]32f421c5-d49b-400d-975a-90fb411fe13f" Source="s35" Units="[string]V" Value="[double]35">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 36" CanDisable="[bool]False" GroupName="[string]" Id="8d38317fa70b4eb0bdbce81aeeb29d89" IsUserVisible="[bool]True" MappingAlias="[string]2ddb361d-5106-47ea-8e8c-7fd8475a070e" Source="s36" Units="[string]V" Value="[double]36">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 37" CanDisable="[bool]False" GroupName="[string]" Id="bf765cc88ee1482198fdecfdf9e47f2c" IsUserVisible="[bool]True" MappingAlias="[string]ae1f3c1b-c0da-4ed5-b1c5-de38544332e9" Source="s37" Units="[string]V" Value="[double]37">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 38" CanDisable="[bool]False" GroupName="[string]" Id="1e7110bd717940b4b56bad0a960aeaa1" IsUserVisible="[bool]True" MappingAlias="[string]d4b8c94d-8d53-4299-b1cf-79689af8392a" Source="s38" Units="[string]V" Value="[double]38">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 39" CanDisable="[bool]False" GroupName="[string]" Id="f68a9c841f5648d4829aa37e1c5a3e7b" IsUserVisible="[bool]True" MappingAlias="[string]509eda03-12a5-4670-bcaa-a9224af4b758" Source="s39" Units="[string]V" Value="[double]39">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 40" CanDisable="[bool]False" GroupName="[string]" Id="3b68df6dcec04dbf8930f86338cd872c" IsUserVisible="[bool]True" MappingAlias="[string]cf59cb5b-2215-4efa-a36e-1e0bc37bcc85" Source="s40" Units="[string]V" Value="[double]40">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 41" CanDisable="[bool]False" GroupName="[string]" Id="a05c44882347fa96e8c7ad5b820bbb" IsUserVisible="[bool]True" MappingAlias="[string]1306453f-cf3b-451c-9bdf-6d47fa5ca5f4" Source="s41" Units="[string]V" Value="[double]41">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 42" CanDisable="[bool]False" GroupName="[string]" Id="8c3a1a344ccc4f4893580142b4930664" IsUserVisible="[bool]True" MappingAlias="[string]fd8c6922-4f2f-46e0-a28b-7816d34d9f6a" Source="s42" Units="[string]V" Value="[double]42">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 43" CanDisable="[bool]False" GroupName="[string]" Id="bedf7412f6fa4bf28b3f5066f01a1598" IsUserVisible="[bool]True" MappingAlias="[string]1833627e-dbfc-4614-a50e-7b145080263a" Source="s43" Units="[string]V" Value="[double]43">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 44" CanDisable="[bool]False" GroupName="[string]" Id="d500ef001eb5448a851741ea0f959d97" IsUserVisible="[bool]True" MappingAlias="[string]95cb4a80-1d7b-4edc-b357-5f54124716a2" Source="s44" Units="[string]V" Value="[double]44">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 45" CanDisable="[bool]False" GroupName="[string]" Id="582a693239aa47cdab752716a4a7f25c" IsUserVisible="[bool]True" MappingAlias="[string]36d50278-e86b-4cf0-8760-c6f3b0ee21f3" Source="s45" Units="[string]V" Value="[double]45">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 46" CanDisable="[bool]False" GroupName="[string]" Id="6a4984fc51fb428e9eaed5206e27926c" IsUserVisible="[bool]True" MappingAlias="[string]27ed74df-f43f-4501-b75e-bf1e41201c13" Source="s46" Units="[string]V" Value="[double]46">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 47" CanDisable="[bool]False" GroupName="[string]" Id="b0527b187f9544a8ac1761142d2a1f05" IsUserVisible="[bool]True" MappingAlias="[string]9a5cbba4-191b-4b4a-ab16-a4482d9c4c75" Source="s47" Units="[string]V" Value="[double]47">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 48" CanDisable="[bool]False" GroupName="[string]" Id="a1fbd73f83814ddd95ae1f3294ee040d" IsUserVisible="[bool]True" MappingAlias="[string]bff9ddd4-4e9f-46b5-abbe-209c3ceca7fb" Source="s48" Units="[string]V" Value="[double]48">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 49" CanDisable="[bool]False" GroupName="[string]" Id="a5b558937fe54b3e940ffe8c8f557082" IsUserVisible="[bool]True" MappingAlias="[string]127b1165-73d2-4dca-b9f8-376a1fd99661" Source="s49" Units="[string]V" Value="[double]49">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 50" CanDisable="[bool]False" GroupName="[string]" Id="7f584d66890403594dbe2b1c51fd942" IsUserVisible="[bool]True" MappingAlias="[string]0a34088b-bc63-41f8-889b-27f7546269ac" Source="s50" Units="[string]V" Value="[double]50">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 51" CanDisable="[bool]False" GroupName="[string]" Id="6acb2979ce6d41e98640a741964f81b0" IsUserVisible="[bool]True" MappingAlias="[string]605b8958-1d6c-4f23-b03f-88cc241ab066" Source="s51" Units="[string]V" Value="[double]51">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 52" CanDisable="[bool]False" GroupName="[string]" Id="4ae99b31bf85414f876bd07b2b44cde5" IsUserVisible="[bool]True" MappingAlias="[string]cd1f44b5-7fb9-4514-95d7-2451bff47723" Source="s52" Units="[string]V" Value="[double]52">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 53" CanDisable="[bool]False" GroupName="[string]" Id="6076b7020da541feb29ba89eeccc2b01" IsUserVisible="[bool]True" MappingAlias="[string]7a917730-fe11-40f9-99a2-30ecb77e5d8f" Source="s53" Units="[string]V" Value="[double]53">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 54" CanDisable="[bool]False" GroupName="[string]" Id="a975d86e867e489297c1b77f133f2e21" IsUserVisible="[bool]True" MappingAlias="[string]7a7c5d7c-63ef-4624-8a84-5472c4d337ac" Source="s54" Units="[string]V" Value="[double]54">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 55" CanDisable="[bool]False" GroupName="[string]" Id="8639f47b38484d8eb390186dfd0f365c" IsUserVisible="[bool]True" MappingAlias="[string]d31e108b-b721-4ecf-ba86-7af117361546" Source="s55" Units="[string]V" Value="[double]55">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 56" CanDisable="[bool]False" GroupName="[string]" Id="5604ed2a6afb44f094165feb4f552d34" IsUserVisible="[bool]True" MappingAlias="[string]f995fb75-96f0-4b8b-a50d-a2eceeee7729" Source="s56" Units="[string]V" Value="[double]56">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 57" CanDisable="[bool]False" GroupName="[string]" Id="bfa18920807141d28d4cba6c45b3ee2e" IsUserVisible="[bool]True" MappingAlias="[string]e0bf8df7-a1f9-4edf-b2a8-41a319bef167" Source="s57" Units="[string]V" Value="[double]57">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 58" CanDisable="[bool]False" GroupName="[string]" Id="4133d44d7f33432f983970518b4535a4" IsUserVisible="[bool]True" MappingAlias="[string]528094bd-282c-4ad5-86a0-01ad8c2e3949" Source="s58" Units="[string]V" Value="[double]58">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 59" CanDisable="[bool]False" GroupName="[string]" Id="48fc5ff058b04deda984c876e3564ee5" IsUserVisible="[bool]True" MappingAlias="[string]8b084e45-7c50-497b-b202-9bbcbec25f2e" Source="s59" Units="[string]V" Value="[double]59">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 60" CanDisable="[bool]False" GroupName="[string]" Id="4a011bbdba23405683f7c458d149a99d" IsUserVisible="[bool]True" MappingAlias="[string]bd542c3c-5702-445a-8909-5254d6cca66a" Source="s60" Units="[string]V" Value="[double]60">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 61" CanDisable="[bool]False" GroupName="[string]" Id="452744a1aa0f4ff68df8fab1065ed64c" IsUserVisible="[bool]True" MappingAlias="[string]a739889e-8641-4e9f-b478-823f0bdcdaa7" Source="s61" Units="[string]V" Value="[double]61">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 62" CanDisable="[bool]False" GroupName="[string]" Id="f4d956f3253b47328cf3ab982fc6af2d" IsUserVisible="[bool]True" MappingAlias="[string]318051d4-624b-460a-834d-f2d9b2ed1255" Source="s62" Units="[string]V" Value="[double]62">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 63" CanDisable="[bool]False" GroupName="[string]" Id="a1619a9e613b472782eaec0748ea9648" IsUserVisible="[bool]True" MappingAlias="[string]5d984a4a-38d6-49c1-83b6-7b16dc352fbc" Source="s63" Units="[string]V" Value="[double]63">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 64" CanDisable="[bool]False" GroupName="[string]" Id="a81a40c50e6e45749a33694425b269ee" IsUserVisible="[bool]True" MappingAlias="[string]76f22d40-dec6-49c7-92d6-a56ed42afbac" Source="s64" Units="[string]V" Value="[double]64">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 65" CanDisable="[bool]False" GroupName="[string]" Id="2e2f95c3c99e4177887d7760495a5de2" IsUserVisible="[bool]True" MappingAlias="[string]f02e4202-b510-4c5c-8e67-3890b0355210" Source="s65" Units="[string]V" Value="[double]65">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 66" CanDisable="[bool]False" GroupName="[string]" Id="70209af0ff9e4d9d998247d67646f2d0" IsUserVisible="[bool]True" MappingAlias="[string]9adbb564-d8b9-4d5a-98ad-a3375ee468c5" Source="s66" Units="[string]V" Value="[double]66">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 67" CanDisable="[bool]False" GroupName="[string]" Id="b60d5841451a47a695e1bf265fbee1ab" IsUserVisible="[bool]True" MappingAlias="[string]d874bab2-668c-4cd3-b6a1-83ed5256bc13" Source="s67" Units="[string]V" Value="[double]67">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 68" CanDisable="[bool]False" GroupName="[string]" Id="ac21052d58724e689e131ea021eac60a" IsUserVisible="[bool]True" MappingAlias="[string]7c663c0b-938b-4c6d-b4f3-ad806a296f34" Source="s68" Units="[string]V" Value="[double]68">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 69" CanDisable="[bool]False" GroupName="[string]" Id="6d0ccac54d9745088b3e9d6d55c0e641" IsUserVisible="[bool]True" MappingAlias="[string]973bd82a-9906-40a8-b9e4-e9dda5e135a3" Source="s69" Units="[string]V" Value="[double]69">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 70" CanDisable="[bool]False" GroupName="[string]" Id="89ed9d34ab764483b8a5492eddc9192a" IsUserVisible="[bool]True" MappingAlias="[string]82fa9d30-0a5e-4243-bf8a-857abf439f1d" Source="s70" Units="[string]V" Value="[double]70">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 71" CanDisable="[bool]False" GroupName="[string]" Id="eeec808d64d5403bb7739b0397d84797" IsUserVisible="[bool]True" MappingAlias="[string]19c7c73c-8b0c-4998-97a7-3a51a7effabf" Source="s71" Units="[string]V" Value="[double]71">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 72" CanDisable="[bool]False" GroupName="[string]" Id="f670bb34545e42288ef9e3c471d1d4f7" IsUserVisible="[bool]True" MappingAlias="[string]5a55b17a-e11d-45f6-a25c-d37af664d12c" Source="s72" Units="[string]V" Value="[double]72">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 73" CanDisable="[bool]False" GroupName="[string]" Id="c8b7fb6a78034a40aa8177d06167b91d" IsUserVisible="[bool]True" MappingAlias="[string]569e5d2a-565d-4dc1-a220-b9d6aca04a07" Source="s73" Units="[string]V" Value="[double]73">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 74" CanDisable="[bool]False" GroupName="[string]" Id="c24911fe563e4064b0b914c4eb8a9951" IsUserVisible="[bool]True" MappingAlias="[string]14f569dc-f743-475f-9ed1-9fbc7d20139e" Source="s74" Units="[string]V" Value="[double]74">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 75" CanDisable="[bool]False" GroupName="[string]" Id="8ed9c3bfc94c4a88910ba1efb954af7a" IsUserVisible="[bool]True" MappingAlias="[string]950e3e14-cd46-4996-94e3-4c35c2137b38" Source="s75" Units="[string]V" Value="[double]75">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 76" CanDisable="[bool]False" GroupName="[string]" Id="16999e17730c45e2a95caa41f67b7cf1" IsUserVisible="[bool]True" MappingAlias="[string]8d3fb879-9479-4646-81dc-75795e27c5ff" Source="s76" Units="[string]V" Value="[double]76">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 77" CanDisable="[bool]False" GroupName="[string]" Id="dd108c5a1c948af812f43eaac59934e" IsUserVisible="[bool]True" MappingAlias="[string]e4d841ba-4157-4c96-b3aa-09ab7279f0df" Source="s77" Units="[string]V" Value="[double]77">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 78" CanDisable="[bool]False" GroupName="[string]" Id="f81b61d184f64daf92d1c7dbed806ac6" IsUserVisible="[bool]True" MappingAlias="[string]f1495568-2cd3-466c-929a-c23a45fc2168" Source="s78" Units="[string]V" Value="[double]78">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 79" CanDisable="[bool]False" GroupName="[string]" Id="be55f7e8f8845b9bc2dfe5c633128f1" IsUserVisible="[bool]True" MappingAlias="[string]b7f9cf3d-d9f5-4bb9-a591-f0e4f6172010" Source="s79" Units="[string]V" Value="[double]79">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 80" CanDisable="[bool]False" GroupName="[string]" Id="80a51a362c1f4dce848ed4e0266339b7" IsUserVisible="[bool]True" MappingAlias="[string]af030e15-dd57-4aed-bef8-bd14432f393d" Source="s80" Units="[string]V" Value="[double]80">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 81" CanDisable="[bool]False" GroupName="[string]" Id="29d67114b4bb4aca8fec26420be14e26" IsUserVisible="[bool]True" MappingAlias="[string]b6b0c051-1d99-4fbb-a321-4ae48d13eb1d" Source="s81" Units="[string]V" Value="[double]81">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 82" CanDisable="[bool]False" GroupName="[string]" Id="959f0da0193847a4ba45fb19e1001a94" IsUserVisible="[bool]True" MappingAlias="[string]199d32e5-4091-4315-922c-eb9edf226894" Source="s82" Units="[string]V" Value="[double]82">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 83" CanDisable="[bool]False" GroupName="[string]" Id="84d9584181b54cd4b50b7f7121f1ccd0" IsUserVisible="[bool]True" MappingAlias="[string]69cf1d95-1403-4de9-95d7-bb3f228cea40" Source="s83" Units="[string]V" Value="[double]83">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 84" CanDisable="[bool]False" GroupName="[string]" Id="ec53b222acb3429f8bae6b7b57233f13" IsUserVisible="[bool]True" MappingAlias="[string]5d58616c-b678-47d7-87ec-f9564a34349a" Source="s84" Units="[string]V" Value="[double]84">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 85" CanDisable="[bool]False" GroupName="[string]" Id="a439d35f22384873b81b10a753110b17" IsUserVisible="[bool]True" MappingAlias="[string]377eda79-a3b7-4eae-9791-46bb85888b80" Source="s85" Units="[string]V" Value="[double]85">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 86" CanDisable="[bool]False" GroupName="[string]" Id="2f2a9eb8ee5e46308e9d34e75c0db618" IsUserVisible="[bool]True" MappingAlias="[string]7410a32e-8ebc-4fb7-8902-ee7874f39e00" Source="s86" Units="[string]V" Value="[double]86">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 87" CanDisable="[bool]False" GroupName="[string]" Id="63454c7ee01a432bb95ec176f9ec9166" IsUserVisible="[bool]True" MappingAlias="[string]86c2ae93-6c8d-402d-ac6e-d4c7cbac9488" Source="s87" Units="[string]V" Value="[double]87">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 88" CanDisable="[bool]False" GroupName="[string]" Id="b89683a9b5d4f7c99e40ef05b3e91ac" IsUserVisible="[bool]True" MappingAlias="[string]6108183a-8cfe-4513-8de7-a3eda38bbe38" Source="s88" Units="[string]V" Value="[double]88">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 89" CanDisable="[bool]False" GroupName="[string]" Id="dade41acfb5a4cc1bed2e190eaee5059" IsUserVisible="[bool]True" MappingAlias="[string]95d96087-192e-4d65-87a7-74fa3b944a7a" Source="s89" Units="[string]V" Value="[double]89">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 90" CanDisable="[bool]False" GroupName="[string]" Id="167a9b0b163f4713aa27039e927b7b89" IsUserVisible="[bool]True" MappingAlias="[string]8402fda2-7185-40d3-8f28-ac5d19d248f3" Source="s90" Units="[string]V" Value="[double]90">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 91" CanDisable="[bool]False" GroupName="[string]" Id="ce30604f8ddd462db5cbbd71046f46ad" IsUserVisible="[bool]True" MappingAlias="[string]622abd2c-35bd-400b-802e-75a6427ddc1d" Source="s91" Units="[string]V" Value="[double]91">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 92" CanDisable="[bool]False" GroupName="[string]" Id="912efb6cc7434d6aacc5586c8adc2352" IsUserVisible="[bool]True" MappingAlias="[string]ac025060-881c-496c-a37c-642cfc36f779" Source="s92" Units="[string]V" Value="[double]92">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 93" CanDisable="[bool]False" GroupName="[string]" Id="fa699252ac90453fae47e3f9d82f08e8" IsUserVisible="[bool]True" MappingAlias="[string]efa8c6f7-2b95-41d8-bb26-381665c7eb43" Source="s93" Units="[string]V" Value="[double]93">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 94" CanDisable="[bool]False" GroupName="[string]" Id="6b7af65a04de40fab51177d47fbbbaed" IsUserVisible="[bool]True" MappingAlias="[string]9cd92ed5-5bc2-427e-bebb-9f2729110ce0" Source="s94" Units="[string]V" Value="[double]94">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 95" CanDisable="[bool]False" GroupName="[string]" Id="47aae383a8a4ef5b733a4eb834d7ded" IsUserVisible="[bool]True" MappingAlias="[string]4ac89971-808d-4f78-843f-1a68a983f876" Source="s95" Units="[string]V" Value="[double]95">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 96" CanDisable="[bool]False" GroupName="[string]" Id="cd1f980295b94af2844946e4805b60e2" IsUserVisible="[bool]True" MappingAlias="[string]066ff139-d900-490d-a247-d0ddf7b70181" Source="s96" Units="[string]V" Value="[double]96">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 97" CanDisable="[bool]False" GroupName="[string]" Id="9a9b60691604a26b67f9eff7874643d" IsUserVisible="[bool]True" MappingAlias="[string]fcaf39a8-d335-497c-b097-edaef3658f3f" Source="s97" Units="[string]V" Value="[double]97">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 98" CanDisable="[bool]False" GroupName="[string]" Id="74935136ea644cbba81b65bda8bdeb8d" IsUserVisible="[bool]True" MappingAlias="[string]0c909be2-021a-4c94-9330-ccc105d10095" Source="s98" Units="[string]V" Value="[double]98">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonInputInfo Alias="Switch 99" CanDisable="[bool]False" GroupName="[string]" Id="2876fc5d610043e6849d334b2a09c208" IsUserVisible="[bool]True" MappingAlias="[string]f4752ba4-fffb-4ee4-8c09-8971bac730a4" Source="s99" Units="[string]V" Value="[double]99">
+						<SupportedDataType />
+					</PeAddonInputInfo>
+					<PeAddonOutputInfo Alias="Sink 0" CanDisable="[bool]True" CriticalAlarm="5a7f22617c1e4ffd883c281bc1eda220" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="9237b01221a47a796d641cab3a699aa" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink0" Units="[string]Voltaires" WarningAlarm="6125a9e9e34b42898bac8321d7e9705e">
+						<AlarmModel Id="6125a9e9e34b42898bac8321d7e9705e" Severity="[AlarmSeverity]Warning" TriggerModel="641fce4eb636478ca362f82ad2e63994">
+							<ChannelMonitorTriggerModel Alias="[string]a83dc899-e09f-482d-ab17-604919acf596" AliasToMonitor="[string]Sink 0" Id="641fce4eb636478ca362f82ad2e63994">
+								<AboveValueTriggerModel Id="d0bb59bc5007441984ee1983fb62141e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5a7f22617c1e4ffd883c281bc1eda220" Severity="[AlarmSeverity]Critical" TriggerModel="e26e58ef87154cd19e3e213ae9adedc0">
+							<ChannelMonitorTriggerModel Alias="[string]6bdb6de3-ce64-4ba5-9efc-43d449cd0ec5" AliasToMonitor="[string]Sink 0" Id="e26e58ef87154cd19e3e213ae9adedc0">
+								<AboveValueTriggerModel Id="626efe2a48a94c968c4444c642184f3a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 1" CanDisable="[bool]True" CriticalAlarm="982331cc1f3e49769755bbcc7cbb5fe7" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="159ef0c9eacb445981757d2d750e1516" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink1" Units="[string]Voltaires" WarningAlarm="fe6f16bce0334d96a9de4124851c6908">
+						<AlarmModel Id="fe6f16bce0334d96a9de4124851c6908" Severity="[AlarmSeverity]Warning" TriggerModel="8118cfbda60f407186363d7eaa734e67">
+							<ChannelMonitorTriggerModel Alias="[string]502399c1-e354-44c7-801e-cfaec7b05d3b" AliasToMonitor="[string]Sink 1" Id="8118cfbda60f407186363d7eaa734e67">
+								<AboveValueTriggerModel Id="25de1e1351914edd8e31ff234d24f8f7" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="982331cc1f3e49769755bbcc7cbb5fe7" Severity="[AlarmSeverity]Critical" TriggerModel="e35bb97672a640ad9a0fbd696de9a211">
+							<ChannelMonitorTriggerModel Alias="[string]c5781e84-2be6-4981-ac22-86d5d2a06279" AliasToMonitor="[string]Sink 1" Id="e35bb97672a640ad9a0fbd696de9a211">
+								<AboveValueTriggerModel Id="65f4a169df4344b98e6c7a9a695774f0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 2" CanDisable="[bool]True" CriticalAlarm="7cb6044060374f799ced3e6dd35a3656" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="557a80c58bd248a98e38af26053e540a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink2" Units="[string]Voltaires" WarningAlarm="5724be9d6b21456db20f8395dfa06c44">
+						<AlarmModel Id="5724be9d6b21456db20f8395dfa06c44" Severity="[AlarmSeverity]Warning" TriggerModel="1d1e09dd96204ec39831f71171b3019b">
+							<ChannelMonitorTriggerModel Alias="[string]426dfbad-922c-4054-96b0-b9c2de908a80" AliasToMonitor="[string]Sink 2" Id="1d1e09dd96204ec39831f71171b3019b">
+								<AboveValueTriggerModel Id="f39c60c5499348dc92a80604bedb63aa" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7cb6044060374f799ced3e6dd35a3656" Severity="[AlarmSeverity]Critical" TriggerModel="bcd2a7ef0bf74894bc0f8603e24ff2b1">
+							<ChannelMonitorTriggerModel Alias="[string]0294e5f6-4176-4e94-8d52-cf76b5d0cb1d" AliasToMonitor="[string]Sink 2" Id="bcd2a7ef0bf74894bc0f8603e24ff2b1">
+								<AboveValueTriggerModel Id="76e85028f05b41d8b99ffd277f8e41e9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 3" CanDisable="[bool]True" CriticalAlarm="dc066c713054e36b4affcfe5d9b6d9b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="9b43fdb2cb49437ebbb802a3766ae215" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink3" Units="[string]Voltaires" WarningAlarm="a74f5e2445b24cc9b1509ec8f5864100">
+						<AlarmModel Id="a74f5e2445b24cc9b1509ec8f5864100" Severity="[AlarmSeverity]Warning" TriggerModel="a388b405abc142169eb029bc2384de6e">
+							<ChannelMonitorTriggerModel Alias="[string]4d36d174-e39b-4ef5-88f9-1927b2eb7b76" AliasToMonitor="[string]Sink 3" Id="a388b405abc142169eb029bc2384de6e">
+								<AboveValueTriggerModel Id="e2d1ab7b24614a6f838bab1fef592000" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="dc066c713054e36b4affcfe5d9b6d9b" Severity="[AlarmSeverity]Critical" TriggerModel="51838a08445c494096c045a9427747a4">
+							<ChannelMonitorTriggerModel Alias="[string]ecac8d89-334c-4b30-ada9-f2c66d89f9d9" AliasToMonitor="[string]Sink 3" Id="51838a08445c494096c045a9427747a4">
+								<AboveValueTriggerModel Id="e6da73af103842cebc8f5087ee57482c" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 4" CanDisable="[bool]True" CriticalAlarm="b39d9ac60b0047f99dba11bd447538f1" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="dde07ecb764849589e71735ef08d2d1b" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink4" Units="[string]Voltaires" WarningAlarm="3ec3e5a4a667428daeb9827b70d0cd70">
+						<AlarmModel Id="3ec3e5a4a667428daeb9827b70d0cd70" Severity="[AlarmSeverity]Warning" TriggerModel="e896b69fb85d4a2d864aec51a5a9191a">
+							<ChannelMonitorTriggerModel Alias="[string]de8e466b-cab3-4fce-81a7-985647df6938" AliasToMonitor="[string]Sink 4" Id="e896b69fb85d4a2d864aec51a5a9191a">
+								<AboveValueTriggerModel Id="129bc40c94d343aba740a2170369b7ee" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="b39d9ac60b0047f99dba11bd447538f1" Severity="[AlarmSeverity]Critical" TriggerModel="4406107a91b420b8485ee6a03bb13b6">
+							<ChannelMonitorTriggerModel Alias="[string]0c764134-9348-424c-b4f8-7ed07afe1cae" AliasToMonitor="[string]Sink 4" Id="4406107a91b420b8485ee6a03bb13b6">
+								<AboveValueTriggerModel Id="e799c76c81b7428fade63e48a5466454" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 5" CanDisable="[bool]True" CriticalAlarm="914878d75c2546ae90f89902aa4f4d10" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="290a7d1afd234730839135d1074114c2" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink5" Units="[string]Voltaires" WarningAlarm="f49a749979b4e16b458804f9e976566">
+						<AlarmModel Id="f49a749979b4e16b458804f9e976566" Severity="[AlarmSeverity]Warning" TriggerModel="16abbb5315f489fb21b0cdb566a4012">
+							<ChannelMonitorTriggerModel Alias="[string]90b87720-1b5a-4300-9c5b-109e49c28d74" AliasToMonitor="[string]Sink 5" Id="16abbb5315f489fb21b0cdb566a4012">
+								<AboveValueTriggerModel Id="53442584e47147079147dd1e7366aeb4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="914878d75c2546ae90f89902aa4f4d10" Severity="[AlarmSeverity]Critical" TriggerModel="ac21ff28785e403fb70f05ac2057ef1a">
+							<ChannelMonitorTriggerModel Alias="[string]888dfff6-8c85-4c07-8f09-2e962c343c5a" AliasToMonitor="[string]Sink 5" Id="ac21ff28785e403fb70f05ac2057ef1a">
+								<AboveValueTriggerModel Id="8bb88aa7fac640aa8a8f91ea8125f3cb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 6" CanDisable="[bool]True" CriticalAlarm="37efb94007a44b6f806e5361d8bba66b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="3c0837d98af24054a7c34886c9c4490e" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink6" Units="[string]Voltaires" WarningAlarm="b57166cfe6be44859442e1d10191467b">
+						<AlarmModel Id="b57166cfe6be44859442e1d10191467b" Severity="[AlarmSeverity]Warning" TriggerModel="dcec041bcddf4373b8410573ed999ae8">
+							<ChannelMonitorTriggerModel Alias="[string]27f67fe0-f3f3-4592-81b9-b060f2e580b9" AliasToMonitor="[string]Sink 6" Id="dcec041bcddf4373b8410573ed999ae8">
+								<AboveValueTriggerModel Id="a68eebee21f4407f8a6baf9bc429f392" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="37efb94007a44b6f806e5361d8bba66b" Severity="[AlarmSeverity]Critical" TriggerModel="ae9b1ffd2f4543aaad32966138e0d9b2">
+							<ChannelMonitorTriggerModel Alias="[string]5d5003f4-ec67-4573-8370-6ea791738155" AliasToMonitor="[string]Sink 6" Id="ae9b1ffd2f4543aaad32966138e0d9b2">
+								<AboveValueTriggerModel Id="c4b6b32e3697493ba293c9d681397f45" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 7" CanDisable="[bool]True" CriticalAlarm="cc6a7f9827684b09872aa06950034e60" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="13d845e44bbd45a09c55a8795e722d4d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink7" Units="[string]Voltaires" WarningAlarm="4a790754b4dd4c9488cdf2afefdfa68e">
+						<AlarmModel Id="4a790754b4dd4c9488cdf2afefdfa68e" Severity="[AlarmSeverity]Warning" TriggerModel="36eac93b79254492b637492368b2275c">
+							<ChannelMonitorTriggerModel Alias="[string]31b5f987-44f3-49f1-b2c7-18e05103aefb" AliasToMonitor="[string]Sink 7" Id="36eac93b79254492b637492368b2275c">
+								<AboveValueTriggerModel Id="bea78751a3cc415fb3e5195cc926ddc0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="cc6a7f9827684b09872aa06950034e60" Severity="[AlarmSeverity]Critical" TriggerModel="6267239b75834c729206cf4b7dd061c5">
+							<ChannelMonitorTriggerModel Alias="[string]613a4e72-8570-4549-a672-9012f258fadb" AliasToMonitor="[string]Sink 7" Id="6267239b75834c729206cf4b7dd061c5">
+								<AboveValueTriggerModel Id="2fb38c7d834c849ce6882fddf47ec3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 8" CanDisable="[bool]True" CriticalAlarm="c8ccfb3b39054b59b9536c8f5dc89c27" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4330d91fce09469ab91a1d25afed2885" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink8" Units="[string]Voltaires" WarningAlarm="6ba44d005705423d8969de459f73d293">
+						<AlarmModel Id="6ba44d005705423d8969de459f73d293" Severity="[AlarmSeverity]Warning" TriggerModel="48eb73fdc4454c879d8619a0f711a3e3">
+							<ChannelMonitorTriggerModel Alias="[string]0420bf4c-6cb3-428f-90ac-1b650414eee3" AliasToMonitor="[string]Sink 8" Id="48eb73fdc4454c879d8619a0f711a3e3">
+								<AboveValueTriggerModel Id="2fded7d7efe947bd970ef429fd871505" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="c8ccfb3b39054b59b9536c8f5dc89c27" Severity="[AlarmSeverity]Critical" TriggerModel="a22b592ea0ec4544a540d7c80946f40a">
+							<ChannelMonitorTriggerModel Alias="[string]6c3995ff-aa48-4379-84d2-2a43f7f4a8e5" AliasToMonitor="[string]Sink 8" Id="a22b592ea0ec4544a540d7c80946f40a">
+								<AboveValueTriggerModel Id="ca72bb6cbd4b4553990c7fcd28b08563" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 9" CanDisable="[bool]True" CriticalAlarm="e95f45b0a3214dfdbd1fac26e530138b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4146bcaac6e943cd90ce3db7b88b88ac" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink9" Units="[string]Voltaires" WarningAlarm="62f56e89bc6c41e7ac10baa2eea6dd43">
+						<AlarmModel Id="62f56e89bc6c41e7ac10baa2eea6dd43" Severity="[AlarmSeverity]Warning" TriggerModel="fa56aa7f3a254c51b31d56810c5f6047">
+							<ChannelMonitorTriggerModel Alias="[string]0223978b-fa5f-4cae-a4ac-ce13689fe27e" AliasToMonitor="[string]Sink 9" Id="fa56aa7f3a254c51b31d56810c5f6047">
+								<AboveValueTriggerModel Id="fab768d8753b423d98ce8cd0c7d4e830" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="e95f45b0a3214dfdbd1fac26e530138b" Severity="[AlarmSeverity]Critical" TriggerModel="d41cf9b8c824955adca1968b36390d2">
+							<ChannelMonitorTriggerModel Alias="[string]c7aec220-7ad0-4c56-b6d7-1bed9407a359" AliasToMonitor="[string]Sink 9" Id="d41cf9b8c824955adca1968b36390d2">
+								<AboveValueTriggerModel Id="830abb6984b74c128dcdaf5f3a6738f5" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 10" CanDisable="[bool]True" CriticalAlarm="13cb866b924457f80a2a8fbd1c660a0" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6a7b4ea1db1940cda4b99526e31c2c66" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink10" Units="[string]Voltaires" WarningAlarm="62c8c7450c174f3fb645789068af5f0a">
+						<AlarmModel Id="62c8c7450c174f3fb645789068af5f0a" Severity="[AlarmSeverity]Warning" TriggerModel="6ae2b733ad524d559c63eb74225d4fd7">
+							<ChannelMonitorTriggerModel Alias="[string]b619a5da-bad1-420b-abe7-99732d115dc6" AliasToMonitor="[string]Sink 10" Id="6ae2b733ad524d559c63eb74225d4fd7">
+								<AboveValueTriggerModel Id="936f2265899041f1a43d6f4c79dddd82" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="13cb866b924457f80a2a8fbd1c660a0" Severity="[AlarmSeverity]Critical" TriggerModel="9d9b82827534111bafadc0313be8c8c">
+							<ChannelMonitorTriggerModel Alias="[string]2779d82e-d8e2-4ba7-a039-b3954bf647e4" AliasToMonitor="[string]Sink 10" Id="9d9b82827534111bafadc0313be8c8c">
+								<AboveValueTriggerModel Id="2986d137d3c1492fbc1e565851b42410" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 11" CanDisable="[bool]True" CriticalAlarm="3b9eba9ecce1404b92d03b634e1f64e7" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="9c49baf27273471c936a3852da5115e0" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink11" Units="[string]Voltaires" WarningAlarm="9b600e05ac7487a8c8cca31a46ccc93">
+						<AlarmModel Id="9b600e05ac7487a8c8cca31a46ccc93" Severity="[AlarmSeverity]Warning" TriggerModel="136202ac8abc47449dcf5bac81350cb2">
+							<ChannelMonitorTriggerModel Alias="[string]4d72e8f5-0086-491a-b90c-4e5532b5b255" AliasToMonitor="[string]Sink 11" Id="136202ac8abc47449dcf5bac81350cb2">
+								<AboveValueTriggerModel Id="84336c20f492465db756a733cd3664f4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="3b9eba9ecce1404b92d03b634e1f64e7" Severity="[AlarmSeverity]Critical" TriggerModel="719ce3b6523e47e78abb26622f93881f">
+							<ChannelMonitorTriggerModel Alias="[string]04338b8d-2862-413f-9c87-3004b3bf9309" AliasToMonitor="[string]Sink 11" Id="719ce3b6523e47e78abb26622f93881f">
+								<AboveValueTriggerModel Id="33b25d6d6916443285f7ac8d47aa9db3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 12" CanDisable="[bool]True" CriticalAlarm="43ad64bcf5e4da68fe251c66e4f9930" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c85ca86ec89c4538a57ec33859e19c63" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink12" Units="[string]Voltaires" WarningAlarm="68dcbc6ea24d4978ac1434abc2496fc9">
+						<AlarmModel Id="68dcbc6ea24d4978ac1434abc2496fc9" Severity="[AlarmSeverity]Warning" TriggerModel="bbd1f16f0e59480380f584b23693b52c">
+							<ChannelMonitorTriggerModel Alias="[string]6476dd42-cf28-4019-9ab7-913ed9c14849" AliasToMonitor="[string]Sink 12" Id="bbd1f16f0e59480380f584b23693b52c">
+								<AboveValueTriggerModel Id="c18543ce67274f64af17159dd440c6a0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="43ad64bcf5e4da68fe251c66e4f9930" Severity="[AlarmSeverity]Critical" TriggerModel="c6bbc194ef4c443493695b130cc551c3">
+							<ChannelMonitorTriggerModel Alias="[string]5d4bbf78-6c2b-4f19-8be0-446fb898af86" AliasToMonitor="[string]Sink 12" Id="c6bbc194ef4c443493695b130cc551c3">
+								<AboveValueTriggerModel Id="dcfca9995ce140dcbb9852340caef53a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 13" CanDisable="[bool]True" CriticalAlarm="a658334a86304392b804302a0a3197e1" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="429ee538efe4844b8fcfdddc2f6bcee" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink13" Units="[string]Voltaires" WarningAlarm="46997c0089974c1593606f4a3b5515b7">
+						<AlarmModel Id="46997c0089974c1593606f4a3b5515b7" Severity="[AlarmSeverity]Warning" TriggerModel="777025f1d7d741ea8d45f22c7dd40e2d">
+							<ChannelMonitorTriggerModel Alias="[string]3dd3015b-7bc9-41e0-a8e5-37e058d2572d" AliasToMonitor="[string]Sink 13" Id="777025f1d7d741ea8d45f22c7dd40e2d">
+								<AboveValueTriggerModel Id="8470b24d1ebd4dd59f3c8beab835a0e1" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="a658334a86304392b804302a0a3197e1" Severity="[AlarmSeverity]Critical" TriggerModel="55b637ded747465aa3c1a0cd7926a3e3">
+							<ChannelMonitorTriggerModel Alias="[string]678a5ce0-73fd-43d1-a891-bc4ad66b89a0" AliasToMonitor="[string]Sink 13" Id="55b637ded747465aa3c1a0cd7926a3e3">
+								<AboveValueTriggerModel Id="d350e4431924c57b0d0ea79d9af3ae4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 14" CanDisable="[bool]True" CriticalAlarm="5804f0184ea744bd8f57f0376126d69d" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="379e176857b944c482acb7654753dfb3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink14" Units="[string]Voltaires" WarningAlarm="3e5eab6e1cca47bcb5d41277a4bb563f">
+						<AlarmModel Id="3e5eab6e1cca47bcb5d41277a4bb563f" Severity="[AlarmSeverity]Warning" TriggerModel="1a21fa16b9a5491fb99fdb89a5bcd655">
+							<ChannelMonitorTriggerModel Alias="[string]8d980c21-295a-4f88-a5a1-9c75eb0c30a7" AliasToMonitor="[string]Sink 14" Id="1a21fa16b9a5491fb99fdb89a5bcd655">
+								<AboveValueTriggerModel Id="eadbab192ac14cbd81f60e151018ee8f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5804f0184ea744bd8f57f0376126d69d" Severity="[AlarmSeverity]Critical" TriggerModel="aa165584e34142558a236a4183ea1abd">
+							<ChannelMonitorTriggerModel Alias="[string]9493acbc-9569-4e31-9ada-63d10e19c6a5" AliasToMonitor="[string]Sink 14" Id="aa165584e34142558a236a4183ea1abd">
+								<AboveValueTriggerModel Id="e9033a5c6b444a049da3e3de47743099" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 15" CanDisable="[bool]True" CriticalAlarm="3d0c0345f8724fd9ab9867e7d30e4636" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="ee114ed7d38d4dbf8ab705fabceef1b8" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink15" Units="[string]Voltaires" WarningAlarm="416a8a255495428786b311fe5b2e5b74">
+						<AlarmModel Id="416a8a255495428786b311fe5b2e5b74" Severity="[AlarmSeverity]Warning" TriggerModel="f26c58794f1542b1af06ee161b3d3b78">
+							<ChannelMonitorTriggerModel Alias="[string]c0e7b27d-bf1f-49b9-abb0-de05bceb6061" AliasToMonitor="[string]Sink 15" Id="f26c58794f1542b1af06ee161b3d3b78">
+								<AboveValueTriggerModel Id="a79e852d7fb54ec6a8677234a125b322" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="3d0c0345f8724fd9ab9867e7d30e4636" Severity="[AlarmSeverity]Critical" TriggerModel="fda64c8ba4634162991f6edce98ca3fa">
+							<ChannelMonitorTriggerModel Alias="[string]26cb55dc-c5e4-4499-ab90-40d849392c7a" AliasToMonitor="[string]Sink 15" Id="fda64c8ba4634162991f6edce98ca3fa">
+								<AboveValueTriggerModel Id="5894b7db69f744ebabbc39d4a307ff36" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 16" CanDisable="[bool]True" CriticalAlarm="14a035f767a9425ea96dff9967b9a29f" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="f81df8ae690e4f47ba5eb5c11583e3b7" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink16" Units="[string]Voltaires" WarningAlarm="2eed5911e3314cb4804af816d9de32f5">
+						<AlarmModel Id="2eed5911e3314cb4804af816d9de32f5" Severity="[AlarmSeverity]Warning" TriggerModel="ca616a2a78734d3794b8cd9871b26520">
+							<ChannelMonitorTriggerModel Alias="[string]9c3b8d19-8bcd-40d5-b764-9829c25fab53" AliasToMonitor="[string]Sink 16" Id="ca616a2a78734d3794b8cd9871b26520">
+								<AboveValueTriggerModel Id="c63af1578382444184b5de163bca11a5" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="14a035f767a9425ea96dff9967b9a29f" Severity="[AlarmSeverity]Critical" TriggerModel="20ba2d7dc3ea48bfab457df2693edbe3">
+							<ChannelMonitorTriggerModel Alias="[string]95599b43-145f-405a-ae19-f7d5cadc4749" AliasToMonitor="[string]Sink 16" Id="20ba2d7dc3ea48bfab457df2693edbe3">
+								<AboveValueTriggerModel Id="10a8cde2e2b4438cb241896c66fe732c" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 17" CanDisable="[bool]True" CriticalAlarm="e65e5132c9ce4e1da37985f2864059df" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="ed8aa9bd684d4bb3a94d21645f136ef1" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink17" Units="[string]Voltaires" WarningAlarm="911cb06c8750447eaf22e6563f1ab258">
+						<AlarmModel Id="911cb06c8750447eaf22e6563f1ab258" Severity="[AlarmSeverity]Warning" TriggerModel="db2ee7b0b9254e2bb14f98119a267b8b">
+							<ChannelMonitorTriggerModel Alias="[string]35f45ce2-bbb9-4783-a5b9-fe01f79cdb92" AliasToMonitor="[string]Sink 17" Id="db2ee7b0b9254e2bb14f98119a267b8b">
+								<AboveValueTriggerModel Id="fb2eab927e384af9ada9a1c06339fe6b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="e65e5132c9ce4e1da37985f2864059df" Severity="[AlarmSeverity]Critical" TriggerModel="23f795088f0d4eb6acc0da870716fcad">
+							<ChannelMonitorTriggerModel Alias="[string]b67aace8-c036-47b0-b945-1288bb28abf5" AliasToMonitor="[string]Sink 17" Id="23f795088f0d4eb6acc0da870716fcad">
+								<AboveValueTriggerModel Id="7095a85ea6414441a9519f1d07cf7b94" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 18" CanDisable="[bool]True" CriticalAlarm="1f6f27dfdf9d4112a7e7add8852d16c4" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="a79c87d928fa4c238d50ab91e96fbf92" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink18" Units="[string]Voltaires" WarningAlarm="e640f049e4674b529836216ae0c74ec8">
+						<AlarmModel Id="e640f049e4674b529836216ae0c74ec8" Severity="[AlarmSeverity]Warning" TriggerModel="b6944fd624c144a792d3699141e2024d">
+							<ChannelMonitorTriggerModel Alias="[string]d6fe70b0-6e10-4001-bf57-30043d855b05" AliasToMonitor="[string]Sink 18" Id="b6944fd624c144a792d3699141e2024d">
+								<AboveValueTriggerModel Id="16bf08db5ac14c5a8d2386f0c34abeee" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="1f6f27dfdf9d4112a7e7add8852d16c4" Severity="[AlarmSeverity]Critical" TriggerModel="e3c33e3a2ca64816b43c1318ff417c82">
+							<ChannelMonitorTriggerModel Alias="[string]c57a6924-9427-4669-a5c3-7cdc7fbc5e7b" AliasToMonitor="[string]Sink 18" Id="e3c33e3a2ca64816b43c1318ff417c82">
+								<AboveValueTriggerModel Id="ca73073309714f5ab53c3656d31eec1d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 19" CanDisable="[bool]True" CriticalAlarm="fc005b28851a43a5a3cecfa5eaee1c7c" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="41ba8270e86e416eb60b8cb0005f6eaa" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink19" Units="[string]Voltaires" WarningAlarm="85340e5cef424ba08b52e2fe4154a93a">
+						<AlarmModel Id="85340e5cef424ba08b52e2fe4154a93a" Severity="[AlarmSeverity]Warning" TriggerModel="eacf4253124a4da7bf303c4654558801">
+							<ChannelMonitorTriggerModel Alias="[string]6f0b92e9-ec15-4c53-a82e-928ffe648a97" AliasToMonitor="[string]Sink 19" Id="eacf4253124a4da7bf303c4654558801">
+								<AboveValueTriggerModel Id="ea1c09b3f24e48fbaaf260aa58776cdd" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="fc005b28851a43a5a3cecfa5eaee1c7c" Severity="[AlarmSeverity]Critical" TriggerModel="775b5614cf304ba7b0fc4dbfb06b1469">
+							<ChannelMonitorTriggerModel Alias="[string]f3ec665a-b061-4e7a-9b42-ea9ce4f5fc3f" AliasToMonitor="[string]Sink 19" Id="775b5614cf304ba7b0fc4dbfb06b1469">
+								<AboveValueTriggerModel Id="a7e7f9b55e8840c8aca780424ec62999" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 20" CanDisable="[bool]True" CriticalAlarm="dc8e5c3204774c299035fd79a538eaa7" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2a4ab03bbaf4b5988173794cf5896b2" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink20" Units="[string]Voltaires" WarningAlarm="172baba08e90478c9b8441437ec52b28">
+						<AlarmModel Id="172baba08e90478c9b8441437ec52b28" Severity="[AlarmSeverity]Warning" TriggerModel="f732a17d74194ad9a9c351b15dbe7d5a">
+							<ChannelMonitorTriggerModel Alias="[string]a14b138b-81e6-4328-a4d3-08f10fbaab49" AliasToMonitor="[string]Sink 20" Id="f732a17d74194ad9a9c351b15dbe7d5a">
+								<AboveValueTriggerModel Id="be641e8bfd894d75b94a238eb09b0dbb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="dc8e5c3204774c299035fd79a538eaa7" Severity="[AlarmSeverity]Critical" TriggerModel="2b05d03e7804e2ab8088467f9ab2028">
+							<ChannelMonitorTriggerModel Alias="[string]5a04cd03-354a-4ca6-b7d1-c2a67e0b4536" AliasToMonitor="[string]Sink 20" Id="2b05d03e7804e2ab8088467f9ab2028">
+								<AboveValueTriggerModel Id="32d578c3c78440cb2ac245e0ddbc7d2" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 21" CanDisable="[bool]True" CriticalAlarm="77ee372445c348b09d32b68000ca4d1c" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="23ee1ab5eea34e2889f71d490d43d743" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink21" Units="[string]Voltaires" WarningAlarm="ea009f8675e4271ae6b019160fcc9d5">
+						<AlarmModel Id="ea009f8675e4271ae6b019160fcc9d5" Severity="[AlarmSeverity]Warning" TriggerModel="a0e57eb6f9ee47bc8ab90e9926a4ea29">
+							<ChannelMonitorTriggerModel Alias="[string]a4161c87-ae16-4700-a19d-c665bcfdcdef" AliasToMonitor="[string]Sink 21" Id="a0e57eb6f9ee47bc8ab90e9926a4ea29">
+								<AboveValueTriggerModel Id="9f2ff28ecab34d58b5cc3fd858997728" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="77ee372445c348b09d32b68000ca4d1c" Severity="[AlarmSeverity]Critical" TriggerModel="b24be1ad35d646fe87ea8156fd49bc9d">
+							<ChannelMonitorTriggerModel Alias="[string]c8e5a60b-3013-4f45-b5ff-6ed538b8f1c1" AliasToMonitor="[string]Sink 21" Id="b24be1ad35d646fe87ea8156fd49bc9d">
+								<AboveValueTriggerModel Id="1387168c93cc417eb7130e1d97e80af0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 22" CanDisable="[bool]True" CriticalAlarm="189a875112134e29b3b3d188d60b5917" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="9420d4f2028448baa78a84742dfeca7d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink22" Units="[string]Voltaires" WarningAlarm="b3083cffce69474ca15fd32f025920d6">
+						<AlarmModel Id="b3083cffce69474ca15fd32f025920d6" Severity="[AlarmSeverity]Warning" TriggerModel="f1dbf928eb924eeb8a5227be867964af">
+							<ChannelMonitorTriggerModel Alias="[string]ae874376-9fe0-415d-b2e4-fb7954235c63" AliasToMonitor="[string]Sink 22" Id="f1dbf928eb924eeb8a5227be867964af">
+								<AboveValueTriggerModel Id="8f79fb1780dd474fa08217e2287ea303" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="189a875112134e29b3b3d188d60b5917" Severity="[AlarmSeverity]Critical" TriggerModel="376920790263470b9f8178a9bc83127f">
+							<ChannelMonitorTriggerModel Alias="[string]340a7f9c-1dbc-4fd0-bea4-4cf03c6bd169" AliasToMonitor="[string]Sink 22" Id="376920790263470b9f8178a9bc83127f">
+								<AboveValueTriggerModel Id="e334dd2ab13648108465df360055282b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 23" CanDisable="[bool]True" CriticalAlarm="9a4bcb5f5714bdeade66c7633a2004e" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="778c1c0d8fd249659c44d15514a5a1aa" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink23" Units="[string]Voltaires" WarningAlarm="e454f5a58a1a48fca2493ac662d56906">
+						<AlarmModel Id="e454f5a58a1a48fca2493ac662d56906" Severity="[AlarmSeverity]Warning" TriggerModel="f398faea28ed4934bd32fee1bbe0817f">
+							<ChannelMonitorTriggerModel Alias="[string]ac871a53-e578-4394-b37b-c5630d2bbdd2" AliasToMonitor="[string]Sink 23" Id="f398faea28ed4934bd32fee1bbe0817f">
+								<AboveValueTriggerModel Id="2e626ced06f441c799d4e99dad5bc932" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="9a4bcb5f5714bdeade66c7633a2004e" Severity="[AlarmSeverity]Critical" TriggerModel="78a2b59e1f42475aa6f6f43070c3e2e2">
+							<ChannelMonitorTriggerModel Alias="[string]eb93b948-9778-4995-9d60-18d60617a902" AliasToMonitor="[string]Sink 23" Id="78a2b59e1f42475aa6f6f43070c3e2e2">
+								<AboveValueTriggerModel Id="ad1f8c63145743f59ad808bda8e6d87b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 24" CanDisable="[bool]True" CriticalAlarm="5171a7e694b3484dbae2fcfde2d250f2" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="814a1e7407054fd3a43299912a88219a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink24" Units="[string]Voltaires" WarningAlarm="c4a54372aee14736aa98414963e2818b">
+						<AlarmModel Id="c4a54372aee14736aa98414963e2818b" Severity="[AlarmSeverity]Warning" TriggerModel="79a0e2bae0f84c6da7390ebb7cf47a8f">
+							<ChannelMonitorTriggerModel Alias="[string]47b7373d-12db-420e-9940-a11d35de9b55" AliasToMonitor="[string]Sink 24" Id="79a0e2bae0f84c6da7390ebb7cf47a8f">
+								<AboveValueTriggerModel Id="6c0fd2aa725d4e598498eb76309734ca" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5171a7e694b3484dbae2fcfde2d250f2" Severity="[AlarmSeverity]Critical" TriggerModel="2542ad81179c41f49b4327ceecb4a3cc">
+							<ChannelMonitorTriggerModel Alias="[string]02b1324a-d4ce-4fb1-a215-f63d566e6c42" AliasToMonitor="[string]Sink 24" Id="2542ad81179c41f49b4327ceecb4a3cc">
+								<AboveValueTriggerModel Id="cc663f4700a14735a7fb7402d190898b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 25" CanDisable="[bool]True" CriticalAlarm="4d6ed80a41e44188ae382bc1cd2c72a0" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="82b4f65e2d1845dfa4e4b80858a3a0aa" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink25" Units="[string]Voltaires" WarningAlarm="7800ed8c7c424406804b252accefb252">
+						<AlarmModel Id="7800ed8c7c424406804b252accefb252" Severity="[AlarmSeverity]Warning" TriggerModel="85b6f878e7694cf09379b5afa12c5347">
+							<ChannelMonitorTriggerModel Alias="[string]6d2b4927-a9d7-4099-b96c-9d686a16f89a" AliasToMonitor="[string]Sink 25" Id="85b6f878e7694cf09379b5afa12c5347">
+								<AboveValueTriggerModel Id="45ca9ce701d047a794683f3ecc934312" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="4d6ed80a41e44188ae382bc1cd2c72a0" Severity="[AlarmSeverity]Critical" TriggerModel="bf0860824f2143db8794553ac86da19f">
+							<ChannelMonitorTriggerModel Alias="[string]ae5a755c-6d88-415d-9548-1c8b28dc64c2" AliasToMonitor="[string]Sink 25" Id="bf0860824f2143db8794553ac86da19f">
+								<AboveValueTriggerModel Id="bbde451b8e494183bd90569459fb1605" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 26" CanDisable="[bool]True" CriticalAlarm="81e4394cfe04229b269a602b5610d84" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="cf5068e8ebf847e58dfd2518bfea6f1c" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink26" Units="[string]Voltaires" WarningAlarm="5c92225685d845b881c49b3e87932b3c">
+						<AlarmModel Id="5c92225685d845b881c49b3e87932b3c" Severity="[AlarmSeverity]Warning" TriggerModel="329bf36188a94b68894bb73b39b5aeb1">
+							<ChannelMonitorTriggerModel Alias="[string]8bb757da-2563-4fa4-ac20-c093b3f97a0c" AliasToMonitor="[string]Sink 26" Id="329bf36188a94b68894bb73b39b5aeb1">
+								<AboveValueTriggerModel Id="4809fabce08d48db9560c2c740a69973" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="81e4394cfe04229b269a602b5610d84" Severity="[AlarmSeverity]Critical" TriggerModel="63615494aa0f4585907c5e06bb95f05b">
+							<ChannelMonitorTriggerModel Alias="[string]c703c995-84f8-4dd7-ac88-8032ab69b52a" AliasToMonitor="[string]Sink 26" Id="63615494aa0f4585907c5e06bb95f05b">
+								<AboveValueTriggerModel Id="4e5a0cedea649a1b4510d7f86f6d604" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 27" CanDisable="[bool]True" CriticalAlarm="378561ca348242eb9f3765787cd0d54b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="80022dbe66ab4b0c8f32286cf932a99c" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink27" Units="[string]Voltaires" WarningAlarm="86a6634cb1a24da686bf55d14992bde8">
+						<AlarmModel Id="86a6634cb1a24da686bf55d14992bde8" Severity="[AlarmSeverity]Warning" TriggerModel="23b131addd2c4955b5f49113cd6c18d2">
+							<ChannelMonitorTriggerModel Alias="[string]23e3a963-76cd-4d49-a404-1b8adafdbb58" AliasToMonitor="[string]Sink 27" Id="23b131addd2c4955b5f49113cd6c18d2">
+								<AboveValueTriggerModel Id="bf1b976003df4aeebdd7cf45fe22b402" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="378561ca348242eb9f3765787cd0d54b" Severity="[AlarmSeverity]Critical" TriggerModel="4f8442fd61d74b11bbbdbc8f8fd2db88">
+							<ChannelMonitorTriggerModel Alias="[string]7030efbb-242b-4726-be06-682495ece2a0" AliasToMonitor="[string]Sink 27" Id="4f8442fd61d74b11bbbdbc8f8fd2db88">
+								<AboveValueTriggerModel Id="ecfdc987918e40239930c2b1c7e6ef51" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 28" CanDisable="[bool]True" CriticalAlarm="1ed4ee4fc88248bb8daaa624e38d4d95" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="7ff1f989d81440a08b1f260f10b02c2b" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink28" Units="[string]Voltaires" WarningAlarm="86994b1b331a4d39b7138da164919211">
+						<AlarmModel Id="86994b1b331a4d39b7138da164919211" Severity="[AlarmSeverity]Warning" TriggerModel="d6cc1d8a528f46e89ea932c54f1e306c">
+							<ChannelMonitorTriggerModel Alias="[string]15416d01-1201-4192-89df-f31125d72360" AliasToMonitor="[string]Sink 28" Id="d6cc1d8a528f46e89ea932c54f1e306c">
+								<AboveValueTriggerModel Id="ca02162abe4649a2d6aab5634ed6f6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="1ed4ee4fc88248bb8daaa624e38d4d95" Severity="[AlarmSeverity]Critical" TriggerModel="6e6a32f33ce4f8ebdfc21b55a0c9d34">
+							<ChannelMonitorTriggerModel Alias="[string]e2b1a155-5bc8-4fb4-a2c1-05d1c2db26ae" AliasToMonitor="[string]Sink 28" Id="6e6a32f33ce4f8ebdfc21b55a0c9d34">
+								<AboveValueTriggerModel Id="ee0998705bdf489f86569dc9cad98551" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 29" CanDisable="[bool]True" CriticalAlarm="915a5af6864049977258710f832bd9" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4c5c3871cbd14f1bb6be0fa3b3f6327d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink29" Units="[string]Voltaires" WarningAlarm="72874a659064a8d89422f1f2a4a67d9">
+						<AlarmModel Id="72874a659064a8d89422f1f2a4a67d9" Severity="[AlarmSeverity]Warning" TriggerModel="7d9827fee31c4d71855c8a74df8bfcfb">
+							<ChannelMonitorTriggerModel Alias="[string]dbce7064-5165-4262-898b-97171fd04d6f" AliasToMonitor="[string]Sink 29" Id="7d9827fee31c4d71855c8a74df8bfcfb">
+								<AboveValueTriggerModel Id="24ab98e4df8242a5b28a2b4dd333d0ac" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="915a5af6864049977258710f832bd9" Severity="[AlarmSeverity]Critical" TriggerModel="541e14de50a541aba38ce57b15103a72">
+							<ChannelMonitorTriggerModel Alias="[string]13bcbf2f-e881-42b0-a483-cc169fc9e38b" AliasToMonitor="[string]Sink 29" Id="541e14de50a541aba38ce57b15103a72">
+								<AboveValueTriggerModel Id="51eb0cb1780b46a5a2fdc8e528fc950e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 30" CanDisable="[bool]True" CriticalAlarm="5408dd544d2d4da7a3255bc729256f53" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4fd1ee019e9401fa0239c6243e6f865" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink30" Units="[string]Voltaires" WarningAlarm="40ac927d51f84182b0f2733212ffa028">
+						<AlarmModel Id="40ac927d51f84182b0f2733212ffa028" Severity="[AlarmSeverity]Warning" TriggerModel="a8e2d121d1d4132a453753a53c415ed">
+							<ChannelMonitorTriggerModel Alias="[string]49102b49-9bf8-4f6c-823e-91944c341105" AliasToMonitor="[string]Sink 30" Id="a8e2d121d1d4132a453753a53c415ed">
+								<AboveValueTriggerModel Id="4a428a8de4ed407e9eed8f20407e9fa6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5408dd544d2d4da7a3255bc729256f53" Severity="[AlarmSeverity]Critical" TriggerModel="554d2527074a463cb1dbac7f3c809615">
+							<ChannelMonitorTriggerModel Alias="[string]2e7f1771-ac3a-48ea-8443-65101781faa3" AliasToMonitor="[string]Sink 30" Id="554d2527074a463cb1dbac7f3c809615">
+								<AboveValueTriggerModel Id="bc5f62714d6d447d84d2a287fb88465d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 31" CanDisable="[bool]True" CriticalAlarm="5a875ab7c26f426e87bbc9caf1f4da02" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="5caa891cf2a44114a9b2f7f2eb6ea0d3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink31" Units="[string]Voltaires" WarningAlarm="6fad029da2cf4827afcb657c642549be">
+						<AlarmModel Id="6fad029da2cf4827afcb657c642549be" Severity="[AlarmSeverity]Warning" TriggerModel="43207dc64eaf4b10a8a49f08c910ae4f">
+							<ChannelMonitorTriggerModel Alias="[string]b9bfecc1-2e34-42bc-a0f1-98191ce6e4b4" AliasToMonitor="[string]Sink 31" Id="43207dc64eaf4b10a8a49f08c910ae4f">
+								<AboveValueTriggerModel Id="aca3460365eb43d8a7ec65be3e290579" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5a875ab7c26f426e87bbc9caf1f4da02" Severity="[AlarmSeverity]Critical" TriggerModel="7b34a548ea6e413887c8d4486d6d85e4">
+							<ChannelMonitorTriggerModel Alias="[string]51efb074-c3a2-4e94-94eb-4227f259d714" AliasToMonitor="[string]Sink 31" Id="7b34a548ea6e413887c8d4486d6d85e4">
+								<AboveValueTriggerModel Id="8952f825c91b4f0aa9071ae065036bae" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 32" CanDisable="[bool]True" CriticalAlarm="27bdf40de4944a75914c2d059522b0fd" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="59dec6c1596749c39914c62f052424c5" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink32" Units="[string]Voltaires" WarningAlarm="8b170bc90b8140e9aca29b30961dfc3b">
+						<AlarmModel Id="8b170bc90b8140e9aca29b30961dfc3b" Severity="[AlarmSeverity]Warning" TriggerModel="302b3102c86c42538a8973ed49c197a4">
+							<ChannelMonitorTriggerModel Alias="[string]163b63f6-faa6-4264-a820-3cc214a7125a" AliasToMonitor="[string]Sink 32" Id="302b3102c86c42538a8973ed49c197a4">
+								<AboveValueTriggerModel Id="8d530ff8b7a48b78932a9027c148116" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="27bdf40de4944a75914c2d059522b0fd" Severity="[AlarmSeverity]Critical" TriggerModel="d22d98d8517547898183be77603957cd">
+							<ChannelMonitorTriggerModel Alias="[string]2b60c5fa-eb1f-47a7-a199-7757be2f61d5" AliasToMonitor="[string]Sink 32" Id="d22d98d8517547898183be77603957cd">
+								<AboveValueTriggerModel Id="6c441c3afddb46a4bd4a01b1c51d24f3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 33" CanDisable="[bool]True" CriticalAlarm="e3579d7ab63e432ca9fa71114c087a46" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="276694cbbbdb45c0958c5c47110ab40e" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink33" Units="[string]Voltaires" WarningAlarm="51628546dac5468aaeb5d1450c38bc89">
+						<AlarmModel Id="51628546dac5468aaeb5d1450c38bc89" Severity="[AlarmSeverity]Warning" TriggerModel="a90f3bde00804ebda249eddcdaff5b1c">
+							<ChannelMonitorTriggerModel Alias="[string]cd4cbe1b-ce07-4e85-92df-e391b9749537" AliasToMonitor="[string]Sink 33" Id="a90f3bde00804ebda249eddcdaff5b1c">
+								<AboveValueTriggerModel Id="a5695608934f4b5899cb2f1d27239326" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="e3579d7ab63e432ca9fa71114c087a46" Severity="[AlarmSeverity]Critical" TriggerModel="336b112a24224650aae84b0baf0b9e01">
+							<ChannelMonitorTriggerModel Alias="[string]c0fcf612-9fc0-48a8-ad23-8daf0964b325" AliasToMonitor="[string]Sink 33" Id="336b112a24224650aae84b0baf0b9e01">
+								<AboveValueTriggerModel Id="8d0d182af63c45a3b008d7768363dedd" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 34" CanDisable="[bool]True" CriticalAlarm="8357bf1f22494cfe9b7f71504a237198" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="a6ca89847a7749f4be6f43530aeb0c68" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink34" Units="[string]Voltaires" WarningAlarm="b6578c02acff466f9df2a48f4252e918">
+						<AlarmModel Id="b6578c02acff466f9df2a48f4252e918" Severity="[AlarmSeverity]Warning" TriggerModel="f6a30050b00f4b79b6580167fb7f4309">
+							<ChannelMonitorTriggerModel Alias="[string]7cdb9979-f37c-4a69-9982-fb5eb2a96cc9" AliasToMonitor="[string]Sink 34" Id="f6a30050b00f4b79b6580167fb7f4309">
+								<AboveValueTriggerModel Id="6edfbad727b14aafb646401e545ef867" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="8357bf1f22494cfe9b7f71504a237198" Severity="[AlarmSeverity]Critical" TriggerModel="c6875b06fdc240b9881a859a5f84deaf">
+							<ChannelMonitorTriggerModel Alias="[string]95a2f5aa-d385-4e71-b1c2-a8ba564e895e" AliasToMonitor="[string]Sink 34" Id="c6875b06fdc240b9881a859a5f84deaf">
+								<AboveValueTriggerModel Id="9eda3971f8e645058269a44e975e7c9e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 35" CanDisable="[bool]True" CriticalAlarm="24b0d93dcfa44760998b172c3bdbe1bb" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6d5aad603d614540b08441b55b0fec35" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink35" Units="[string]Voltaires" WarningAlarm="7612a620b3df45bf81598c5e8d31abbb">
+						<AlarmModel Id="7612a620b3df45bf81598c5e8d31abbb" Severity="[AlarmSeverity]Warning" TriggerModel="bc70cb52f40b41e3ae18c454a12ac10a">
+							<ChannelMonitorTriggerModel Alias="[string]eb8b5eed-9423-45f4-89bb-21be82954084" AliasToMonitor="[string]Sink 35" Id="bc70cb52f40b41e3ae18c454a12ac10a">
+								<AboveValueTriggerModel Id="7ab45521595b4818b26982db948f93df" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="24b0d93dcfa44760998b172c3bdbe1bb" Severity="[AlarmSeverity]Critical" TriggerModel="4e0a3de796f741e393090f3f8a28cc6e">
+							<ChannelMonitorTriggerModel Alias="[string]09a60288-2e1e-4de0-a418-bb13232e169f" AliasToMonitor="[string]Sink 35" Id="4e0a3de796f741e393090f3f8a28cc6e">
+								<AboveValueTriggerModel Id="fc45a2cd365f499bb269e0e270a245ef" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 36" CanDisable="[bool]True" CriticalAlarm="894e245fe3af4acaae779de5eb676036" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="ba0da5f8775a45b8b0fca1d85a22212a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink36" Units="[string]Voltaires" WarningAlarm="c59f872b2ae7404799956f3f100a638a">
+						<AlarmModel Id="c59f872b2ae7404799956f3f100a638a" Severity="[AlarmSeverity]Warning" TriggerModel="e93af745c1cb4781a45c71feff4e776f">
+							<ChannelMonitorTriggerModel Alias="[string]fcd6f221-809d-42c7-9a7a-0ba175e5401e" AliasToMonitor="[string]Sink 36" Id="e93af745c1cb4781a45c71feff4e776f">
+								<AboveValueTriggerModel Id="5f161e4e47774587837c4004801b123f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="894e245fe3af4acaae779de5eb676036" Severity="[AlarmSeverity]Critical" TriggerModel="681bd5bb08904af6be2bae9ddd8b6146">
+							<ChannelMonitorTriggerModel Alias="[string]824193d8-c8f2-4463-8eb3-6e0b741d5bf9" AliasToMonitor="[string]Sink 36" Id="681bd5bb08904af6be2bae9ddd8b6146">
+								<AboveValueTriggerModel Id="a24e4c63109b4cc4adb5e7c5edd44267" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 37" CanDisable="[bool]True" CriticalAlarm="7c3322a47ee0452fa55bed1996604125" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="b66a9b77a0ed461b8bc5aaabb11e157a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink37" Units="[string]Voltaires" WarningAlarm="cd2cba91bb54a62a4e8134a7681db04">
+						<AlarmModel Id="cd2cba91bb54a62a4e8134a7681db04" Severity="[AlarmSeverity]Warning" TriggerModel="d5ad66947de4a10a005ccabd8f46c51">
+							<ChannelMonitorTriggerModel Alias="[string]328bf0f5-140d-420a-99db-118ab6ebc335" AliasToMonitor="[string]Sink 37" Id="d5ad66947de4a10a005ccabd8f46c51">
+								<AboveValueTriggerModel Id="152c37060dab40a1a2661a8a9b123f07" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7c3322a47ee0452fa55bed1996604125" Severity="[AlarmSeverity]Critical" TriggerModel="a107714d5c3b4fdaa7a027c424701e4d">
+							<ChannelMonitorTriggerModel Alias="[string]0b5519bf-714a-4087-bf35-5663c3d6e068" AliasToMonitor="[string]Sink 37" Id="a107714d5c3b4fdaa7a027c424701e4d">
+								<AboveValueTriggerModel Id="f8138dc5601d42ef8089c6888ad457d8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 38" CanDisable="[bool]True" CriticalAlarm="18d73e1b94a64a6e954a079375e6a176" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="e0abb41e81b0493ebb4d9d2a545fb66c" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink38" Units="[string]Voltaires" WarningAlarm="7d9dc834c051426ca5eed955fd894083">
+						<AlarmModel Id="7d9dc834c051426ca5eed955fd894083" Severity="[AlarmSeverity]Warning" TriggerModel="4bbe3aaa81a94b09a8e40f0806df24dd">
+							<ChannelMonitorTriggerModel Alias="[string]8f28729b-13e7-4d32-b92c-a979a4fcb014" AliasToMonitor="[string]Sink 38" Id="4bbe3aaa81a94b09a8e40f0806df24dd">
+								<AboveValueTriggerModel Id="4988d41d8b794676a604dd57b33efba9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="18d73e1b94a64a6e954a079375e6a176" Severity="[AlarmSeverity]Critical" TriggerModel="2dbc6e12e192483b831fd8dbda9a7844">
+							<ChannelMonitorTriggerModel Alias="[string]29aedd2a-a21f-4ad5-af2a-7de72eefbfc0" AliasToMonitor="[string]Sink 38" Id="2dbc6e12e192483b831fd8dbda9a7844">
+								<AboveValueTriggerModel Id="5f77efc358d14b018fa3a8df5fb3e758" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 39" CanDisable="[bool]True" CriticalAlarm="9802fd41b544f6e86e59ab5f06eba48" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="34c686d2efb94ff9930a364bfe33d5f9" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink39" Units="[string]Voltaires" WarningAlarm="6774cf9193e54e51bd918fdb936adfc6">
+						<AlarmModel Id="6774cf9193e54e51bd918fdb936adfc6" Severity="[AlarmSeverity]Warning" TriggerModel="e730c6454b3846ffa79ca2ad1f0f01a3">
+							<ChannelMonitorTriggerModel Alias="[string]f9e8aa07-8970-4e48-8ba5-4eba1b1d5228" AliasToMonitor="[string]Sink 39" Id="e730c6454b3846ffa79ca2ad1f0f01a3">
+								<AboveValueTriggerModel Id="3bb149b5f7384a0a9979936060faea9a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="9802fd41b544f6e86e59ab5f06eba48" Severity="[AlarmSeverity]Critical" TriggerModel="cd63658d7fb5495dbb60aa4c7899a8a1">
+							<ChannelMonitorTriggerModel Alias="[string]4b72e2a3-9233-4cd1-ad2e-bd633e53179d" AliasToMonitor="[string]Sink 39" Id="cd63658d7fb5495dbb60aa4c7899a8a1">
+								<AboveValueTriggerModel Id="d79d8d062c7d4759b0fc6547bab7dc2f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 40" CanDisable="[bool]True" CriticalAlarm="2d62d8a341b8491dab87aa501dcbfe2c" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="f2f719e0c7d4ed0b66c52d07b0b496b" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink40" Units="[string]Voltaires" WarningAlarm="9f2beb90bc6b408b9893f8be0d9f99d3">
+						<AlarmModel Id="9f2beb90bc6b408b9893f8be0d9f99d3" Severity="[AlarmSeverity]Warning" TriggerModel="69f94d6cf5a04c97a2c8bfe5630ee1ea">
+							<ChannelMonitorTriggerModel Alias="[string]b67372ff-b7b1-4a56-beea-380ec5433697" AliasToMonitor="[string]Sink 40" Id="69f94d6cf5a04c97a2c8bfe5630ee1ea">
+								<AboveValueTriggerModel Id="e90853133ff84a4698e272e4e314d7fd" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="2d62d8a341b8491dab87aa501dcbfe2c" Severity="[AlarmSeverity]Critical" TriggerModel="329c77f70824416b9208b1d3722629d5">
+							<ChannelMonitorTriggerModel Alias="[string]b41ae761-0ca5-4950-ab38-2a7e45c26c6a" AliasToMonitor="[string]Sink 40" Id="329c77f70824416b9208b1d3722629d5">
+								<AboveValueTriggerModel Id="aa601ecc58844517a5e21208c10d3d23" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 41" CanDisable="[bool]True" CriticalAlarm="5775e6fc91b04f8c9275ae3806c77182" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="93c0e891cb0f4a9d99d9c3adba5e276e" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink41" Units="[string]Voltaires" WarningAlarm="616914eb29704ac7a0a30bcbf563de2b">
+						<AlarmModel Id="616914eb29704ac7a0a30bcbf563de2b" Severity="[AlarmSeverity]Warning" TriggerModel="71e368c1e34045f3b63cb703ea08f7fb">
+							<ChannelMonitorTriggerModel Alias="[string]66545fea-22dd-4ff7-9e83-9b2534d0423e" AliasToMonitor="[string]Sink 41" Id="71e368c1e34045f3b63cb703ea08f7fb">
+								<AboveValueTriggerModel Id="a1434dcce6a748a68642720f471e2b01" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5775e6fc91b04f8c9275ae3806c77182" Severity="[AlarmSeverity]Critical" TriggerModel="a217fb0a82c144c981e14fbd159f75fa">
+							<ChannelMonitorTriggerModel Alias="[string]934c7c57-f87d-4c87-926c-3cb7f60c0a06" AliasToMonitor="[string]Sink 41" Id="a217fb0a82c144c981e14fbd159f75fa">
+								<AboveValueTriggerModel Id="bbebb09f38df4893a9bcfd6a4c821448" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 42" CanDisable="[bool]True" CriticalAlarm="d7916abbf8d942efa2669ed3b5f16682" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="798ce75f512f4c90aa66b1f6ed76691f" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink42" Units="[string]Voltaires" WarningAlarm="a0b8b5e3b671494987d809dba249ece1">
+						<AlarmModel Id="a0b8b5e3b671494987d809dba249ece1" Severity="[AlarmSeverity]Warning" TriggerModel="8f94621e1dce41f5a58b8e8577af1858">
+							<ChannelMonitorTriggerModel Alias="[string]6f4e6a8a-1305-406d-a4db-a5f8aa6c23c7" AliasToMonitor="[string]Sink 42" Id="8f94621e1dce41f5a58b8e8577af1858">
+								<AboveValueTriggerModel Id="f5a177afebea4789a712789636785a57" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="d7916abbf8d942efa2669ed3b5f16682" Severity="[AlarmSeverity]Critical" TriggerModel="8eb6efc30cbc45acab3f334ce9dee6b6">
+							<ChannelMonitorTriggerModel Alias="[string]6e5aed1f-e551-4273-b213-49619e49b7f8" AliasToMonitor="[string]Sink 42" Id="8eb6efc30cbc45acab3f334ce9dee6b6">
+								<AboveValueTriggerModel Id="4fa96f08509b43939ffa5e28e6860de8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 43" CanDisable="[bool]True" CriticalAlarm="fb83c948b2b0456e85692bbbd1b77228" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6dce7f5e9b9d4089b7ab89fadac4b86d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink43" Units="[string]Voltaires" WarningAlarm="a8ad1d8b996a4a7abafa12e41a0001cc">
+						<AlarmModel Id="a8ad1d8b996a4a7abafa12e41a0001cc" Severity="[AlarmSeverity]Warning" TriggerModel="7ee0d8fa32ed41a18002db954ff249e6">
+							<ChannelMonitorTriggerModel Alias="[string]6bea0f19-1847-4cc3-996a-2a6c7549524f" AliasToMonitor="[string]Sink 43" Id="7ee0d8fa32ed41a18002db954ff249e6">
+								<AboveValueTriggerModel Id="c1559bf36c0d40699442e7bbd6e000ed" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="fb83c948b2b0456e85692bbbd1b77228" Severity="[AlarmSeverity]Critical" TriggerModel="6f16fb77b249465b8a54b592c7c29dc2">
+							<ChannelMonitorTriggerModel Alias="[string]760f55b0-693d-4b01-a6d7-c1c2b27f8844" AliasToMonitor="[string]Sink 43" Id="6f16fb77b249465b8a54b592c7c29dc2">
+								<AboveValueTriggerModel Id="53be921bafce4ef6afba4d747e7e4735" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 44" CanDisable="[bool]True" CriticalAlarm="cbddd97df944a40ba3c49f7e0498925" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="b3499c2c283442469ac0c628436ecb63" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink44" Units="[string]Voltaires" WarningAlarm="8b6c2be7424a4f6487e0fa125ae15421">
+						<AlarmModel Id="8b6c2be7424a4f6487e0fa125ae15421" Severity="[AlarmSeverity]Warning" TriggerModel="843449daa0654270adb7c31d41372dcc">
+							<ChannelMonitorTriggerModel Alias="[string]18731b12-03ed-4ca7-b3f7-40b8448ff996" AliasToMonitor="[string]Sink 44" Id="843449daa0654270adb7c31d41372dcc">
+								<AboveValueTriggerModel Id="17ab18f60bbd40c393fab8580a23e194" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="cbddd97df944a40ba3c49f7e0498925" Severity="[AlarmSeverity]Critical" TriggerModel="916f31acc27b46a6aa139436c95d9583">
+							<ChannelMonitorTriggerModel Alias="[string]eb40120d-a1e5-4db2-8a0d-2cc8a76c8a16" AliasToMonitor="[string]Sink 44" Id="916f31acc27b46a6aa139436c95d9583">
+								<AboveValueTriggerModel Id="6e93550c3e2e40189b4d394897d49f00" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 45" CanDisable="[bool]True" CriticalAlarm="a8baa69bfde049ed9413ef91fd349872" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="50b51dd33d124fe4b3a32787a08507a0" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink45" Units="[string]Voltaires" WarningAlarm="1b3f596127bb4aaf9304f9ebbfe884b5">
+						<AlarmModel Id="1b3f596127bb4aaf9304f9ebbfe884b5" Severity="[AlarmSeverity]Warning" TriggerModel="7fdb0005d9e54fb58d00217cf91ec007">
+							<ChannelMonitorTriggerModel Alias="[string]77cbf40d-7d98-48c2-9abc-93bb1e84e300" AliasToMonitor="[string]Sink 45" Id="7fdb0005d9e54fb58d00217cf91ec007">
+								<AboveValueTriggerModel Id="7445037784914e079343e3b8c5077256" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="a8baa69bfde049ed9413ef91fd349872" Severity="[AlarmSeverity]Critical" TriggerModel="4aef06cee829435fbe6cf596bb325039">
+							<ChannelMonitorTriggerModel Alias="[string]b6eda3ab-b23a-4041-b4c4-842c2c815780" AliasToMonitor="[string]Sink 45" Id="4aef06cee829435fbe6cf596bb325039">
+								<AboveValueTriggerModel Id="4d42a85d64514ffab36dc94013146025" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 46" CanDisable="[bool]True" CriticalAlarm="8e13854948e04ff6b6dd53da5e042c78" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="a5a3957a759a42fd82ca7181ffe2e854" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink46" Units="[string]Voltaires" WarningAlarm="89b27d203f3047bbba9cafcd0431ee53">
+						<AlarmModel Id="89b27d203f3047bbba9cafcd0431ee53" Severity="[AlarmSeverity]Warning" TriggerModel="e8b7129a03b64a54ae97e09ae334693d">
+							<ChannelMonitorTriggerModel Alias="[string]99e2d4c1-571e-43aa-b18b-b21aee44fb61" AliasToMonitor="[string]Sink 46" Id="e8b7129a03b64a54ae97e09ae334693d">
+								<AboveValueTriggerModel Id="5f61827094ea4fc6aef1942e0eb77a28" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="8e13854948e04ff6b6dd53da5e042c78" Severity="[AlarmSeverity]Critical" TriggerModel="2eb66891ce17441798fdf84967d2c209">
+							<ChannelMonitorTriggerModel Alias="[string]55da6593-903e-4ab5-9c5f-5a7e5a363f24" AliasToMonitor="[string]Sink 46" Id="2eb66891ce17441798fdf84967d2c209">
+								<AboveValueTriggerModel Id="13855c3e41654162af06771be0e11320" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 47" CanDisable="[bool]True" CriticalAlarm="4ceed247f74e42228e9698387c980ffb" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4ad54ac11fd14e7cb16e2058baf99288" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink47" Units="[string]Voltaires" WarningAlarm="e57672b76db44c4e85460aed561c059a">
+						<AlarmModel Id="e57672b76db44c4e85460aed561c059a" Severity="[AlarmSeverity]Warning" TriggerModel="2b34aca5c74d42be81157bbad8d859e9">
+							<ChannelMonitorTriggerModel Alias="[string]f4a5d9fc-1cc8-41d7-81cc-dbd231a703a1" AliasToMonitor="[string]Sink 47" Id="2b34aca5c74d42be81157bbad8d859e9">
+								<AboveValueTriggerModel Id="77875372d67f4b6fa4f6e66c4c86adeb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="4ceed247f74e42228e9698387c980ffb" Severity="[AlarmSeverity]Critical" TriggerModel="bffe42ba9d6841678371d2caf3cbef4f">
+							<ChannelMonitorTriggerModel Alias="[string]76b64060-a796-4649-a8ca-7335b4db3650" AliasToMonitor="[string]Sink 47" Id="bffe42ba9d6841678371d2caf3cbef4f">
+								<AboveValueTriggerModel Id="d772de0364c44e9cb500bbcb63834c08" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 48" CanDisable="[bool]True" CriticalAlarm="c14f3c9a074843558434b0627192bf72" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c7d7da93f2764abc8fa6cdb28f7644d9" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink48" Units="[string]Voltaires" WarningAlarm="f9e65f98c30b47f186fbc532bd3a0095">
+						<AlarmModel Id="f9e65f98c30b47f186fbc532bd3a0095" Severity="[AlarmSeverity]Warning" TriggerModel="3cd6e8c70fa94b6d98ecccd16631c6d6">
+							<ChannelMonitorTriggerModel Alias="[string]726d21a1-937a-43c3-a2aa-a36c4c07bfc0" AliasToMonitor="[string]Sink 48" Id="3cd6e8c70fa94b6d98ecccd16631c6d6">
+								<AboveValueTriggerModel Id="5f6f7af1e16d4350a99b80d43d4deec7" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="c14f3c9a074843558434b0627192bf72" Severity="[AlarmSeverity]Critical" TriggerModel="55b9f663d2524f9d8955abc544b6a7e4">
+							<ChannelMonitorTriggerModel Alias="[string]6acfc595-f5a0-48e7-bb91-33ddb923fa25" AliasToMonitor="[string]Sink 48" Id="55b9f663d2524f9d8955abc544b6a7e4">
+								<AboveValueTriggerModel Id="3521d0a943dd431dbe49dc3bf57918f3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 49" CanDisable="[bool]True" CriticalAlarm="8f2556f95bbe46a0942b7106720b0c1b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="f92f198ed69745cdbc373d8009fe99f5" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink49" Units="[string]Voltaires" WarningAlarm="a61e7429f47441c9a7560f38d2f69cd4">
+						<AlarmModel Id="a61e7429f47441c9a7560f38d2f69cd4" Severity="[AlarmSeverity]Warning" TriggerModel="f03bb953df94416e8ebe4abc147c7114">
+							<ChannelMonitorTriggerModel Alias="[string]6c2ab9a4-a964-4ff1-a099-d78d82617a34" AliasToMonitor="[string]Sink 49" Id="f03bb953df94416e8ebe4abc147c7114">
+								<AboveValueTriggerModel Id="db5ea32d35b24c389a294939dfa0e55c" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="8f2556f95bbe46a0942b7106720b0c1b" Severity="[AlarmSeverity]Critical" TriggerModel="603d93f5695347b7a940f410eb7decb4">
+							<ChannelMonitorTriggerModel Alias="[string]1c933321-179f-4c4b-b48e-884c8f94b2ad" AliasToMonitor="[string]Sink 49" Id="603d93f5695347b7a940f410eb7decb4">
+								<AboveValueTriggerModel Id="c35d1395cb914bb3afa672dfdbefac3f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 50" CanDisable="[bool]True" CriticalAlarm="2919356c73a141d1a5e074f8495a2114" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="b325bedd809432f869f2058b9b7ea72" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink50" Units="[string]Voltaires" WarningAlarm="17f7afe25214c29942038f5f6a9c5ab">
+						<AlarmModel Id="17f7afe25214c29942038f5f6a9c5ab" Severity="[AlarmSeverity]Warning" TriggerModel="2e003e4e7e384fc9b782e20a95ee7699">
+							<ChannelMonitorTriggerModel Alias="[string]e6499c2e-1ade-4df3-b995-743b2a087618" AliasToMonitor="[string]Sink 50" Id="2e003e4e7e384fc9b782e20a95ee7699">
+								<AboveValueTriggerModel Id="21c8daf8e2e94391bd792c827c51b984" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="2919356c73a141d1a5e074f8495a2114" Severity="[AlarmSeverity]Critical" TriggerModel="c07ffb919b64dc98725d64f01a5e40e">
+							<ChannelMonitorTriggerModel Alias="[string]d144bb87-530c-4cb4-9f44-c326bbefb150" AliasToMonitor="[string]Sink 50" Id="c07ffb919b64dc98725d64f01a5e40e">
+								<AboveValueTriggerModel Id="71e22a3202ba40b6bc0fd8a5ca097fb9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 51" CanDisable="[bool]True" CriticalAlarm="97a5337595b74d40adfd8072136b726c" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="ed4aa2cd10b94c11bc22f7ce71634a9d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink51" Units="[string]Voltaires" WarningAlarm="83629b5a635d439c9e0f29046716b804">
+						<AlarmModel Id="83629b5a635d439c9e0f29046716b804" Severity="[AlarmSeverity]Warning" TriggerModel="f390c4e163264a5eb818db0c5275d545">
+							<ChannelMonitorTriggerModel Alias="[string]052a75b4-7128-4325-85ae-c454de2983db" AliasToMonitor="[string]Sink 51" Id="f390c4e163264a5eb818db0c5275d545">
+								<AboveValueTriggerModel Id="d536253e6fb34e0fbacd7110cbac7e8d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="97a5337595b74d40adfd8072136b726c" Severity="[AlarmSeverity]Critical" TriggerModel="8f75c971a1ed41119b4603b55018daa6">
+							<ChannelMonitorTriggerModel Alias="[string]d9307356-ff09-4f5e-bf92-c77bd2806dba" AliasToMonitor="[string]Sink 51" Id="8f75c971a1ed41119b4603b55018daa6">
+								<AboveValueTriggerModel Id="1b47b258433c47498bf808a16b4b96fb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 52" CanDisable="[bool]True" CriticalAlarm="49e7bbf977ab40b9a85dcb8342e0f4da" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="942313a3516a43d49f44ab68140cec21" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink52" Units="[string]Voltaires" WarningAlarm="efcd7e2b640a47f99d88dae8360d611c">
+						<AlarmModel Id="efcd7e2b640a47f99d88dae8360d611c" Severity="[AlarmSeverity]Warning" TriggerModel="2afaab8d0cb04f3eab09a8b12eb07132">
+							<ChannelMonitorTriggerModel Alias="[string]d88a9a4b-fa9d-46b6-bc65-c48d2fb778b0" AliasToMonitor="[string]Sink 52" Id="2afaab8d0cb04f3eab09a8b12eb07132">
+								<AboveValueTriggerModel Id="10641c8af3c0471eb90f7b196e029688" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="49e7bbf977ab40b9a85dcb8342e0f4da" Severity="[AlarmSeverity]Critical" TriggerModel="2062633fa1524403a17b260489df8535">
+							<ChannelMonitorTriggerModel Alias="[string]5045839f-e2d8-4e60-add7-7726af50cbca" AliasToMonitor="[string]Sink 52" Id="2062633fa1524403a17b260489df8535">
+								<AboveValueTriggerModel Id="58fcbc08222b41df80b5000ab46a296c" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 53" CanDisable="[bool]True" CriticalAlarm="9fc66fa6bf36465aaa664d5bda9be9b8" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="3c438fe2be6346faa64408a7cdda7421" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink53" Units="[string]Voltaires" WarningAlarm="8c46b1d975b40cfbfa4686efcc322bc">
+						<AlarmModel Id="8c46b1d975b40cfbfa4686efcc322bc" Severity="[AlarmSeverity]Warning" TriggerModel="c9797b2ea5e24b56a7a9f5d240ad89ad">
+							<ChannelMonitorTriggerModel Alias="[string]8ca659f1-49b2-4724-a725-cb29f6025e27" AliasToMonitor="[string]Sink 53" Id="c9797b2ea5e24b56a7a9f5d240ad89ad">
+								<AboveValueTriggerModel Id="7c116beda5f54b5181e4b9a712b47748" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="9fc66fa6bf36465aaa664d5bda9be9b8" Severity="[AlarmSeverity]Critical" TriggerModel="be6c871812854c40ad6a6930016fa272">
+							<ChannelMonitorTriggerModel Alias="[string]4c042ba3-5060-4334-ab7f-a64164d7b5d7" AliasToMonitor="[string]Sink 53" Id="be6c871812854c40ad6a6930016fa272">
+								<AboveValueTriggerModel Id="42e3d387c954713b2bb3d0456261e2d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 54" CanDisable="[bool]True" CriticalAlarm="21e0be1c8d1b4635b0695c7d49e2190e" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="1c2f19dda30e41b8891f93b2c28d82c2" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink54" Units="[string]Voltaires" WarningAlarm="991cceac260047089e07b6dd99282796">
+						<AlarmModel Id="991cceac260047089e07b6dd99282796" Severity="[AlarmSeverity]Warning" TriggerModel="a991480b171447fb9d2e48eab42e4514">
+							<ChannelMonitorTriggerModel Alias="[string]cabb5351-6569-440d-8882-2cca7129076d" AliasToMonitor="[string]Sink 54" Id="a991480b171447fb9d2e48eab42e4514">
+								<AboveValueTriggerModel Id="3c84b3b7459f4cb996506ecc251c841e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="21e0be1c8d1b4635b0695c7d49e2190e" Severity="[AlarmSeverity]Critical" TriggerModel="3f2302439107497892f2e02fdeb1545e">
+							<ChannelMonitorTriggerModel Alias="[string]31646861-c098-4ce5-9cc3-c2bcd9b03e16" AliasToMonitor="[string]Sink 54" Id="3f2302439107497892f2e02fdeb1545e">
+								<AboveValueTriggerModel Id="cb936078825490883f3573bdfb47448" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 55" CanDisable="[bool]True" CriticalAlarm="ab21cd5f9afa4b2eab4db64a1a49c481" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="22d3aa808cdd401486c92d7e4eb1e129" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink55" Units="[string]Voltaires" WarningAlarm="1d17de8bd58c449fa4720ddc1b481dd1">
+						<AlarmModel Id="1d17de8bd58c449fa4720ddc1b481dd1" Severity="[AlarmSeverity]Warning" TriggerModel="bc1b0bff8fda421db840ea84ce5ed211">
+							<ChannelMonitorTriggerModel Alias="[string]4d4d7f09-e2a9-46cd-b751-751545b0d225" AliasToMonitor="[string]Sink 55" Id="bc1b0bff8fda421db840ea84ce5ed211">
+								<AboveValueTriggerModel Id="c4c2a86111d84517b4038d0a82f0c85d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="ab21cd5f9afa4b2eab4db64a1a49c481" Severity="[AlarmSeverity]Critical" TriggerModel="2d96ba44b80a48249e197dcd6c24505f">
+							<ChannelMonitorTriggerModel Alias="[string]31f6a141-9e58-4c9f-9d57-a88a1c1a6645" AliasToMonitor="[string]Sink 55" Id="2d96ba44b80a48249e197dcd6c24505f">
+								<AboveValueTriggerModel Id="c0ea817e1894597882cc45c36a948e6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 56" CanDisable="[bool]True" CriticalAlarm="cd4974b02dbc4fa7986b19e4f12f55a5" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="15dc76239b4d4d5a90bd6b3c60a30e86" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink56" Units="[string]Voltaires" WarningAlarm="76239a69afe14afa8302526ebb71719e">
+						<AlarmModel Id="76239a69afe14afa8302526ebb71719e" Severity="[AlarmSeverity]Warning" TriggerModel="e622dc48e0e143fd876588651d93b365">
+							<ChannelMonitorTriggerModel Alias="[string]5b59f23c-ce07-4145-a2e7-62c169fadb85" AliasToMonitor="[string]Sink 56" Id="e622dc48e0e143fd876588651d93b365">
+								<AboveValueTriggerModel Id="da1dd20aab4a4ddc8d44b0fc17b4ba92" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="cd4974b02dbc4fa7986b19e4f12f55a5" Severity="[AlarmSeverity]Critical" TriggerModel="143ca495be6a4a3a8f2c7b5a5b416c83">
+							<ChannelMonitorTriggerModel Alias="[string]901384b3-9ec7-4def-bf11-ff6398a37286" AliasToMonitor="[string]Sink 56" Id="143ca495be6a4a3a8f2c7b5a5b416c83">
+								<AboveValueTriggerModel Id="23076f8ec62a481e8977385e1b92f84a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 57" CanDisable="[bool]True" CriticalAlarm="3ed7cfe7d118469aa1e9d0c278b1e469" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="36c437f932d74d43ad16a1b79a906bfc" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink57" Units="[string]Voltaires" WarningAlarm="dbb667bf71ac479b9fc4ffdfdf4a4001">
+						<AlarmModel Id="dbb667bf71ac479b9fc4ffdfdf4a4001" Severity="[AlarmSeverity]Warning" TriggerModel="4ebb88eb7d3e46ce97062fd0bef7b481">
+							<ChannelMonitorTriggerModel Alias="[string]45e5da59-b426-441e-8e8f-e2ff80062f2a" AliasToMonitor="[string]Sink 57" Id="4ebb88eb7d3e46ce97062fd0bef7b481">
+								<AboveValueTriggerModel Id="854ccaaeb0ed49649aa9bbc60edaa7a7" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="3ed7cfe7d118469aa1e9d0c278b1e469" Severity="[AlarmSeverity]Critical" TriggerModel="840e0fb47fb64cbca1f2db11da8c80c1">
+							<ChannelMonitorTriggerModel Alias="[string]0f6a36bb-0bbd-4a50-aee6-bec81cc819e2" AliasToMonitor="[string]Sink 57" Id="840e0fb47fb64cbca1f2db11da8c80c1">
+								<AboveValueTriggerModel Id="9aadda97fb4b446fba4f8ade6b11b785" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 58" CanDisable="[bool]True" CriticalAlarm="52d672a6b9574839a0fa9cd4637e18ad" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="f7c25909134844cc9bb2ed81b3023f6d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink58" Units="[string]Voltaires" WarningAlarm="53700b4eea4948eda577032a1d1a2d30">
+						<AlarmModel Id="53700b4eea4948eda577032a1d1a2d30" Severity="[AlarmSeverity]Warning" TriggerModel="ac03ab99eb154b1bae58efa0d76a2926">
+							<ChannelMonitorTriggerModel Alias="[string]59c1baad-bca5-4e98-ad89-f4e78292d251" AliasToMonitor="[string]Sink 58" Id="ac03ab99eb154b1bae58efa0d76a2926">
+								<AboveValueTriggerModel Id="99c54f3ef5bf4d949f9ce314f51fb869" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="52d672a6b9574839a0fa9cd4637e18ad" Severity="[AlarmSeverity]Critical" TriggerModel="dc0d15197b484e199ac7ae28745ad4d7">
+							<ChannelMonitorTriggerModel Alias="[string]1d5fdb74-bfb3-4486-a654-8a532f7b66c4" AliasToMonitor="[string]Sink 58" Id="dc0d15197b484e199ac7ae28745ad4d7">
+								<AboveValueTriggerModel Id="f8927ed6497245ac84dbc713863ce45e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 59" CanDisable="[bool]True" CriticalAlarm="45663b78ba7e4176b5c28bda899a204a" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="d668c0d627984e1cb4a3c6147425f2c3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink59" Units="[string]Voltaires" WarningAlarm="fa0bac115d8342fe87f500bf53c76420">
+						<AlarmModel Id="fa0bac115d8342fe87f500bf53c76420" Severity="[AlarmSeverity]Warning" TriggerModel="766acc00f44446588b3ffe79538e32bc">
+							<ChannelMonitorTriggerModel Alias="[string]b1b52888-d332-4664-b0f7-82e33de4ab1d" AliasToMonitor="[string]Sink 59" Id="766acc00f44446588b3ffe79538e32bc">
+								<AboveValueTriggerModel Id="8c69afd4e0e4b4aa2c8b359126c822c" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="45663b78ba7e4176b5c28bda899a204a" Severity="[AlarmSeverity]Critical" TriggerModel="5898901a0481439ca835944c07ccaa97">
+							<ChannelMonitorTriggerModel Alias="[string]35872791-5737-426f-a073-3748bf09ca56" AliasToMonitor="[string]Sink 59" Id="5898901a0481439ca835944c07ccaa97">
+								<AboveValueTriggerModel Id="e03f44a5311947a08c73ea4796b56aba" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 60" CanDisable="[bool]True" CriticalAlarm="7b16ed98c56e4f86bcf34aea2fb83f29" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="be7758556fd845a0b073b3e63b6a54b6" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink60" Units="[string]Voltaires" WarningAlarm="2d1c24e237064464b4e061475c3d58e4">
+						<AlarmModel Id="2d1c24e237064464b4e061475c3d58e4" Severity="[AlarmSeverity]Warning" TriggerModel="d5c82695c1ce416aa572fdf6771c4bd2">
+							<ChannelMonitorTriggerModel Alias="[string]64964ee6-832f-4704-852a-d9179a6f9492" AliasToMonitor="[string]Sink 60" Id="d5c82695c1ce416aa572fdf6771c4bd2">
+								<AboveValueTriggerModel Id="6d77dcc4b16b416cb9c028df5938cab4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7b16ed98c56e4f86bcf34aea2fb83f29" Severity="[AlarmSeverity]Critical" TriggerModel="c72c6b89a7bd49d58c4772ea88f7b6ac">
+							<ChannelMonitorTriggerModel Alias="[string]58eadad5-be04-44df-a1b2-9e0f20e3b264" AliasToMonitor="[string]Sink 60" Id="c72c6b89a7bd49d58c4772ea88f7b6ac">
+								<AboveValueTriggerModel Id="f2ab2c9f0f744b3797244ca3f9229321" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 61" CanDisable="[bool]True" CriticalAlarm="40a0e2009eba4e8bbcef32f686529cda" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="195183d677fd44b78bd29322d6a15026" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink61" Units="[string]Voltaires" WarningAlarm="f9e65ae1e487433f8248af5fe7178ad1">
+						<AlarmModel Id="f9e65ae1e487433f8248af5fe7178ad1" Severity="[AlarmSeverity]Warning" TriggerModel="cc099a05f3064ee2a10f6ecf4ba6083a">
+							<ChannelMonitorTriggerModel Alias="[string]350bbc92-cdfd-4b6a-97d9-11279bfe99bb" AliasToMonitor="[string]Sink 61" Id="cc099a05f3064ee2a10f6ecf4ba6083a">
+								<AboveValueTriggerModel Id="38afc137c46f4279a9dab19f43591997" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="40a0e2009eba4e8bbcef32f686529cda" Severity="[AlarmSeverity]Critical" TriggerModel="8d3b94f2ef754cc6854d850e2ba53cd3">
+							<ChannelMonitorTriggerModel Alias="[string]741eef6c-4291-41f9-ad31-fbeef3d3c7e2" AliasToMonitor="[string]Sink 61" Id="8d3b94f2ef754cc6854d850e2ba53cd3">
+								<AboveValueTriggerModel Id="ca4b25e4714c412d90d22ae3ee973397" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 62" CanDisable="[bool]True" CriticalAlarm="7c756c7dfba343b18c2a1d443b248eb7" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="af636a5b70454245806bc39d4abba71b" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink62" Units="[string]Voltaires" WarningAlarm="20bd10c01c9a4925b83dbb030a775c53">
+						<AlarmModel Id="20bd10c01c9a4925b83dbb030a775c53" Severity="[AlarmSeverity]Warning" TriggerModel="566124e411784b45b1e51020d525e83e">
+							<ChannelMonitorTriggerModel Alias="[string]e0aa3fb8-d44a-45a6-9c52-751159bba8ce" AliasToMonitor="[string]Sink 62" Id="566124e411784b45b1e51020d525e83e">
+								<AboveValueTriggerModel Id="9fbccb47018f45628d3175c3b6d91b9e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7c756c7dfba343b18c2a1d443b248eb7" Severity="[AlarmSeverity]Critical" TriggerModel="d07c082e84bd45f4ad04f2302b5249b3">
+							<ChannelMonitorTriggerModel Alias="[string]d88db1d2-c9b1-4666-8510-43caf7018011" AliasToMonitor="[string]Sink 62" Id="d07c082e84bd45f4ad04f2302b5249b3">
+								<AboveValueTriggerModel Id="287ec57e67004a469a300dbf4ece5aa9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 63" CanDisable="[bool]True" CriticalAlarm="1b6482ba7eba45c4aa58d55b2913e786" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="13011faa5294e9191556bf8046791b1" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink63" Units="[string]Voltaires" WarningAlarm="f946d32cc40a4b3597a79de2bfea8f66">
+						<AlarmModel Id="f946d32cc40a4b3597a79de2bfea8f66" Severity="[AlarmSeverity]Warning" TriggerModel="ea8f81a0cb2c428eb341748a60f23116">
+							<ChannelMonitorTriggerModel Alias="[string]5ce867db-826f-43bd-8d2e-b9e59841e1e3" AliasToMonitor="[string]Sink 63" Id="ea8f81a0cb2c428eb341748a60f23116">
+								<AboveValueTriggerModel Id="b0d1f6ea17e04878832caf0412b63e99" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="1b6482ba7eba45c4aa58d55b2913e786" Severity="[AlarmSeverity]Critical" TriggerModel="a528f2dfced14285a7f62971b8702e4d">
+							<ChannelMonitorTriggerModel Alias="[string]13fd995a-5947-40a2-b11b-8053e8168bc4" AliasToMonitor="[string]Sink 63" Id="a528f2dfced14285a7f62971b8702e4d">
+								<AboveValueTriggerModel Id="3d0ed53bde9f4aa28f40e7854f0c59d6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 64" CanDisable="[bool]True" CriticalAlarm="800e63fd99e84366b79092efd90790e6" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4b877221268f43dbab9369557adf875a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink64" Units="[string]Voltaires" WarningAlarm="b1a5b9acbeae4653a84ca769b5ad6915">
+						<AlarmModel Id="b1a5b9acbeae4653a84ca769b5ad6915" Severity="[AlarmSeverity]Warning" TriggerModel="7eda0597b33b4773a8b8f29bfc0d53f1">
+							<ChannelMonitorTriggerModel Alias="[string]902c9521-ca3a-4a99-9365-d0b4668810cb" AliasToMonitor="[string]Sink 64" Id="7eda0597b33b4773a8b8f29bfc0d53f1">
+								<AboveValueTriggerModel Id="df07091d333448b1832bc3eba8de3b28" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="800e63fd99e84366b79092efd90790e6" Severity="[AlarmSeverity]Critical" TriggerModel="f434959da68f4a6c9c786263972e4011">
+							<ChannelMonitorTriggerModel Alias="[string]5f201fdd-cd0f-42b9-994c-b80397f462ea" AliasToMonitor="[string]Sink 64" Id="f434959da68f4a6c9c786263972e4011">
+								<AboveValueTriggerModel Id="281f175ca4b84941b84826823b88b8f0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 65" CanDisable="[bool]True" CriticalAlarm="ec74a74593b14ed48832d2fa4253d2a8" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="868e57f4f3284cb99825244d27187ba9" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink65" Units="[string]Voltaires" WarningAlarm="b52fc64ab5894b5a84dd905d41393160">
+						<AlarmModel Id="b52fc64ab5894b5a84dd905d41393160" Severity="[AlarmSeverity]Warning" TriggerModel="fa784f6ef38348ae861cb4610410812e">
+							<ChannelMonitorTriggerModel Alias="[string]22d12d67-1f67-41c8-ba6b-43097670c3d5" AliasToMonitor="[string]Sink 65" Id="fa784f6ef38348ae861cb4610410812e">
+								<AboveValueTriggerModel Id="c520e3c9ef9d4685af5abcf9ab74d024" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="ec74a74593b14ed48832d2fa4253d2a8" Severity="[AlarmSeverity]Critical" TriggerModel="65ae80d33f3b44b2b74ce81ad5fa039a">
+							<ChannelMonitorTriggerModel Alias="[string]52615ba6-c800-457e-a7a5-1997b9ab3132" AliasToMonitor="[string]Sink 65" Id="65ae80d33f3b44b2b74ce81ad5fa039a">
+								<AboveValueTriggerModel Id="5ab503325eff4ac18ff388f328e1c57d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 66" CanDisable="[bool]True" CriticalAlarm="7c4bf7384ea247d89b16bec5321404c9" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="86edc1b5473940209840bf9ec151b33f" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink66" Units="[string]Voltaires" WarningAlarm="546632a0c45344559a5ac3c4de1d974c">
+						<AlarmModel Id="546632a0c45344559a5ac3c4de1d974c" Severity="[AlarmSeverity]Warning" TriggerModel="13f6a60ea94143a28a696caa378f769c">
+							<ChannelMonitorTriggerModel Alias="[string]5816e843-810a-45c0-a1db-0710fd8abcda" AliasToMonitor="[string]Sink 66" Id="13f6a60ea94143a28a696caa378f769c">
+								<AboveValueTriggerModel Id="a2ed8f0f12b547f596ba7be585aea801" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7c4bf7384ea247d89b16bec5321404c9" Severity="[AlarmSeverity]Critical" TriggerModel="48aff9f2f69a4504ad1d34b17d577d71">
+							<ChannelMonitorTriggerModel Alias="[string]1eef3a9d-3421-4069-b4f0-8659724efa9e" AliasToMonitor="[string]Sink 66" Id="48aff9f2f69a4504ad1d34b17d577d71">
+								<AboveValueTriggerModel Id="9b29293bb14d447fa92ba545aefbef7f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 67" CanDisable="[bool]True" CriticalAlarm="86092d8b26944768a9b585380b0bdfb" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c8266372ad414aefb1d75cb334cb5c27" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink67" Units="[string]Voltaires" WarningAlarm="d65416b3f8064107b015b9bd2645ad74">
+						<AlarmModel Id="d65416b3f8064107b015b9bd2645ad74" Severity="[AlarmSeverity]Warning" TriggerModel="293bfe99b7ab4ca3aea4b9565c0ced45">
+							<ChannelMonitorTriggerModel Alias="[string]785db11c-095a-4468-a086-fe7813585dbb" AliasToMonitor="[string]Sink 67" Id="293bfe99b7ab4ca3aea4b9565c0ced45">
+								<AboveValueTriggerModel Id="f62076da732c401a88528d4a76c459e1" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="86092d8b26944768a9b585380b0bdfb" Severity="[AlarmSeverity]Critical" TriggerModel="1e7b0bc6aadc414081b414e5d6ae4a81">
+							<ChannelMonitorTriggerModel Alias="[string]606953ec-559c-4561-a7bf-a7be54be3afa" AliasToMonitor="[string]Sink 67" Id="1e7b0bc6aadc414081b414e5d6ae4a81">
+								<AboveValueTriggerModel Id="605974b056d94d68b65073ef2f976756" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 68" CanDisable="[bool]True" CriticalAlarm="cd04627368ab457cb2e04eb2b54d5e8e" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="73b363d49c1641d3ae89579c36d7be3e" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink68" Units="[string]Voltaires" WarningAlarm="15de37a10e64d8dabca13f715e82cce">
+						<AlarmModel Id="15de37a10e64d8dabca13f715e82cce" Severity="[AlarmSeverity]Warning" TriggerModel="42d9d734a04348c2804a84c7344a25fc">
+							<ChannelMonitorTriggerModel Alias="[string]9ca8b1e7-1b37-4d4b-8cff-5cc2c7ddda9c" AliasToMonitor="[string]Sink 68" Id="42d9d734a04348c2804a84c7344a25fc">
+								<AboveValueTriggerModel Id="97db4ce76fcb49c5986477d45feee2f2" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="cd04627368ab457cb2e04eb2b54d5e8e" Severity="[AlarmSeverity]Critical" TriggerModel="12bb669a0b3a4ce1a89f9b286b1aa6e0">
+							<ChannelMonitorTriggerModel Alias="[string]3aff837c-d516-41e3-9556-855772f6b893" AliasToMonitor="[string]Sink 68" Id="12bb669a0b3a4ce1a89f9b286b1aa6e0">
+								<AboveValueTriggerModel Id="d9008baa631e4c859211b016fe596e8a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 69" CanDisable="[bool]True" CriticalAlarm="3f2e0801dd3941988bf0ccd93f55db5d" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="43df023c5fdb451393cf9ae4f1c97261" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink69" Units="[string]Voltaires" WarningAlarm="3ae7b21e59ec4c86bf7ed6f48188a729">
+						<AlarmModel Id="3ae7b21e59ec4c86bf7ed6f48188a729" Severity="[AlarmSeverity]Warning" TriggerModel="964957cd89014caea4e6ee0ac0e57319">
+							<ChannelMonitorTriggerModel Alias="[string]e15bc37a-fb32-47ff-b371-1880b672e29a" AliasToMonitor="[string]Sink 69" Id="964957cd89014caea4e6ee0ac0e57319">
+								<AboveValueTriggerModel Id="7df8ab532f5c4c6d889514fca295d7a9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="3f2e0801dd3941988bf0ccd93f55db5d" Severity="[AlarmSeverity]Critical" TriggerModel="824f35f964bb4f5d9cbbb499995c3238">
+							<ChannelMonitorTriggerModel Alias="[string]9c77788e-451e-41a4-9ae5-534184111634" AliasToMonitor="[string]Sink 69" Id="824f35f964bb4f5d9cbbb499995c3238">
+								<AboveValueTriggerModel Id="76eb3682766a4a8b9c25624aff0bdfcb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 70" CanDisable="[bool]True" CriticalAlarm="3bcb4e75e16341149ec7dd24a98b44c1" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="82efdfd9c74747e2a9c29e1d36610f0d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink70" Units="[string]Voltaires" WarningAlarm="167c904cc15d49138465cfc969cd7b66">
+						<AlarmModel Id="167c904cc15d49138465cfc969cd7b66" Severity="[AlarmSeverity]Warning" TriggerModel="adc0c3efd664dd1bb66af700ef5f73f">
+							<ChannelMonitorTriggerModel Alias="[string]353d4ab4-5205-4a01-bc6b-1b83a650a6dc" AliasToMonitor="[string]Sink 70" Id="adc0c3efd664dd1bb66af700ef5f73f">
+								<AboveValueTriggerModel Id="7ad6237fea6847feafce9733e80215eb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="3bcb4e75e16341149ec7dd24a98b44c1" Severity="[AlarmSeverity]Critical" TriggerModel="766ad69ace8a4ff8959529239b5c297a">
+							<ChannelMonitorTriggerModel Alias="[string]28a7b021-f24b-4f89-ae11-471f5b2b71a1" AliasToMonitor="[string]Sink 70" Id="766ad69ace8a4ff8959529239b5c297a">
+								<AboveValueTriggerModel Id="db5614e4d0d9459d8c26ad4edfcdaa2a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 71" CanDisable="[bool]True" CriticalAlarm="bfa70e2f6a943b195735c60f5f3d2b9" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="764fae70a7164d398abcf08e711605ed" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink71" Units="[string]Voltaires" WarningAlarm="e5bee7d4c8da49bb8731fb0b77007154">
+						<AlarmModel Id="e5bee7d4c8da49bb8731fb0b77007154" Severity="[AlarmSeverity]Warning" TriggerModel="9abdb2a3aeb149fa9d094e4d780de6ac">
+							<ChannelMonitorTriggerModel Alias="[string]2a403b85-5a5c-4cc9-820a-bbbf44531292" AliasToMonitor="[string]Sink 71" Id="9abdb2a3aeb149fa9d094e4d780de6ac">
+								<AboveValueTriggerModel Id="32d265181d674da08c77ad3eea3945b1" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="bfa70e2f6a943b195735c60f5f3d2b9" Severity="[AlarmSeverity]Critical" TriggerModel="46395cff4b4d45728a7ecbf8939fe321">
+							<ChannelMonitorTriggerModel Alias="[string]ee5fb36d-2dca-4761-adea-ce9e6d2b0f40" AliasToMonitor="[string]Sink 71" Id="46395cff4b4d45728a7ecbf8939fe321">
+								<AboveValueTriggerModel Id="2646a445226146cea6323cb38285acd4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 72" CanDisable="[bool]True" CriticalAlarm="276c8cbf02664be1a844d06b70262fab" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="1d7a4329d26141938efc3476f6f7461a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink72" Units="[string]Voltaires" WarningAlarm="abc75ba660cb467bac2e369e818d5a7d">
+						<AlarmModel Id="abc75ba660cb467bac2e369e818d5a7d" Severity="[AlarmSeverity]Warning" TriggerModel="84d07a1ec61c47089c3de09427937755">
+							<ChannelMonitorTriggerModel Alias="[string]3d568b27-cbca-42ff-a05b-02fd631a078c" AliasToMonitor="[string]Sink 72" Id="84d07a1ec61c47089c3de09427937755">
+								<AboveValueTriggerModel Id="cf0078b27ffa4d08a1edd740fc8b12f6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="276c8cbf02664be1a844d06b70262fab" Severity="[AlarmSeverity]Critical" TriggerModel="6c578444cfa044c9a04affe836400fc4">
+							<ChannelMonitorTriggerModel Alias="[string]e270796d-de58-4d60-93d2-d8c69b72c094" AliasToMonitor="[string]Sink 72" Id="6c578444cfa044c9a04affe836400fc4">
+								<AboveValueTriggerModel Id="2a751eba2a7b4dbbbd8faec895eca4a8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 73" CanDisable="[bool]True" CriticalAlarm="13ed95c4b54e4311a0bb4e271143c38f" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="a801cdbe3314298963b431d4be97d2a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink73" Units="[string]Voltaires" WarningAlarm="8120bf37264453bab0279deec6f3c51">
+						<AlarmModel Id="8120bf37264453bab0279deec6f3c51" Severity="[AlarmSeverity]Warning" TriggerModel="7443418f782b4769856e2ff71271b650">
+							<ChannelMonitorTriggerModel Alias="[string]5f32a343-3de0-40cb-a5fe-e8f4c6d6e888" AliasToMonitor="[string]Sink 73" Id="7443418f782b4769856e2ff71271b650">
+								<AboveValueTriggerModel Id="6cb0c85912b64eacab9dc6e395be6ca5" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="13ed95c4b54e4311a0bb4e271143c38f" Severity="[AlarmSeverity]Critical" TriggerModel="d94effed7c064ec0b00b8f5d4b8e4994">
+							<ChannelMonitorTriggerModel Alias="[string]88540e0a-c45e-41eb-8b87-181854b65901" AliasToMonitor="[string]Sink 73" Id="d94effed7c064ec0b00b8f5d4b8e4994">
+								<AboveValueTriggerModel Id="3a8f9e2dd1cf40faba5e3f0d639302d3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 74" CanDisable="[bool]True" CriticalAlarm="ebe703e5225d48288f03afd87b3af763" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="e5b0723049ea40989e2aad804628436a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink74" Units="[string]Voltaires" WarningAlarm="f6e7f5feeed24c5688127c2e6df184f7">
+						<AlarmModel Id="f6e7f5feeed24c5688127c2e6df184f7" Severity="[AlarmSeverity]Warning" TriggerModel="952e1942385e42978fdbe77a88f12422">
+							<ChannelMonitorTriggerModel Alias="[string]78f76683-08a7-4bdb-9362-8633439e8aec" AliasToMonitor="[string]Sink 74" Id="952e1942385e42978fdbe77a88f12422">
+								<AboveValueTriggerModel Id="463b64fcac144e1080ce4602148a6b26" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="ebe703e5225d48288f03afd87b3af763" Severity="[AlarmSeverity]Critical" TriggerModel="b43ea4cbea6f4528a6607bb76f2133b5">
+							<ChannelMonitorTriggerModel Alias="[string]932c6440-4d30-4e29-84e1-49a632dcf97f" AliasToMonitor="[string]Sink 74" Id="b43ea4cbea6f4528a6607bb76f2133b5">
+								<AboveValueTriggerModel Id="8b7f6cd11ed34f3f8a4a43ee39fff055" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 75" CanDisable="[bool]True" CriticalAlarm="8e7ffea053214200b82ab1c3b9664593" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="81581a253984c27a2e529470475c1b9" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink75" Units="[string]Voltaires" WarningAlarm="585b8a5226df404d8c3aa76d398f191e">
+						<AlarmModel Id="585b8a5226df404d8c3aa76d398f191e" Severity="[AlarmSeverity]Warning" TriggerModel="ad95e060222a4f2faee201e259239798">
+							<ChannelMonitorTriggerModel Alias="[string]5c515f48-eb07-4f15-a71b-81e2a4bf7159" AliasToMonitor="[string]Sink 75" Id="ad95e060222a4f2faee201e259239798">
+								<AboveValueTriggerModel Id="cc610bf5cf224f0b856893108c7205b5" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="8e7ffea053214200b82ab1c3b9664593" Severity="[AlarmSeverity]Critical" TriggerModel="1f0fc78a3c4a48afb41c64f0077653a1">
+							<ChannelMonitorTriggerModel Alias="[string]4338497a-0302-4533-9990-3dd1719330ae" AliasToMonitor="[string]Sink 75" Id="1f0fc78a3c4a48afb41c64f0077653a1">
+								<AboveValueTriggerModel Id="b9f28dbb83fb446bb9ee1db94bebba18" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 76" CanDisable="[bool]True" CriticalAlarm="2cb8a2b7b0e34880b3ca7f19c602f1eb" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="57771db9e4a14aedad021152baf081ff" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink76" Units="[string]Voltaires" WarningAlarm="1b768cc9ccc14affb335cd13273f49f2">
+						<AlarmModel Id="1b768cc9ccc14affb335cd13273f49f2" Severity="[AlarmSeverity]Warning" TriggerModel="ed28bd8d8dc54e7c900f7fdb797ffc5b">
+							<ChannelMonitorTriggerModel Alias="[string]527b8d4e-e4ba-497b-8c13-727561ef5622" AliasToMonitor="[string]Sink 76" Id="ed28bd8d8dc54e7c900f7fdb797ffc5b">
+								<AboveValueTriggerModel Id="a37a1c4b8a4c47529998c1de593cf983" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="2cb8a2b7b0e34880b3ca7f19c602f1eb" Severity="[AlarmSeverity]Critical" TriggerModel="eb48f094db7841c08e2f17e8b1435930">
+							<ChannelMonitorTriggerModel Alias="[string]ef0150f0-f246-47af-986a-708f37eed06c" AliasToMonitor="[string]Sink 76" Id="eb48f094db7841c08e2f17e8b1435930">
+								<AboveValueTriggerModel Id="ae4ddcaf272e40dfa87e69ba870ad5b2" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 77" CanDisable="[bool]True" CriticalAlarm="57a989927dc94c50ba208a18931c1100" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="fb146099d65c45f4a791f20597aac0f4" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink77" Units="[string]Voltaires" WarningAlarm="9b5029c8b1f847a38f6be873fd480786">
+						<AlarmModel Id="9b5029c8b1f847a38f6be873fd480786" Severity="[AlarmSeverity]Warning" TriggerModel="1d81232bdf04499d982f6a3c1470106c">
+							<ChannelMonitorTriggerModel Alias="[string]aff9241d-457a-4653-b3db-f2cef544b470" AliasToMonitor="[string]Sink 77" Id="1d81232bdf04499d982f6a3c1470106c">
+								<AboveValueTriggerModel Id="880483f231b344d1a98cd4bb172dc8ed" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="57a989927dc94c50ba208a18931c1100" Severity="[AlarmSeverity]Critical" TriggerModel="5aa81a9168bc43a784955b92bba92e3a">
+							<ChannelMonitorTriggerModel Alias="[string]323b93de-a1bb-4412-b894-e6d3184dfa7c" AliasToMonitor="[string]Sink 77" Id="5aa81a9168bc43a784955b92bba92e3a">
+								<AboveValueTriggerModel Id="af9e6f272a7e44ec92e85ffc515b6a3b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 78" CanDisable="[bool]True" CriticalAlarm="470ae524ca3c4692ae72c1a3a8614af0" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="7302406ee9b4319bec09e5e33f5a5b3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink78" Units="[string]Voltaires" WarningAlarm="d14d3da7652f4555b3fb7e5da5adf166">
+						<AlarmModel Id="d14d3da7652f4555b3fb7e5da5adf166" Severity="[AlarmSeverity]Warning" TriggerModel="ea878264e01a4b58aed59e5c50733faa">
+							<ChannelMonitorTriggerModel Alias="[string]5c69c44c-08bc-4ef8-b0ed-f11807f830aa" AliasToMonitor="[string]Sink 78" Id="ea878264e01a4b58aed59e5c50733faa">
+								<AboveValueTriggerModel Id="39ec0189106c42908b489f677659cc4b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="470ae524ca3c4692ae72c1a3a8614af0" Severity="[AlarmSeverity]Critical" TriggerModel="ec37e3d4ccaf47b19e81b79d18f68aa0">
+							<ChannelMonitorTriggerModel Alias="[string]614db51b-1c5d-435d-aa0e-a3a401535488" AliasToMonitor="[string]Sink 78" Id="ec37e3d4ccaf47b19e81b79d18f68aa0">
+								<AboveValueTriggerModel Id="91c0aecbae71473b98c6a018cd8d3c64" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 79" CanDisable="[bool]True" CriticalAlarm="1066450537dd4102b737f318511e992b" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="4e87956cb97649098a79a7526a2e69cf" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink79" Units="[string]Voltaires" WarningAlarm="e69d20db4bb74268a0e5fc720bd6d57a">
+						<AlarmModel Id="e69d20db4bb74268a0e5fc720bd6d57a" Severity="[AlarmSeverity]Warning" TriggerModel="d7fe987365eb465d91c8ea229a9b95b8">
+							<ChannelMonitorTriggerModel Alias="[string]f54e6c68-c406-4d33-8b7d-6e464d46b66a" AliasToMonitor="[string]Sink 79" Id="d7fe987365eb465d91c8ea229a9b95b8">
+								<AboveValueTriggerModel Id="3a523fe6e3cd44cd9df9c073c219182e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="1066450537dd4102b737f318511e992b" Severity="[AlarmSeverity]Critical" TriggerModel="3be0804bbb434d27a1eead0e4b40316d">
+							<ChannelMonitorTriggerModel Alias="[string]710ab22f-a2c0-49b2-9d05-2d4967661d30" AliasToMonitor="[string]Sink 79" Id="3be0804bbb434d27a1eead0e4b40316d">
+								<AboveValueTriggerModel Id="4d6d785891ac454c86651fd4d92de036" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 80" CanDisable="[bool]True" CriticalAlarm="f54a3fb55c4d45d589d0b22e9e05a168" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="a8943e058e09451aa3bd5a2f40493686" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink80" Units="[string]Voltaires" WarningAlarm="9b04cf6686d744dc9996ed9a22b7d10c">
+						<AlarmModel Id="9b04cf6686d744dc9996ed9a22b7d10c" Severity="[AlarmSeverity]Warning" TriggerModel="d03ee6d3535d42568384b80a6bd19536">
+							<ChannelMonitorTriggerModel Alias="[string]a2310496-990e-4c1b-bae8-d719e8bac859" AliasToMonitor="[string]Sink 80" Id="d03ee6d3535d42568384b80a6bd19536">
+								<AboveValueTriggerModel Id="a74ca34f95c4d0aad51a51f6f547290" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="f54a3fb55c4d45d589d0b22e9e05a168" Severity="[AlarmSeverity]Critical" TriggerModel="7164ddf32691458facfa4145f8c93651">
+							<ChannelMonitorTriggerModel Alias="[string]f48eea4e-93e4-4852-ac8c-8a58dcedf547" AliasToMonitor="[string]Sink 80" Id="7164ddf32691458facfa4145f8c93651">
+								<AboveValueTriggerModel Id="6f9d971c6e3f4d869deaccadcd69ac48" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 81" CanDisable="[bool]True" CriticalAlarm="83f03cd88d594567b25cf697c6a1b825" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="1e6d105ff4f94e31aa7640db27b9f41a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink81" Units="[string]Voltaires" WarningAlarm="25e94c2bac3341f2bca67e6fbf402dac">
+						<AlarmModel Id="25e94c2bac3341f2bca67e6fbf402dac" Severity="[AlarmSeverity]Warning" TriggerModel="4e82e883b7b2426a9e54777a3aff933a">
+							<ChannelMonitorTriggerModel Alias="[string]aaa709b6-e6c6-4a3a-9451-0c6d948be471" AliasToMonitor="[string]Sink 81" Id="4e82e883b7b2426a9e54777a3aff933a">
+								<AboveValueTriggerModel Id="2a1b8c218f1a4670bdfef8db804c9728" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="83f03cd88d594567b25cf697c6a1b825" Severity="[AlarmSeverity]Critical" TriggerModel="ac50eb1552994d4ebe59e1815610601f">
+							<ChannelMonitorTriggerModel Alias="[string]638c066a-aed3-4ba4-96ae-d0b9221a4da2" AliasToMonitor="[string]Sink 81" Id="ac50eb1552994d4ebe59e1815610601f">
+								<AboveValueTriggerModel Id="4ba8ac1b00a044ee88274d719efb19ed" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 82" CanDisable="[bool]True" CriticalAlarm="5f462a84985a44df8091da2cd4760b98" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c279d6ce7d6245738a8e4b9a983edaec" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink82" Units="[string]Voltaires" WarningAlarm="76f385311a6b409b91a2dfda126cc942">
+						<AlarmModel Id="76f385311a6b409b91a2dfda126cc942" Severity="[AlarmSeverity]Warning" TriggerModel="e9128719dde5487f8b2c54463eddc5f3">
+							<ChannelMonitorTriggerModel Alias="[string]3c9d234c-9072-4578-955e-81397d852a01" AliasToMonitor="[string]Sink 82" Id="e9128719dde5487f8b2c54463eddc5f3">
+								<AboveValueTriggerModel Id="da4ae23cbcdc4c37bcdad1733556aa4f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="5f462a84985a44df8091da2cd4760b98" Severity="[AlarmSeverity]Critical" TriggerModel="586c9501cbb64266b85ab6565940a315">
+							<ChannelMonitorTriggerModel Alias="[string]84e64acc-5896-478a-b57d-3074005d49f8" AliasToMonitor="[string]Sink 82" Id="586c9501cbb64266b85ab6565940a315">
+								<AboveValueTriggerModel Id="469b053e5a74442e826e73f3592ba00d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 83" CanDisable="[bool]True" CriticalAlarm="112ad13aab754c34b162ff659e8c9ca9" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2e1621b9d3e842d29ffdf0a82900e55b" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink83" Units="[string]Voltaires" WarningAlarm="d1212ccfe6c341968bec3243a7a3f19d">
+						<AlarmModel Id="d1212ccfe6c341968bec3243a7a3f19d" Severity="[AlarmSeverity]Warning" TriggerModel="d965519b246f4402b3a6752d43041aac">
+							<ChannelMonitorTriggerModel Alias="[string]9812bb2c-5ae4-483b-ba17-d9acc0e24351" AliasToMonitor="[string]Sink 83" Id="d965519b246f4402b3a6752d43041aac">
+								<AboveValueTriggerModel Id="6f1b315a0de94b47b20f4cd541ea80de" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="112ad13aab754c34b162ff659e8c9ca9" Severity="[AlarmSeverity]Critical" TriggerModel="e38097a4d34847328191480140d54273">
+							<ChannelMonitorTriggerModel Alias="[string]dfffd126-e889-4cc3-ab9b-8d7204d5e992" AliasToMonitor="[string]Sink 83" Id="e38097a4d34847328191480140d54273">
+								<AboveValueTriggerModel Id="7eacda14901f46aab87b38a984e15be6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 84" CanDisable="[bool]True" CriticalAlarm="7ee0c027f64e40faa161c6016ff1644c" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="57482bb21169422ba7a9cddb8ddae2d6" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink84" Units="[string]Voltaires" WarningAlarm="a3e5499f7ecf42bfb5066caf5fda66da">
+						<AlarmModel Id="a3e5499f7ecf42bfb5066caf5fda66da" Severity="[AlarmSeverity]Warning" TriggerModel="44c01e4a8ce432ea51af22cb23c8de6">
+							<ChannelMonitorTriggerModel Alias="[string]7eeaefd4-1f27-4b5d-aa67-e58196dc891c" AliasToMonitor="[string]Sink 84" Id="44c01e4a8ce432ea51af22cb23c8de6">
+								<AboveValueTriggerModel Id="2e2ed556b1c049538b0075bb409e367e" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="7ee0c027f64e40faa161c6016ff1644c" Severity="[AlarmSeverity]Critical" TriggerModel="e470b520ce554afba9f53ed5c666e480">
+							<ChannelMonitorTriggerModel Alias="[string]9583e50b-25c0-45c2-bfc7-b813f54ce27e" AliasToMonitor="[string]Sink 84" Id="e470b520ce554afba9f53ed5c666e480">
+								<AboveValueTriggerModel Id="8a79261e234944b6925d68289d22d374" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 85" CanDisable="[bool]True" CriticalAlarm="951ca212c3fb40b2ace15b37b67e3051" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="bacd6cc33d0c45d6a2803c6765d2ea0d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink85" Units="[string]Voltaires" WarningAlarm="34022875c8b54fc3b211d11f51310fba">
+						<AlarmModel Id="34022875c8b54fc3b211d11f51310fba" Severity="[AlarmSeverity]Warning" TriggerModel="ea5dde1a64f84ebbadfc026047bbb7b2">
+							<ChannelMonitorTriggerModel Alias="[string]60c811b5-2919-498f-8f81-1cb8997c56f7" AliasToMonitor="[string]Sink 85" Id="ea5dde1a64f84ebbadfc026047bbb7b2">
+								<AboveValueTriggerModel Id="ea32f09c17da4a4d9284878dc59e147b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="951ca212c3fb40b2ace15b37b67e3051" Severity="[AlarmSeverity]Critical" TriggerModel="9156477d4ada48e19282f323a7dd4496">
+							<ChannelMonitorTriggerModel Alias="[string]b6d2d9b5-2853-4d2c-b5b2-410d0adebd57" AliasToMonitor="[string]Sink 85" Id="9156477d4ada48e19282f323a7dd4496">
+								<AboveValueTriggerModel Id="30c473be1e0644dfb39ae18ae757b5d1" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 86" CanDisable="[bool]True" CriticalAlarm="4a2fb49721314b3596e7f04d5c45ba11" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2b3e28980d0b4327afb246b0b6e728da" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink86" Units="[string]Voltaires" WarningAlarm="b4da1373b78b43e4a6810bbc29f589e3">
+						<AlarmModel Id="b4da1373b78b43e4a6810bbc29f589e3" Severity="[AlarmSeverity]Warning" TriggerModel="831a75f2ee944f239a20c64aa0a4c829">
+							<ChannelMonitorTriggerModel Alias="[string]9ad5154f-b185-48ba-b7f6-8c64da46e112" AliasToMonitor="[string]Sink 86" Id="831a75f2ee944f239a20c64aa0a4c829">
+								<AboveValueTriggerModel Id="2427d6c2ddfc4df1900f42b6b26e4518" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="4a2fb49721314b3596e7f04d5c45ba11" Severity="[AlarmSeverity]Critical" TriggerModel="7ddf33d94d514ba88945c3a4a31cc6a8">
+							<ChannelMonitorTriggerModel Alias="[string]264c6a1e-8a30-4f38-b247-4cb98f611347" AliasToMonitor="[string]Sink 86" Id="7ddf33d94d514ba88945c3a4a31cc6a8">
+								<AboveValueTriggerModel Id="ad74da258fa4c648c68de8d4966e81b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 87" CanDisable="[bool]True" CriticalAlarm="483f2f6a6564373911671c62e7c24b1" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6da9f063ac44464c97d7d737a020686a" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink87" Units="[string]Voltaires" WarningAlarm="1ec5cf9e56c14dec82760d91d3f994d3">
+						<AlarmModel Id="1ec5cf9e56c14dec82760d91d3f994d3" Severity="[AlarmSeverity]Warning" TriggerModel="8fd99145496d42c7a331684ddaba1998">
+							<ChannelMonitorTriggerModel Alias="[string]d22964fc-857b-4d84-8c87-e534a21a3573" AliasToMonitor="[string]Sink 87" Id="8fd99145496d42c7a331684ddaba1998">
+								<AboveValueTriggerModel Id="de95af06988747be976221555f58dc67" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="483f2f6a6564373911671c62e7c24b1" Severity="[AlarmSeverity]Critical" TriggerModel="271e8bfeac0543f6a196182f34ecfa3c">
+							<ChannelMonitorTriggerModel Alias="[string]b008af94-1e16-4340-ae16-bc76d41ef4b3" AliasToMonitor="[string]Sink 87" Id="271e8bfeac0543f6a196182f34ecfa3c">
+								<AboveValueTriggerModel Id="cc93e7de608646799757593ea5947de8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 88" CanDisable="[bool]True" CriticalAlarm="a8347a612fe5437b8227426b53213e21" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="39a74165c3da40f1af45ab1e0b5ec0e3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink88" Units="[string]Voltaires" WarningAlarm="b8d2e6c7704f45da808ef3fa07655cbf">
+						<AlarmModel Id="b8d2e6c7704f45da808ef3fa07655cbf" Severity="[AlarmSeverity]Warning" TriggerModel="bc595fe0357743b587380a188d0c1222">
+							<ChannelMonitorTriggerModel Alias="[string]8ff5ba47-7ed9-4606-9044-ab3d76a7fafe" AliasToMonitor="[string]Sink 88" Id="bc595fe0357743b587380a188d0c1222">
+								<AboveValueTriggerModel Id="218f4f50150048e682c102380b187169" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="a8347a612fe5437b8227426b53213e21" Severity="[AlarmSeverity]Critical" TriggerModel="f7651b042bd3425f9de977f4b353e41b">
+							<ChannelMonitorTriggerModel Alias="[string]35a114d4-b5d0-44ea-a62b-51df4143a533" AliasToMonitor="[string]Sink 88" Id="f7651b042bd3425f9de977f4b353e41b">
+								<AboveValueTriggerModel Id="bbb107b2603549e4bac02481c077a2b6" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 89" CanDisable="[bool]True" CriticalAlarm="393cacd6b34b4b609290002b56295536" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2f93dbf6cfe24f279d647012497494a9" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink89" Units="[string]Voltaires" WarningAlarm="8499d3b461174312a5e16a10755654c0">
+						<AlarmModel Id="8499d3b461174312a5e16a10755654c0" Severity="[AlarmSeverity]Warning" TriggerModel="e6724c8e01be47638072551dad98eb86">
+							<ChannelMonitorTriggerModel Alias="[string]0f2c451d-2426-4440-b6aa-f075313000c7" AliasToMonitor="[string]Sink 89" Id="e6724c8e01be47638072551dad98eb86">
+								<AboveValueTriggerModel Id="dfb0a34469fa431d82ce941a7fc3789f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="393cacd6b34b4b609290002b56295536" Severity="[AlarmSeverity]Critical" TriggerModel="13e6f4a16f1a4841ad4d1a11779a3193">
+							<ChannelMonitorTriggerModel Alias="[string]6a0b5ce1-c002-4be5-b6c8-246403be6824" AliasToMonitor="[string]Sink 89" Id="13e6f4a16f1a4841ad4d1a11779a3193">
+								<AboveValueTriggerModel Id="fa5a082a17194837a6393b229b893f90" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 90" CanDisable="[bool]True" CriticalAlarm="9c377d9fd8f840b3b0d0fdf99ccfcbe8" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="3f84f14e924d407fbe61c7ffcf4e8cab" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink90" Units="[string]Voltaires" WarningAlarm="b46c5d0bd28440378007bc95f351a27c">
+						<AlarmModel Id="b46c5d0bd28440378007bc95f351a27c" Severity="[AlarmSeverity]Warning" TriggerModel="fd57278fa82b4862804e625670895250">
+							<ChannelMonitorTriggerModel Alias="[string]b14e7fec-9c53-4e92-b165-ef6d37d15250" AliasToMonitor="[string]Sink 90" Id="fd57278fa82b4862804e625670895250">
+								<AboveValueTriggerModel Id="6937d8f4a4684acabac4ae8d5bcc40c0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="9c377d9fd8f840b3b0d0fdf99ccfcbe8" Severity="[AlarmSeverity]Critical" TriggerModel="97219ce6e62b47b5815cac841cb12b36">
+							<ChannelMonitorTriggerModel Alias="[string]b2c6d59c-6b71-49af-85d4-6283106cfc62" AliasToMonitor="[string]Sink 90" Id="97219ce6e62b47b5815cac841cb12b36">
+								<AboveValueTriggerModel Id="c1cecc2c43c24c8a8d13b6e352ea8102" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 91" CanDisable="[bool]True" CriticalAlarm="f1a2df96648848ae8217ffe09deacb6e" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6b181b9096da41ecbfcdeadad639b5e3" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink91" Units="[string]Voltaires" WarningAlarm="c2b3a8c2060642aca09233cc1e8d1b0d">
+						<AlarmModel Id="c2b3a8c2060642aca09233cc1e8d1b0d" Severity="[AlarmSeverity]Warning" TriggerModel="d2878c30ad0e4a2d9662c23204fea34a">
+							<ChannelMonitorTriggerModel Alias="[string]fa8f1e7d-a038-42ae-8f02-065e4aef7856" AliasToMonitor="[string]Sink 91" Id="d2878c30ad0e4a2d9662c23204fea34a">
+								<AboveValueTriggerModel Id="ff4721efe46644478284a6e3fdb64a72" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="f1a2df96648848ae8217ffe09deacb6e" Severity="[AlarmSeverity]Critical" TriggerModel="8606981ebb6143f2a2b612f155384e65">
+							<ChannelMonitorTriggerModel Alias="[string]c8198776-e926-4a06-a4e6-3258ef873e37" AliasToMonitor="[string]Sink 91" Id="8606981ebb6143f2a2b612f155384e65">
+								<AboveValueTriggerModel Id="c7e68c0485ef4cc290cf0a63286282a9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 92" CanDisable="[bool]True" CriticalAlarm="607edf5453fa42a9a627ed24c13a60e5" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2b39cc5ef86540e99a84a1391f6ab753" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink92" Units="[string]Voltaires" WarningAlarm="a20392510f344ffea3a14e6bcbe312cb">
+						<AlarmModel Id="a20392510f344ffea3a14e6bcbe312cb" Severity="[AlarmSeverity]Warning" TriggerModel="deaf914d7f6e4f33af84e3a369109191">
+							<ChannelMonitorTriggerModel Alias="[string]3dbd9476-d2af-435b-a693-a5fcf704942a" AliasToMonitor="[string]Sink 92" Id="deaf914d7f6e4f33af84e3a369109191">
+								<AboveValueTriggerModel Id="d9dc6df9d4cd4fadb26d654624413a12" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="607edf5453fa42a9a627ed24c13a60e5" Severity="[AlarmSeverity]Critical" TriggerModel="926552391a12454eb590ed6319e27f81">
+							<ChannelMonitorTriggerModel Alias="[string]6ae96e55-4aab-4de2-96d9-e1076dbe1052" AliasToMonitor="[string]Sink 92" Id="926552391a12454eb590ed6319e27f81">
+								<AboveValueTriggerModel Id="fe5847eebd054c0aa0c56f4d4f0ff6ef" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 93" CanDisable="[bool]True" CriticalAlarm="fd7286cd26f34ec6a31d0e01e3a1a74f" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c2b4d93ca88f4de0b2ae661d4d989f40" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink93" Units="[string]Voltaires" WarningAlarm="e482c651fd15427e927027c4d0604957">
+						<AlarmModel Id="e482c651fd15427e927027c4d0604957" Severity="[AlarmSeverity]Warning" TriggerModel="3a1414832d1a4d8c8c1af4572201f067">
+							<ChannelMonitorTriggerModel Alias="[string]0ffb90e8-d54e-4d0d-a18e-3622a2e87fc9" AliasToMonitor="[string]Sink 93" Id="3a1414832d1a4d8c8c1af4572201f067">
+								<AboveValueTriggerModel Id="55de20f5817a4a5c936a1ff31eab4a86" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="fd7286cd26f34ec6a31d0e01e3a1a74f" Severity="[AlarmSeverity]Critical" TriggerModel="ada50b01444485b444831766104afb">
+							<ChannelMonitorTriggerModel Alias="[string]850e2892-9a5f-4f0d-af00-b8f502372238" AliasToMonitor="[string]Sink 93" Id="ada50b01444485b444831766104afb">
+								<AboveValueTriggerModel Id="51abeab0edc2438bbc79935454810937" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 94" CanDisable="[bool]True" CriticalAlarm="e0fd0f31df3441eaba9b9f07244b0dd3" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2691dd322fe047b99bdc4d023ca71f22" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink94" Units="[string]Voltaires" WarningAlarm="7a913ecbb3ae4bdc8bdba3d286d63433">
+						<AlarmModel Id="7a913ecbb3ae4bdc8bdba3d286d63433" Severity="[AlarmSeverity]Warning" TriggerModel="31dafdf19514c279d57f2e16ba0975e">
+							<ChannelMonitorTriggerModel Alias="[string]a03d55eb-923d-41c6-8f91-574398c9f69b" AliasToMonitor="[string]Sink 94" Id="31dafdf19514c279d57f2e16ba0975e">
+								<AboveValueTriggerModel Id="26cd485bf8f043bcbca631d86520f77b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="e0fd0f31df3441eaba9b9f07244b0dd3" Severity="[AlarmSeverity]Critical" TriggerModel="5810e5f25ba1421eb1ccdaa2175e7035">
+							<ChannelMonitorTriggerModel Alias="[string]9d05e837-418f-4eb5-ba2f-1b29b86769bc" AliasToMonitor="[string]Sink 94" Id="5810e5f25ba1421eb1ccdaa2175e7035">
+								<AboveValueTriggerModel Id="62c26ca16c8445dfb1f8797d7a09e8cc" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 95" CanDisable="[bool]True" CriticalAlarm="6c5342450ede49a0a8e62b034f1a80e5" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="2a4a8e130115461893dca49a28373e54" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink95" Units="[string]Voltaires" WarningAlarm="1ad9b771574145bc820d30e7dab76d22">
+						<AlarmModel Id="1ad9b771574145bc820d30e7dab76d22" Severity="[AlarmSeverity]Warning" TriggerModel="efb2fb5e9b054f7aa25afdcc25894673">
+							<ChannelMonitorTriggerModel Alias="[string]a20964c0-8bc9-4b56-adc9-863c6efd1851" AliasToMonitor="[string]Sink 95" Id="efb2fb5e9b054f7aa25afdcc25894673">
+								<AboveValueTriggerModel Id="de0030680ed147f9bf93d7561024af08" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="6c5342450ede49a0a8e62b034f1a80e5" Severity="[AlarmSeverity]Critical" TriggerModel="13a3c65a2a14af7b61001181e2ce367">
+							<ChannelMonitorTriggerModel Alias="[string]b1aab031-ab67-41df-950f-0cf0183b22d5" AliasToMonitor="[string]Sink 95" Id="13a3c65a2a14af7b61001181e2ce367">
+								<AboveValueTriggerModel Id="d02b17b8126f491d89b4bd8e69755c1b" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 96" CanDisable="[bool]True" CriticalAlarm="98daa9915e2a4087988c46f1aaee1568" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="eeea2c2f3df84190b6f4f7f01b9b36eb" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink96" Units="[string]Voltaires" WarningAlarm="3bf811350996431db25f981efb32bcb7">
+						<AlarmModel Id="3bf811350996431db25f981efb32bcb7" Severity="[AlarmSeverity]Warning" TriggerModel="f52e56dfbffc4aeb9f14ddbd7f3aa078">
+							<ChannelMonitorTriggerModel Alias="[string]170f014b-d206-4073-9a90-89977ef5ca8d" AliasToMonitor="[string]Sink 96" Id="f52e56dfbffc4aeb9f14ddbd7f3aa078">
+								<AboveValueTriggerModel Id="c5a0f9cd0f7e47dd9291688088467a7f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="98daa9915e2a4087988c46f1aaee1568" Severity="[AlarmSeverity]Critical" TriggerModel="aeb891d617004260bf3472e93ac8166b">
+							<ChannelMonitorTriggerModel Alias="[string]502c8ac8-bced-417a-a333-bb72cd75c370" AliasToMonitor="[string]Sink 96" Id="aeb891d617004260bf3472e93ac8166b">
+								<AboveValueTriggerModel Id="bf770f6ea67e4f978f85dc3998f2fd25" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 97" CanDisable="[bool]True" CriticalAlarm="9bfe5a72da1b44f397d1fb897bfc2005" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="f4ad7b06c37c45bcabd5a6af672db8fe" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink97" Units="[string]Voltaires" WarningAlarm="11cc5a0f0d5d407b902e35d73b8ae0d8">
+						<AlarmModel Id="11cc5a0f0d5d407b902e35d73b8ae0d8" Severity="[AlarmSeverity]Warning" TriggerModel="edd82f7521ad4821a839fde75e771e50">
+							<ChannelMonitorTriggerModel Alias="[string]eeddcb8f-cf68-497d-9092-c41caa929473" AliasToMonitor="[string]Sink 97" Id="edd82f7521ad4821a839fde75e771e50">
+								<AboveValueTriggerModel Id="496da96010f4437bab0df4b273f665d8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="9bfe5a72da1b44f397d1fb897bfc2005" Severity="[AlarmSeverity]Critical" TriggerModel="475a772f4aed4c48a7b47c6ff863785c">
+							<ChannelMonitorTriggerModel Alias="[string]407ce6ad-90ce-435a-8b36-8a12d2101e6c" AliasToMonitor="[string]Sink 97" Id="475a772f4aed4c48a7b47c6ff863785c">
+								<AboveValueTriggerModel Id="d2ef95ae9b004a80adc8ba6288f1e100" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 98" CanDisable="[bool]True" CriticalAlarm="afe800bcfa7c4efa94edf63fe1d85110" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c6734127e5f04ab38dcc2bfb58ea8aa8" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink98" Units="[string]Voltaires" WarningAlarm="a82e653f10a144ed82f055fae9c63f02">
+						<AlarmModel Id="a82e653f10a144ed82f055fae9c63f02" Severity="[AlarmSeverity]Warning" TriggerModel="2d507d78c8ad4c3d967478ca29688ce7">
+							<ChannelMonitorTriggerModel Alias="[string]74eb6750-a7d7-4ef1-9e44-a018fc894607" AliasToMonitor="[string]Sink 98" Id="2d507d78c8ad4c3d967478ca29688ce7">
+								<AboveValueTriggerModel Id="d3d21a4829844a28ace03d31e7256984" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="afe800bcfa7c4efa94edf63fe1d85110" Severity="[AlarmSeverity]Critical" TriggerModel="5627e4aabfe4272a8b8bed75deef7e8">
+							<ChannelMonitorTriggerModel Alias="[string]41243852-aa5c-449a-b287-cfa907f9a1fc" AliasToMonitor="[string]Sink 98" Id="5627e4aabfe4272a8b8bed75deef7e8">
+								<AboveValueTriggerModel Id="465de77624a14ca88b90f9730facadc8" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Sink 99" CanDisable="[bool]True" CriticalAlarm="2c0e7064d74b4a3f87a37ce8520ac513" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="6a51108f72a144e9ba0d9943f3ab7a42" InheritsTiming="[bool]False" SampleRate="[double]10" Source="sink99" Units="[string]Voltaires" WarningAlarm="6cecc2b95cae4e108e26d79e64faf27d">
+						<AlarmModel Id="6cecc2b95cae4e108e26d79e64faf27d" Severity="[AlarmSeverity]Warning" TriggerModel="9aaa22f513c343b8bb700753ecabd83f">
+							<ChannelMonitorTriggerModel Alias="[string]1b5c88fd-e137-4994-b590-fcffdb67bc98" AliasToMonitor="[string]Sink 99" Id="9aaa22f513c343b8bb700753ecabd83f">
+								<AboveValueTriggerModel Id="1b48131969024f788f3ea921200554b0" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="2c0e7064d74b4a3f87a37ce8520ac513" Severity="[AlarmSeverity]Critical" TriggerModel="54e3a089202b4c288286720265ead5f8">
+							<ChannelMonitorTriggerModel Alias="[string]bb1bdde6-5fd7-482f-b8aa-8aff63f7f135" AliasToMonitor="[string]Sink 99" Id="54e3a089202b4c288286720265ead5f8">
+								<AboveValueTriggerModel Id="5a1365f6f2ba4178b9d1b8e633d72aed" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+				</AddonModel>
+			</ProcessingElementModelOwner>
+		</ChannelConfigurationModel>
+		<ChassisModelOwner Id="f5bbd13d97884601856e70932bb4908b" />
+	</ChannelSpecification>
+	<DataTypeReferenceTable xmlns="http://www.ni.com/PlatformFramework">
+		<p.TypeReference TypeId="a39c785150f24ef9bb779edaf8bee0c5">
+			<Composite Id="1" Name="" Cluster="" GenericTypeDefinition="Void" BaseType="Void">
+				<Members>
+					<Field FieldAccessPolicy="ReadWrite" Name="Name" DataType="String" />
+					<Field FieldAccessPolicy="ReadWrite" Name="Value" DataType="@d6a5199331ae41169a213175b32dd925" />
+				</Members>
+			</Composite>
+		</p.TypeReference>
+		<p.TypeReference TypeId="d6a5199331ae41169a213175b32dd925">
+			<Composite Id="1" Name="Variant" Sealed="" GenericTypeDefinition="Void" BaseType="Void" />
+		</p.TypeReference>
+	</DataTypeReferenceTable>
+</SourceFile>

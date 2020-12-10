@@ -1,0 +1,7 @@
+console-menu
+grpcio-tools
+grpcio
+prettytable
+psutil
+pywin32
+typing-extensions

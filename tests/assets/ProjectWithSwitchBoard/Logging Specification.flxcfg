@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="CCE6F3419D49B6D75A6CECF0A4B08193B48C6512FFD190AC64D1D428E21844CA6BC86823FBBFA386D5620C5B8EC836F1BAB81B6F8A5636C59A5E2D93961C4B98" Timestamp="1D6A7CBC802A6BD" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="21.0.0.0" />
+	</SourceModelFeatureSet>
+	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<LoggingConfigurationModel Id="7e44725217a460eb51c6a3150313d57">
+			<ProcessingElementModelOwner Id="e6b558c32f124259b54c411db5df7345">
+				<TriggeredLoggingProvider Id="9cdbeb19b7e24131929210c3523ca24e" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-08-17T12:28:04.130181999999999999974298336979927626089192926883697509765625-05:00" />
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="6d8bdcdab5ab42f4863fb014479bf50c" LogFileBackupPath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data\\backups&quot;" LogFileBasePath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+					<UserDefinedMetadata Id="3f90aac8743c44f3914c9432fe7b8096">
+						<UserDefinedMetadataItem DataType="String" Id="3470d409fde74c03bfc9a8135834c5b5" Name="Operator">
+							<p.Value>bparrott</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="8279e73311e24f8d9343f3bfd4b6ac8e" Name="DUT">
+							<p.Value>""</p.Value>
+						</UserDefinedMetadataItem>
+					</UserDefinedMetadata>
+				</TdmsLoggingProvider>
+			</ProcessingElementModelOwner>
+		</LoggingConfigurationModel>
+	</LoggingSpecification>
+</SourceFile>

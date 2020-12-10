@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/TestSessionState.proto";
+
+// Service interface for a server side test session.
+service TestSession {
+    // RPC call to add a note to the log file. Notes can only be added while the test session is running.
+    rpc AddNote(AddNoteRequest) returns (AddNoteResponse) {}
+    // RPC call to get the state of the test session.
+    rpc GetState(GetTestSessionStateRequest) returns (GetTestSessionStateResponse) {}
+    // RPC call to start the test session.
+    rpc Start(StartTestSessionRequest) returns (StartTestSessionResponse) {}
+    // RPC call to stop the test session.
+    rpc Stop(StopTestSessionRequest) returns (StopTestSessionResponse) {}
+}
+
+// Request object for adding a note.
+message AddNoteRequest {
+    // The note to add to the log file.
+    string note = 1;
+}
+
+// Response object for an add note request.
+message AddNoteResponse {
+}
+
+// Request object for getting the state of the test session.
+message GetTestSessionStateRequest {
+}
+
+// Response object for a get test session state request.
+message GetTestSessionStateResponse {
+    // The state of the test session
+    TestSessionState test_session_state = 1;
+}
+
+// Request object for starting the test session.
+message StartTestSessionRequest {
+}
+
+// Response object for a start test session request.
+message StartTestSessionResponse {
+    // Indicates if the test session was started
+    bool test_session_started = 1;
+}
+
+// Request object for stopping the test session.
+message StopTestSessionRequest {
+}
+
+// Response object for a stop test session request.
+message StopTestSessionResponse {
+    // Indicates if the test session was stopped
+    bool test_session_stopped = 1;
+}

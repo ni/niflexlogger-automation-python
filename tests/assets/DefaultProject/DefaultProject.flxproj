@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="2EC200EFF4454B7FFAAE817A5D2D95014C5609A3209307F928838D1FBE6317DF692B0E448060A5F54EA2C864EA53314A845A71AFDA127DCAA32F73877957A5C2" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.1193" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.1193" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.1193" Name="FlexLogger" Version="20.2.0.0" />
+	</SourceModelFeatureSet>
+	<Project xmlns="http://www.ni.com/PlatformFramework">
+		<EnvoyManagerRootEnvoy Id="d77ad39313b14fe1b0c8a74f8cce401a" ModelDefinitionType="EnvoyManagerRootEnvoy" Name="RootEnvoy" />
+		<EmbeddedDefinitionReference Id="f5081f4f6f27443eb7fcb809944996dd" ModelDefinitionType="NationalInstruments.ProjectExplorer.Modeling.ProjectDataManager" Name="ProjectExplorer">
+			<ProjectExplorer />
+		</EmbeddedDefinitionReference>
+		<NameScopingEnvoy Id="b2920b5a7a564edab4f7d65b644f6592" ModelDefinitionType="DefaultTarget" Name="DefaultTarget">
+			<DefaultTarget />
+			<SourceFileReference Id="8485e73aa80f4670afcdbee83683ea85" ModelDefinitionType="NationalInstruments.Lumberjack.Core.ChannelSpecification.ChannelSpecificationDefinition" Name="Channel Specification.flxio" StoragePath="Channel Specification.flxio" />
+			<SourceFileReference Id="46ec57e0815f4572a7182f0fce6c0472" ModelDefinitionType="NationalInstruments.Lumberjack.Core.LoggingSpecification.LoggingSpecificationDefinition" Name="Logging Specification.flxcfg" StoragePath="Logging Specification.flxcfg" />
+			<SourceFileReference Id="e5dcfa2ad5c044939dc647629606158d" ModelDefinitionType="NationalInstruments.Lumberjack.Core.TestSpecification.TestSpecificationDefinition" Name="Test Specification.flxtest" StoragePath="Test Specification.flxtest" />
+			<SourceFileReference Id="dcd6b5923515409fbb02a41c4006cb40" ModelDefinitionType="NationalInstruments.Lumberjack.Core.Screen.ScreenModel" Name="Screen.flxscr" StoragePath="Screen.flxscr" />
+			<EmbeddedDefinitionReference Id="26c6364ce9634204a230d816991f5e12" ModelDefinitionType="PublishSkylineTagsDefinition" Name="PublishSkylineTagsDefinition" Reparentable="False">
+				<PublishSkylineTagsDefinition xmlns="http://www.ni.com/Lumberjack.Core" />
+			</EmbeddedDefinitionReference>
+			<EmbeddedDefinitionReference Id="57db15f3097a47dea266be3f148cdc5f" ModelDefinitionType="ConsumeExternalSkylineTagsDefinition" Name="ConsumeExternalSkylineTagsDefinition" Reparentable="False">
+				<ConsumeExternalSkylineTagsDefinition xmlns="http://www.ni.com/Lumberjack.Core" />
+			</EmbeddedDefinitionReference>
+			<EmbeddedDefinitionReference Id="9d8f41234355475dbfe2072518b37ede" ModelDefinitionType="ProjectCreationDate" Name="ProjectCreationDate" Reparentable="False">
+				<ProjectCreationDate DateTime="2020-06-24T19:42:26.0001535Z" xmlns="http://www.ni.com/Lumberjack.Core" />
+			</EmbeddedDefinitionReference>
+			<EmbeddedDefinitionReference Id="67d6150a26764aef8de0f1cb0e1d309a" ModelDefinitionType="ProjectRunNumber" Name="ProjectRunNumber" Reparentable="False">
+				<ProjectRunNumber RunNumber="0" xmlns="http://www.ni.com/Lumberjack.Core" />
+			</EmbeddedDefinitionReference>
+		</NameScopingEnvoy>
+		<NameScopingEnvoy Id="7ba47c4be5f74ac5a71cb4e40b6d2216" ModelDefinitionType="NullTarget" Name="NullTarget">
+			<NullTarget />
+			<EmbeddedDefinitionReference Id="163c0dd731943b580d17e30918c0809" ModelDefinitionType="PackageReferencesDefinition" Name="ProjectReferences">
+				<PackageReferencesDefinition />
+			</EmbeddedDefinitionReference>
+		</NameScopingEnvoy>
+	</Project>
+	<ProjectInformation xmlns="http://www.ni.com/PlatformFramework" />
+</SourceFile>

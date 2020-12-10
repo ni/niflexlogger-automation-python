@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+package national_instruments.diagram_sdk.automation.protocols;
+option csharp_namespace = "NationalInstruments.DiagramSdk.Automation.Protocols";
+
+// An identifier for a server side Project.
+message ProjectIdentifier {
+    // The automation id for a server side Project.
+    string project_id = 1;
+}
+
+message ElementIdentifier {
+    // The automation id for a server side Project.
+    string project_id = 1;
+    // The string that identifies the file in the project containing the desired element.
+    string file_name = 2;
+    // The string that identifies the desired element in the file.
+    string element_id = 3;
+    // The string that identifies a subpart of the element (such as a terminal) in the file.
+    string subpart_id = 4;
+}

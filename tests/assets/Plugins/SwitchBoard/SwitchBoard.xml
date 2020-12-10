@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProcessingElement>
+  <Type>499DD1BA-7ACC-4B7A-E3C8-AB7C12 1352C</Type>
+  <Name>SwitchBoard</Name>
+  <TemplateType>Plugin</TemplateType>
+  <DevelopmentKitVersion>1.0</DevelopmentKitVersion>
+  <Version>0.1</Version>
+  <OldestCompatibleVersion>0.1</OldestCompatibleVersion>
+  <AliasBase>SwitchBoard</AliasBase>
+  <Icon>output</Icon>
+  <Description>My switchboard plugin</Description>
+  <VIExec>niPluginWrapper</VIExec>  
+</ProcessingElement>

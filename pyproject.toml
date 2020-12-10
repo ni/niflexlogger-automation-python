@@ -1,0 +1,7 @@
+[tool.black]
+line-length=100
+
+[build-system]
+# Minimum requirements for the build system to execute.
+requires = ["setuptools", "wheel", "grpcio", "grpcio-tools"]
+build-backend = "setuptools.build_meta"

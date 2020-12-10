@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package national_instruments.core.automation.protocols;
+
+// Service interface for a service side Log.
+service Log {
+    // RPC Call initiate listening to a server side Log.
+    rpc Listen(ListenRequest) returns (stream ListenResponse) {}
+    // RPC call to stop listening to a server side log.
+    rpc StopListening(StopListeningRequest) returns (StopListeningResponse) {}
+}
+
+// The type of the listen response.
+enum ResponseType {
+    // A simple message was written to the log.
+    message = 0;
+    // A fatal error was written to the log.
+    error = 1;
+    // An internal error was written to the log.
+    internal_error = 2;
+}
+
+// Message describing request to listen to the server side log.
+message ListenRequest {
+    // A bitfield indicating which types of logging events the client is interested in receiving.
+    // See NationalInstruments.Core.Automation.Protocols.LoggingEvents for the constants.
+    int32 DesiredLoggingEvents = 1;
+}
+
+// Response object created while listening to a server side log.
+message ListenResponse {
+    // The message written to the log.
+    string message = 1;
+    // The type of the listen response.
+    ResponseType Type = 2;
+    // The unique id of the log response.  Usually only set for error type messages.
+    uint32 uniqueId = 3;
+}
+
+// Message sent to indicate we're done listening to the server side log.
+message StopListeningRequest { }
+
+// Response sent once we're no longer listening to the server side log.
+message StopListeningResponse { }
