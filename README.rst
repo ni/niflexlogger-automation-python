@@ -5,7 +5,7 @@ Author       NI
 
 About
 =====
-The **niflexlogger** package contains an API (Application Programming
+The **niflexlogger-automation** package contains an API (Application Programming
 Interface) and examples for using Python to automate `NI FlexLogger <https://ni.com/flexlogger>`_.
 The automation API supports modifying the configuration of existing FlexLogger projects and
 controlling the execution of FlexLogger test sessions.
@@ -13,7 +13,7 @@ The package is implemented in Python. NI created and supports this package.
 
 Requirements
 ============
-**niflexlogger** has the following requirements:
+**niflexlogger-automation** has the following requirements:
 
 * FlexLogger 2021 R1+
 * CPython 3.6 - 3.9
@@ -22,15 +22,15 @@ Requirements
 
 Installation
 ============
-To install **niflexlogger**, use one of the following methods:
+To install **niflexlogger-automation**, use one of the following methods:
 
 * `pip <https://pypi.python.org/pypi/pip>`_::
 
-   $ python -m pip install niflexlogger
+   $ python -m pip install niflexlogger-automation
 
 * **easy_install** from `setuptools <https://pypi.python.org/pypi/setuptools>`_::
 
-   $ python -m easy_install niflexlogger
+   $ python -m easy_install niflexlogger-automation
 
 * Download the project source and run::
 
@@ -40,8 +40,8 @@ To install **niflexlogger**, use one of the following methods:
 
 Usage
 =====
-Refer to the `documentation <https://niflexlogger.readthedocs.io>`_
-for detailed information on how to use **niflexlogger**.
+Refer to the `documentation <https://niflexlogger-automation.readthedocs.io>`_
+for detailed information on how to use **niflexlogger-automation**.
 
 .. _tests_section:
 
@@ -58,17 +58,17 @@ After this is done, you can run the tests with `tox <https://pypi.org/project/to
 
 Support / Feedback
 ==================
-The **niflexlogger** package is supported by NI. For support for
-**niflexlogger**, open a request through the NI support portal at
+The **niflexlogger-automation** package is supported by NI. For support for
+**niflexlogger-automation**, open a request through the NI support portal at
 `ni.com <https://www.ni.com>`_.
 
 Bugs / Feature Requests
 =======================
 To report a bug or submit a feature request, use the
-`GitHub issues page <https://github.com/ni/niflexlogger-python/issues>`_.
+`GitHub issues page <https://github.com/ni/niflexlogger-automation-python/issues>`_.
 
 License
 =======
-**niflexlogger** is licensed under an MIT-style license (see `LICENSE
+**niflexlogger-automation** is licensed under an MIT-style license (see `LICENSE
 <LICENSE>`_).  Other incorporated projects may be licensed under different
 licenses. All licenses allow for non-commercial and commercial use.

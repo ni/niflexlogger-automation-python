@@ -6,7 +6,7 @@ from setuptools import find_namespace_packages, setup  # type: ignore
 from setuptools.command.build_py import build_py as BuildPyCommand  # type: ignore
 from setuptools.command.test import test as TestCommand  # type: ignore
 
-pypi_name = "niflexlogger"
+pypi_name = "niflexlogger-automation"
 
 packages = find_namespace_packages(where="src", include=["flexlogger.*"])
 

@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-publish:
-    if: github.repository == 'ni/niflexlogger'
+    if: github.repository == 'ni/niflexlogger-automation-python'
     runs-on: ubuntu-latest
 
     steps:
