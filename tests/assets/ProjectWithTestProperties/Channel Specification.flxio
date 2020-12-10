@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="2F4D6A7A2716121E00A891F65F4431E9440C844ABF7AE1BD0BEE55FF6D1ED0B534A28655BAF8028A5AE242BB417F6EE6F93CD3E83178B9A804D1BE02EE7846F2" Timestamp="1D66CCA9386BA27" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="FlexLogger DAQmx" Name="http://www.ni.com/FlexLogger/DAQmx" OldestCompatibleVersion="8.3.0.6" Version="8.3.0.6" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="20.3.0.0" />
+	</SourceModelFeatureSet>
+	<ChannelSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<ChannelConfigurationModel Id="f0c8437308b74f78a27c2537ed9563ef">
+			<ProcessingElementModelOwner Id="9f6d6edec6ba44a7bd4482e5a6c8fbcf">
+				<DAQmxProcessingElement Id="79198f72c5944d27a12ad14ffb02fac8" xmlns="http://www.ni.com/FlexLogger/DAQmx">
+					<TopLevelTimingOwner FallbackMediumSampleRateLevel="[SampleRateLevel]Fast" Id="2a4a9f0631d24a27993f8b09fb963b66">
+						<SampleTiming Id="ceb375775e3c45c39a6853659e296fd5" Level="[SampleRateLevel]Slow" Units="[Unit]Hertz" Value="[double]1" />
+						<SampleTiming Id="5b7040e9c0e9452c8c8f185723fb4aaf" Level="[SampleRateLevel]Medium" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="1d8d0a69737549f28d5355c961f5aead" Level="[SampleRateLevel]Fast" Units="[Unit]Hertz" Value="[double]1000" />
+						<SampleTiming Id="cc1762641ac54bfaa02f688aceb74ce4" Level="[SampleRateLevel]Counter" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="d54503269071427eb5b2f20dfadb6151" Level="[SampleRateLevel]LegacyCounter" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="acd7521b9f8246a9a80819130dd325b5" Level="[SampleRateLevel]Digital" Units="[Unit]Hertz" Value="[double]10" />
+						<OnDemandTiming Id="564cb732a39b4c249c43708aaa2ad705" Level="[SampleRateLevel]OnDemand" />
+					</TopLevelTimingOwner>
+				</DAQmxProcessingElement>
+			</ProcessingElementModelOwner>
+		</ChannelConfigurationModel>
+		<ChassisModelOwner Id="36ad1aa875454be691d297ce1f8c18f8" />
+	</ChannelSpecification>
+</SourceFile>

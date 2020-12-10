@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package national_instruments.core.automation.protocols;
+
+// Service interface for a service side Log.
+service Application {
+    // RPC call to connect from the client to the server.
+    rpc Connect(ConnectRequest) returns (ConnectResponse) {}
+    // RPC call to shutdown the server.
+    rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
+    // RPT call to get the preferences directory for the application
+    rpc GetPreferencesDirectory(GetPreferencesDirectoryRequest) returns (GetPreferencesDirectoryResponse) {}
+}
+
+// Message sent from the client to initiate a connection.
+message ConnectRequest {}
+
+// Message sent from the server once a connection is established.
+message ConnectResponse {}
+
+// Message sent for disconnect.
+message DisconnectRequest {
+    // True to cause the application to exit.  If True, this should be the last
+    // call to disconect for all client sessions.
+    bool exit_application = 1;
+}
+
+// The result of the disconnect message.
+message DisconnectResponse {}
+
+// Message object sent for requesting the application's preferences directory
+message GetPreferencesDirectoryRequest {}
+
+// Message object returned containing the applciation's preferences directory
+message GetPreferencesDirectoryResponse {
+    // Gets the application's preferences directory
+    string preferences_directory = 1;
+}

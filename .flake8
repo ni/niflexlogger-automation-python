@@ -1,0 +1,16 @@
+[flake8]
+
+max-line-length = 100
+# - use "black" to auto-format
+
+exclude = src/flexlogger/automation/proto
+
+ignore =
+    # D400 and D205 are because we sometimes split the first line of the docstring
+    *.py E203, W503, D100,D101,D102,D105,D106,D107, D400,D205, D415
+
+# Config for flake8-docstrings
+docstring-convention = google
+
+# Config for flake8-import-order
+import-order-style = smarkets

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="944BECF1021FD8BCF01658E2F88EEBDE90263B7E49C5FC4D385179F669E67D2C07E8D53970DD901A3774647299140D4739442EECD66AD2018D8CBD17627DB7AE" Timestamp="1D6860E268EE7DF" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.4.0.756" FeatureSetName="FlexLogger DAQmx" Name="http://www.ni.com/FlexLogger/DAQmx" OldestCompatibleVersion="8.3.0.49152" Version="8.3.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.4.0.756" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.4.0.756" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.4.0.756" Name="FlexLogger" Version="20.3.0.0" />
+	</SourceModelFeatureSet>
+	<ChannelSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<ChannelConfigurationModel Id="fc63b6cee1b340bfb2a6c781cde271d3">
+			<ProcessingElementModelOwner Id="62952760ce434f7cb9fb2d555c32b701">
+				<DAQmxProcessingElement Id="7987c8c20a1744408a3df1b7b3402235" xmlns="http://www.ni.com/FlexLogger/DAQmx">
+					<TopLevelTimingOwner FallbackMediumSampleRateLevel="[SampleRateLevel]Fast" Id="98ebabbd86b84e1ebd25a76b9957efaa">
+						<SampleTiming Id="80421f3882cc412397c3716a4396e967" Level="[SampleRateLevel]Slow" Units="[Unit]Hertz" Value="[double]1" />
+						<SampleTiming Id="29421b77d86147f6ae9c2cd50990ddd6" Level="[SampleRateLevel]Medium" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="da7296c7375b445e9ffd5dcb1af01ca6" Level="[SampleRateLevel]Fast" Units="[Unit]Hertz" Value="[double]1000" />
+						<SampleTiming Id="84779f777dc54759b7830b618f947164" Level="[SampleRateLevel]Counter" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="3769b6a0b9a342db8690bb7bca60c709" Level="[SampleRateLevel]LegacyCounter" Units="[Unit]Hertz" Value="[double]100" />
+						<SampleTiming Id="96fcc0f3ee1445dcaf602b7826b8fd4c" Level="[SampleRateLevel]Digital" Units="[Unit]Hertz" Value="[double]10" />
+						<OnDemandTiming Id="f8ec7566c4574fa0bf32027eec9687a0" Level="[SampleRateLevel]OnDemand" />
+					</TopLevelTimingOwner>
+				</DAQmxProcessingElement>
+				<AddonModel AddonCustomIconPath="[string]" AddonIcon="[AddonIconType]Input" AddonInstanceName="[string]CreateChannelsInProcess" AddonType="[string]94D4 1FA- F6F-6C4F-B623-8FBFB79085 1" DisplayName="[string]CreateChannelsInProcess" Id="6d6d93d1663c423eba835c08b36b8608" UserDisplayName="[string]CreateChannelsInProcess">
+					<PeAddonOutputInfo Alias="df60b754-abb5-442a-9a36-d6d3051ecb46" CriticalAlarm="57d5334e89114538b19e8e9b18130518" DataType="[Type]@cad79fda0a10420d9bd8184e212e3b14" HasLiveData="[bool]False" Id="226ae14faa494264958e76027541ee96" SampleRate="[double]1" Source="LogEvents" Units="[string]" WarningAlarm="f49a83d910484553bf273c67c1bc394c">
+						<AlarmModel Id="f49a83d910484553bf273c67c1bc394c" Severity="[AlarmSeverity]Warning" TriggerModel="247af23a03524148aacb3e529fb1cb02">
+							<ChannelMonitorTriggerModel Alias="[string]c1e7f925-4c3d-4fec-abee-606e73b05efc" AliasToMonitor="[string]df60b754-abb5-442a-9a36-d6d3051ecb46" Id="247af23a03524148aacb3e529fb1cb02">
+								<AboveValueTriggerModel Id="984e8801dada45388838b95dff37af31" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="57d5334e89114538b19e8e9b18130518" Severity="[AlarmSeverity]Critical" TriggerModel="4cf1b37ead1f48118a62e5a1809c53ed">
+							<ChannelMonitorTriggerModel Alias="[string]a9a4041a-19f5-4f70-965f-0f3240e3f44f" AliasToMonitor="[string]df60b754-abb5-442a-9a36-d6d3051ecb46" Id="4cf1b37ead1f48118a62e5a1809c53ed">
+								<AboveValueTriggerModel Id="782ab171fdb04e56813bb14f3c2db2ce" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<Keyword Id="5bffef9c423f4261a2f1da88ff7a0d67" Name="DoNotTriggerChannel" />
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Channel 1" CanDisable="[bool]False" CriticalAlarm="67e9413267c44e6986ff605845f47825" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="c755b3b07f7f4883b6bf8bd38bd6f28d" InheritsTiming="[bool]False" SampleRate="[double]10" Source="1" Units="[string]" WarningAlarm="43c7c6f299354085a08d39b0f66bf3f3">
+						<AlarmModel Id="43c7c6f299354085a08d39b0f66bf3f3" Severity="[AlarmSeverity]Warning" TriggerModel="101b6f687bdb4206b3f09d95295fbc88">
+							<ChannelMonitorTriggerModel Alias="[string]f153318f-fb84-452e-a578-ec59f9cde1e7" AliasToMonitor="[string]Channel 1" Id="101b6f687bdb4206b3f09d95295fbc88">
+								<AboveValueTriggerModel Id="e3a2839dd5734c97a966eff703d82e20" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="67e9413267c44e6986ff605845f47825" Severity="[AlarmSeverity]Critical" TriggerModel="261aa034258145668ff34f0b96a2ddf3">
+							<ChannelMonitorTriggerModel Alias="[string]e68d88c1-3899-417e-a531-70e117c8b4f0" AliasToMonitor="[string]Channel 1" Id="261aa034258145668ff34f0b96a2ddf3">
+								<AboveValueTriggerModel Id="b81dd51db35041deb852e605ed2d7bcb" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+					<PeAddonOutputInfo Alias="Channel 2" CanDisable="[bool]False" CriticalAlarm="58c1ef0d41f04eabb47a738e5c07e33f" DataType="[Type]Wfm(Double)" GroupName="[string]" Id="199d591cbcf243f5b745ecd24e24fe48" InheritsTiming="[bool]False" SampleRate="[double]10" Source="2" Units="[string]" WarningAlarm="ab9e0f508bba435fb3b6dd5bb395e34a">
+						<AlarmModel Id="ab9e0f508bba435fb3b6dd5bb395e34a" Severity="[AlarmSeverity]Warning" TriggerModel="7207860a112246dab8e7809461071c09">
+							<ChannelMonitorTriggerModel Alias="[string]3f690740-8d87-4fd5-99d8-cc12d30561be" AliasToMonitor="[string]Channel 2" Id="7207860a112246dab8e7809461071c09">
+								<AboveValueTriggerModel Id="29a9fbeb2ddc4ca28b830026bbbfc935" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="58c1ef0d41f04eabb47a738e5c07e33f" Severity="[AlarmSeverity]Critical" TriggerModel="742dcc92424e4f398ef98ac676ef7b3f">
+							<ChannelMonitorTriggerModel Alias="[string]1d5ae60c-0733-4407-9baa-c3b345003fee" AliasToMonitor="[string]Channel 2" Id="742dcc92424e4f398ef98ac676ef7b3f">
+								<AboveValueTriggerModel Id="523525c25cc343fb83fc72616490130f" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</PeAddonOutputInfo>
+				</AddonModel>
+			</ProcessingElementModelOwner>
+		</ChannelConfigurationModel>
+		<ChassisModelOwner Id="d5b842f41fe848bc9d710961df17c7a0" />
+	</ChannelSpecification>
+	<DataTypeReferenceTable xmlns="http://www.ni.com/PlatformFramework">
+		<p.TypeReference TypeId="cad79fda0a10420d9bd8184e212e3b14">
+			<Composite Id="1" Name="" Cluster="" GenericTypeDefinition="Void" BaseType="Void">
+				<Members>
+					<Field FieldAccessPolicy="ReadWrite" Name="Name" DataType="String" />
+					<Field FieldAccessPolicy="ReadWrite" Name="Value" DataType="@5ddb0e90d07f4d8d889e98c6bececd1e" />
+				</Members>
+			</Composite>
+		</p.TypeReference>
+		<p.TypeReference TypeId="5ddb0e90d07f4d8d889e98c6bececd1e">
+			<Composite Id="1" Name="Variant" Sealed="" GenericTypeDefinition="Void" BaseType="Void" />
+		</p.TypeReference>
+	</DataTypeReferenceTable>
+</SourceFile>

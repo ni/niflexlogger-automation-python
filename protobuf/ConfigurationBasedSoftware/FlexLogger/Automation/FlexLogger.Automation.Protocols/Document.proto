@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+
+// Service interface for a server side document.
+service Document {
+  // RPC call to close the current document.
+  rpc Close(CloseDocumentRequest) returns (CloseDocumentResponse) {}
+}
+
+// Request object for closing the specified document.
+message CloseDocumentRequest {
+    // The id of the envoy whose document should be closed.
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier envoy = 1;
+}
+
+// Response object for closing a document.
+message CloseDocumentResponse {}
