@@ -2,6 +2,7 @@ import subprocess
 import sys
 from itertools import chain
 from pathlib import Path
+from shlex import quote
 
 PROTO_PATHS = [
     "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols",
@@ -78,7 +79,9 @@ def _call_protoc() -> int:
     ]
 
     cwd = "./src" if _has_src_dir() else None
-    return subprocess.run([sys.executable, "-m", "grpc_tools.protoc"] + args, cwd=cwd).returncode
+    # Need to run with shell=True so the .proto files will get
+    # globbed on Linux.
+    return subprocess.run(' '.join([quote(sys.executable), "-m", "grpc_tools.protoc"] + args), cwd=cwd, shell=True).returncode
 
 
 if __name__ == "__main__":
