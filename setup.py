@@ -93,7 +93,10 @@ setup(
         "grpcio",
         "grpcio-tools",
         "psutil",
-        "pywin32",
+        # This package only works correctly on Windows,
+        # but add this specifier to allow installing it on
+        # Linux, which is helpful for pypi builds and readthedocs.
+        "pywin32; platform_system=='Windows'",
         "console-menu",
         "PrettyTable",
     ],
