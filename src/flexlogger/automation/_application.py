@@ -10,12 +10,12 @@ from pathlib import Path
 from socket import SOCK_STREAM
 from typing import Any, List, Optional, Union
 
+# Do not import anything from win32api here (instead, import them in the
+# methods they're needed in). Linux machines need to be able to import our
+# module so buildthedocs will be able to use automodule correctly to generate
+# our API Reference documentation.
 import psutil  # type: ignore
-import win32api  # type: ignore
-import win32event  # type: ignore
-import winreg  # type: ignore
 from grpc import insecure_channel, RpcError
-from win32com.shell import shell, shellcon  # type: ignore
 
 from ._flexlogger_error import FlexLoggerError
 from ._project import Project
@@ -237,6 +237,9 @@ class Application:
 
     @classmethod
     def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
+        import win32api  # type: ignore
+        import win32event  # type: ignore
+
         if path is not None and not path.name.lower().endswith(".exe"):
             path = path / _FLEXLOGGER_EXE_NAME
         if path is None:
@@ -277,6 +280,8 @@ class Application:
 
     @classmethod
     def _get_server_port_file_path(cls) -> Path:
+        from win32com.shell import shell, shellcon  # type: ignore
+
         program_data_path = Path(shell.SHGetFolderPath(0, shellcon.CSIDL_COMMON_APPDATA, 0, 0))
         return program_data_path / _FLEXLOGGER_PORT_FILE_PATH
 
@@ -298,6 +303,8 @@ class Application:
 
     @classmethod
     def _get_latest_installed_flexlogger_path(cls) -> Optional[Path]:
+        import winreg  # type: ignore
+
         try:
             with winreg.OpenKey(
                 winreg.HKEY_LOCAL_MACHINE, _FLEXLOGGER_REGISTRY_KEY_PATH
