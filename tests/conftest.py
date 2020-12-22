@@ -1,7 +1,20 @@
 from typing import Iterator
 
 import pytest
-from flexlogger.automation import Application, FlexLoggerError
+from flexlogger.automation import (
+    Application,
+    FlexLoggerError,
+    TestProperty,
+    TestSession,
+    TestSessionState,
+    TestSpecificationDocument,
+)
+
+# Prevent pytest from thinking real classes are test classes
+TestProperty.__test__ = False  # type: ignore
+TestSession.__test__ = False  # type: ignore
+TestSessionState.__test__ = False  # type: ignore
+TestSpecificationDocument.__test__ = False  # type: ignore
 
 
 # This needs to be at class scope because of the order pytest runs tests in.
