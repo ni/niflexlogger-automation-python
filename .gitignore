@@ -107,6 +107,7 @@ venv.bak/
 .idea/
 
 .vscode/
+.vs/
 
 # Generated protobuf files
 src/flexlogger/automation/proto/*.proto
