@@ -19,7 +19,7 @@ jobs:
           python-version: 3.8
 
       - name: Install setuptools and other tools
-        run: python3 -m pip install setuptools wheel twine grpc grpcio
+        run: python3 -m pip install setuptools wheel twine grpcio grpcio-tools
 
       - name: Build packages
         run: python3 setup.py bdist_wheel

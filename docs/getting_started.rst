@@ -45,13 +45,13 @@ Communicating with FlexLogger
 
 Launch FlexLogger and open a project
 
-.. literalinclude:: ../examples/basic/launch_application.py
+.. literalinclude:: ../examples/Basic/launch_application.py
    :language: python
    :linenos:
 
 Connect to FlexLogger when it is already running
 
-.. literalinclude:: ../examples/basic/connect_to_application.py
+.. literalinclude:: ../examples/Basic/connect_to_application.py
    :language: python
    :linenos:
 
@@ -60,13 +60,13 @@ Test Session
 
 Start and stop a test
 
-.. literalinclude:: ../examples/basic/start_and_stop_test_session.py
+.. literalinclude:: ../examples/Basic/start_and_stop_test_session.py
    :language: python
    :linenos:
 
 Adding a note to a log file
 
-.. literalinclude:: ../examples/basic/add_note.py
+.. literalinclude:: ../examples/Basic/add_note.py
    :language: python
    :linenos:
 
@@ -75,13 +75,13 @@ Channels
 
 Getting the value of a channel
 
-.. literalinclude:: ../examples/basic/get_channel_value.py
+.. literalinclude:: ../examples/Basic/get_channel_value.py
    :language: python
    :linenos:
 
 Setting the value of a channel
 
-.. literalinclude:: ../examples/basic/set_channel_value.py
+.. literalinclude:: ../examples/Basic/set_channel_value.py
    :language: python
    :linenos:
 
@@ -90,24 +90,59 @@ Logging
 
 Getting the log file base path and name
 
-.. literalinclude:: ../examples/basic/get_log_file_path_and_name.py
+.. literalinclude:: ../examples/Basic/get_log_file_path_and_name.py
    :language: python
    :linenos:
 
 Setting the log file base path and name
 
-.. literalinclude:: ../examples/basic/set_log_file_path_and_name.py
+.. literalinclude:: ../examples/Basic/set_log_file_path_and_name.py
    :language: python
    :linenos:
 
 Getting a test property
 
-.. literalinclude:: ../examples/basic/get_test_property.py
+.. literalinclude:: ../examples/Basic/get_test_property.py
    :language: python
    :linenos:
 
 Setting a test property
 
-.. literalinclude:: ../examples/basic/set_test_property.py
+.. literalinclude:: ../examples/Basic/set_test_property.py
    :language: python
    :linenos:
+
+Troubleshooting
+===============
+
+Can't connect to running FlexLogger
+-----------------------------------
+If you get an error connecting to an already running instance of FlexLogger, the Automation
+server preference may not be enabled. You can enable this preference by opening the
+"File>>Preferences" menu item, and then enabling the "Automation server"
+preference in the "General" tab.
+
+.. image:: preference_automation_server.png
+
+Exception on first call into FlexLogger
+---------------------------------------
+If you see an exception on the first call into FlexLogger similar to::
+
+  grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+        status = StatusCode.UNAVAILABLE
+        details = "failed to connect to all addresses"
+        debug_error_string = "{"created":"@1608052709.612000000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":4143,"referenced_errors":[{"created":"@1608052633.077000000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":398,"grpc_status":14}]}"
+
+the problem may be an HTTP proxy.  To test this, in your Python script add the following lines
+before your FlexLogger API calls:
+
+.. code-block:: python
+
+   if os.environ.get('https_proxy'):
+      del os.environ['https_proxy']
+   if os.environ.get('http_proxy'):
+      del os.environ['http_proxy']
+
+If this fixes the problem, try configuring your proxy to not affect traffic to localhost.
+See `this GitHub issue <https://github.com/ni/niflexlogger-automation-python/issues/13>`_
+for an example.
