@@ -83,7 +83,11 @@ def copy_project(project_name: str) -> Iterator[Path]:
     try:
         yield Path(tmp_directory.name) / project_filename
     finally:
-        rmtree(tmp_directory.name)
+        try:
+            rmtree(tmp_directory.name)
+        except PermissionError:
+            # this can fail because of race conditions, allow this
+            pass
 
 
 def _kill_proc_tree(
