@@ -29,8 +29,14 @@ def project_with_produced_data(app: Application) -> Iterator[Project]:
 
     This is useful to improve test time by not opening/closing this project in every test.
     """
-    with open_project(app, "ProjectWithProducedData") as project:
+    with copy_project("ProjectWithProducedData") as project_path:
+        project = app.open_project(project_path)
         yield project
+        try:
+            project.close()
+        except FlexLoggerError:
+            # utils.kill_all_open_flexloggers may have killed this process already, that's fine
+            pass
 
 
 class TestTestSession:

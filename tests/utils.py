@@ -2,7 +2,7 @@ import os
 import signal
 from contextlib import contextmanager
 from pathlib import Path
-from shutil import copy, rmtree
+from shutil import copy
 from tempfile import TemporaryDirectory
 from typing import Iterator, List, Tuple
 
@@ -75,15 +75,15 @@ def copy_project(project_name: str) -> Iterator[Path]:
     project_filename = project_path.name
     project_dir = project_path.parent
 
+    # This directory gets cleaned up by the pytest framework, and if
+    # we try to clean it up ourselves we can get pytest warnings when
+    # the framework fails to delete it.
     tmp_directory = TemporaryDirectory(prefix="pyflextest_")
     source_files = project_dir.iterdir()
     for source_file in source_files:
         if source_file.is_file():
             copy(str(source_file), tmp_directory.name)
-    try:
-        yield Path(tmp_directory.name) / project_filename
-    finally:
-        rmtree(tmp_directory.name)
+    yield Path(tmp_directory.name) / project_filename
 
 
 def _kill_proc_tree(
