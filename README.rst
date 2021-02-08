@@ -45,9 +45,9 @@ for detailed information on how to use **niflexlogger-automation**.
 
 .. _tests_section:
 
-Tests
+Automated Tests
 =====
-To run the tests, you must first configure FlexLogger to load the test
+To run the automated tests for the Python API, you must first configure FlexLogger to load the test
 plugins that the test projects use.  To do this, copy ``tests/assets/pythonTests.config``
 to ``%public%\Documents\National Instruments\FlexLogger\Plugins\IOPlugins``, and in that file
 replace ``<path to git repo>`` with the path to the cloned repo.
