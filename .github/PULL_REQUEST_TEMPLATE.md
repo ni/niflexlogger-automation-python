@@ -13,3 +13,5 @@ TODO: Justify why this contribution should be part of the project.
 ### What testing has been done?
 
 TODO: Detail what testing has been done to ensure this submission meets requirements.
+
+- [ ] I have run the automated tests (required if there are code changes)
