@@ -47,10 +47,16 @@ for detailed information on how to use **niflexlogger-automation**.
 
 Automated Tests
 =====
-To run the automated tests for the Python API, you must first configure FlexLogger to load the test
-plugins that the test projects use.  To do this, copy ``tests/assets/pythonTests.config``
-to ``%public%\Documents\National Instruments\FlexLogger\Plugins\IOPlugins``, and in that file
-replace ``<path to git repo>`` with the path to the cloned repo.
+The Python API package contains a number of automated tests which should be used to
+validate API changes before submitting a pull request. If a pull request contains
+new API functionality, new automated tests that exercise the new functionality
+should be included with the pull request.
+
+To run the automated tests for the Python API, you must first configure FlexLogger
+to load the test plugins that the test projects use. To do this, copy
+``tests/assets/pythonTests.config`` to 
+``%public%\Documents\National Instruments\FlexLogger\Plugins\IOPlugins``, and in that
+file replace ``<path to git repo>`` with the path to the cloned repo.
 
 After this is done, you can run the tests with `tox <https://pypi.org/project/tox/>`_.
 
