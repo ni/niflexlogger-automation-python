@@ -14,6 +14,10 @@ service TestSession {
     rpc Start(StartTestSessionRequest) returns (StartTestSessionResponse) {}
     // RPC call to stop the test session.
     rpc Stop(StopTestSessionRequest) returns (StopTestSessionResponse) {}
+    // RPC call to pause the test session.
+    rpc Pause(PauseTestSessionRequest) returns (PauseTestSessionResponse) {}
+    // RPC call to resume the test session.
+    rpc Resume(ResumeTestSessionRequest) returns (ResumeTestSessionResponse) {}
 }
 
 // Request object for adding a note.
@@ -54,4 +58,24 @@ message StopTestSessionRequest {
 message StopTestSessionResponse {
     // Indicates if the test session was stopped
     bool test_session_stopped = 1;
+}
+
+// Request object for pausing the test session.
+message PauseTestSessionRequest {
+}
+
+// Response object for a pause test session request.
+message PauseTestSessionResponse {
+    // Indicates if the test session was paused
+    bool test_session_paused = 1;
+}
+
+// Request object for resuming the test session.
+message ResumeTestSessionRequest {
+}
+
+// Response object for a resume test session request.
+message ResumeTestSessionResponse {
+    // Indicates if the test session was resumed
+    bool test_session_resumed = 1;
 }

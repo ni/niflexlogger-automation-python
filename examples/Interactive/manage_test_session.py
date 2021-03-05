@@ -44,6 +44,18 @@ def _stop_test(test_session):
     Screen().input("Test stopped. Press [Enter] to continue")
 
 
+def _pause_test(test_session):
+    print("Pausing test. . . ")
+    test_session.pause()
+    Screen().input("Test paused. Press [Enter] to continue")
+
+
+def _resume_test(test_session):
+    print("Resuming test. . . ")
+    test_session.resume()
+    Screen().input("Test resumed. Press [Enter] to continue")
+
+
 def _show_interactive_menu(test_session):
     """Display an interactive menu based on the current test session state.
 
@@ -81,6 +93,15 @@ def _show_interactive_menu(test_session):
             "",
             [
                 ("Add Note", _add_note, [test_session], {}),
+                ("Pause Test", _pause_test, [test_session], {"should_exit": True}),
+                ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
+            ],
+        ),
+        TestSessionState.PAUSED: _create_menu(
+            "The test session is paused.",
+            "",
+            [
+                ("Resume Test", _resume_test, [test_session], {"should_exit": True}),
                 ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
             ],
         ),
