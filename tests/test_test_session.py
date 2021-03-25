@@ -208,6 +208,22 @@ class TestTestSession:
                 project.test_session.stop()
                 self._verify_tdms_file_has_note(temp_dir, "AddNoteTest.tdms", note_str)
 
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__add_note__note_added(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("AddNoteTest.tdms")
+                project.test_session.start()
+                project.test_session.pause()
+
+                note_str = "Some note about what is happening in the test"
+                project.test_session.add_note(note_str)
+
+                project.test_session.stop()
+                self._verify_tdms_file_has_note(temp_dir, "AddNoteTest.tdms", note_str)
+
     @staticmethod
     def _verify_tdms_file_has_note(
         log_file_base_path: str, log_file_name: str, expected_note_contents: str
@@ -228,19 +244,6 @@ class TestTestSession:
     ) -> None:
         with pytest.raises(FlexLoggerError):
             project_with_produced_data.test_session.add_note("Nope")
-
-    @pytest.mark.integration  # type: ignore
-    def test__test_session_paused__add_note__exception_raised(
-        self, app: Application, project_with_produced_data: Project
-    ) -> None:
-        project = project_with_produced_data
-        try:
-            project.test_session.start()
-            project.test_session.pause()
-            with pytest.raises(FlexLoggerError):
-                project_with_produced_data.test_session.add_note("Nope")
-        finally:
-            project.test_session.stop()
 
     @pytest.mark.integration  # type: ignore
     def test__close_project__start_test__exception_raised(self, app: Application) -> None:

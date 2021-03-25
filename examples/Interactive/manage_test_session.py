@@ -101,6 +101,7 @@ def _show_interactive_menu(test_session):
             "The test session is paused.",
             "",
             [
+                ("Add Note", _add_note, [test_session], {}),
                 ("Resume Test", _resume_test, [test_session], {"should_exit": True}),
                 ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
             ],
