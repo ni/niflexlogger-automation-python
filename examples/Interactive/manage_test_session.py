@@ -1,5 +1,6 @@
 import os
 import sys
+import threading
 
 from consolemenu import ConsoleMenu, Screen
 from consolemenu.items import FunctionItem
@@ -56,6 +57,23 @@ def _resume_test(test_session):
     Screen().input("Test resumed. Press [Enter] to continue")
 
 
+def _monitor_test_time(test_session):
+    print("Monitoring test time. Press [Enter] to stop monitoring. . .")
+    thread_exit_event =  threading.Event()
+    monitor_test_thread = threading.Thread(target=_monitor_test_time_thread,args=(test_session,thread_exit_event))
+    monitor_test_thread.start()
+    Screen().input()
+    thread_exit_event.set()
+    monitor_test_thread.join()
+
+
+def _monitor_test_time_thread(test_session, exit_event):
+    while not exit_event.is_set():
+        sys.stdout.write("Elapsed test time: " + str(test_session.elapsed_test_time)),
+        sys.stdout.flush()
+        sys.stdout.write("\r")
+
+
 def _show_interactive_menu(test_session):
     """Display an interactive menu based on the current test session state.
 
@@ -86,7 +104,9 @@ def _show_interactive_menu(test_session):
         TestSessionState.IDLE: _create_menu(
             "The test session is idle.",
             "",
-            [("Start Test", _start_test, [test_session], {"should_exit": True})],
+            [
+                ("Start Test", _start_test, [test_session], {"should_exit": True}),
+            ],
         ),
         TestSessionState.RUNNING: _create_menu(
             "The test session is running.",
@@ -95,6 +115,7 @@ def _show_interactive_menu(test_session):
                 ("Add Note", _add_note, [test_session], {}),
                 ("Pause Test", _pause_test, [test_session], {"should_exit": True}),
                 ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
+                ("Monitor Elapsed Test Time", _monitor_test_time, [test_session], {}),
             ],
         ),
         TestSessionState.PAUSED: _create_menu(
@@ -104,6 +125,7 @@ def _show_interactive_menu(test_session):
                 ("Add Note", _add_note, [test_session], {}),
                 ("Resume Test", _resume_test, [test_session], {"should_exit": True}),
                 ("Stop Test", _stop_test, [test_session], {"should_exit": True}),
+                ("Monitor Elapsed Test Time", _monitor_test_time, [test_session], {}),
             ],
         ),
         TestSessionState.NO_VALID_LOGGED_CHANNELS: _create_menu(

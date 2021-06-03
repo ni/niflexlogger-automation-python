@@ -1,4 +1,5 @@
 from typing import Callable
+from typing import Optional
 
 from grpc import Channel, RpcError
 
@@ -13,6 +14,8 @@ from .proto import (
     Project_pb2_grpc,  # type: ignore
 )
 from .proto.Identifiers_pb2 import ProjectIdentifier
+
+import pathlib
 
 
 class Project:
@@ -141,3 +144,21 @@ class Project:
     def test_session(self) -> TestSession:
         """Get the test session for the project."""
         return self._test_session
+
+    @property
+    def project_file_path(self) -> Optional[pathlib.Path]:
+        """Get the project file path on disk
+
+        Returns: The saved project file path if it exists, None otherwise
+        """
+        stub = Project_pb2_grpc.ProjectStub(self._channel)
+        try:
+            response = stub.GetProjectFilePath(
+                Project_pb2.GetProjectFilePathRequest(project=self._identifier)
+            )
+            # return a Path() if the returned path is not empty, otherwise return None
+            # pathlib.Path() treats empty string as "current directory" which could be confusing
+            return pathlib.Path(response.project_file_path) if response.project_file_path else None
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get project file path") from error

@@ -1,5 +1,6 @@
 from shutil import rmtree
 from time import sleep
+from pathlib import Path
 
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
@@ -11,7 +12,6 @@ from .utils import (
     kill_all_open_flexloggers,
     open_project,
 )
-
 
 class TestProject:
     @pytest.mark.integration  # type: ignore
@@ -239,3 +239,10 @@ class TestProject:
                 logging_specification.set_log_file_name("SomeNewName")
         # Just verify that closing the app doesn't prompt to save the project (this test
         # will timeout if it does)
+
+    @pytest.mark.integration
+    def test__open_project__active_project_path_matches_loaded_path(self) -> None:
+        with copy_project("DefaultProject") as new_project_path:
+            with Application.launch() as app:
+                project = app.open_project(new_project_path)
+                assert project.project_file_path == new_project_path

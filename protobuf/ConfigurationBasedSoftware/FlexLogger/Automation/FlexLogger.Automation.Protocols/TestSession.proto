@@ -18,6 +18,8 @@ service TestSession {
     rpc Pause(PauseTestSessionRequest) returns (PauseTestSessionResponse) {}
     // RPC call to resume the test session.
     rpc Resume(ResumeTestSessionRequest) returns (ResumeTestSessionResponse) {}
+    // RPC call to query elapsed test time
+    rpc GetElapsedTestTime(GetElapsedTestTimeRequest) returns (GetElapsedTestTimeResponse) {}
 }
 
 // Request object for adding a note.
@@ -78,4 +80,14 @@ message ResumeTestSessionRequest {
 message ResumeTestSessionResponse {
     // Indicates if the test session was resumed
     bool test_session_resumed = 1;
+}
+
+// Request object for querying elapsed test time.
+message GetElapsedTestTimeRequest {
+}
+
+// Response object for querying elapsed test time request.
+message GetElapsedTestTimeResponse {
+    // Indicates the elapsed test time (in seconds)
+    double elapsed_test_time = 1;
 }

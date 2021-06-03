@@ -10,6 +10,8 @@ from .proto import (
 )
 from .proto.TestSessionState_pb2 import TestSessionState as TestSessionState_pb2
 
+from datetime import timedelta
+
 STATE_MAP = {
     TestSessionState_pb2.TEST_SESSION_STATE_IDLE: TestSessionState.IDLE,
     TestSessionState_pb2.TEST_SESSION_STATE_RUNNING: TestSessionState.RUNNING,
@@ -142,3 +144,21 @@ class TestSession:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to resume test session") from error
+
+    @property
+    def elapsed_test_time(self) -> timedelta:
+        """Queries the elapsed test time
+
+        Returns:
+            The current tests's elapsed time if a test is running or paused, the most recent test's elapsed time if a test has been run and stopped.
+
+        Raises:
+            FlexLoggerError: if no test has ever been run since the project was loaded
+        """
+        stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
+        try:
+            get_elapsed_test_time_response = stub.GetElapsedTestTime(TestSession_pb2.GetElapsedTestTimeRequest())
+            return timedelta(seconds=get_elapsed_test_time_response.elapsed_test_time)
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to query elapsed test time") from error

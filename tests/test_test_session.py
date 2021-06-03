@@ -284,3 +284,64 @@ class TestTestSession:
                     kill_all_open_flexloggers()
                     if process is not None:
                         process.kill()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_idle__query_elapsed_time__exception_raised(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        with pytest.raises(FlexLoggerError):
+            project_with_produced_data.test_session.elapsed_test_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_running__elapsed_time_increases(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            project.test_session.start()
+
+            time.sleep(0.25)
+            first_elapsed_time = project.test_session.elapsed_test_time
+            assert first_elapsed_time.total_seconds() > 0
+            time.sleep(0.25)
+            second_elapsed_time = project.test_session.elapsed_test_time
+            assert second_elapsed_time > first_elapsed_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__elapsed_time_pauses(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            project.test_session.start()
+            time.sleep(0.25)
+            elapsed_time_before_pause = project.test_session.elapsed_test_time
+            assert elapsed_time_before_pause.total_seconds() > 0
+            project.test_session.pause()
+
+            time.sleep(0.25)
+            first_elapsed_time_after_pause = project.test_session.elapsed_test_time
+            assert first_elapsed_time_after_pause > elapsed_time_before_pause
+            time.sleep(0.25)
+            second_elapsed_time_after_pause = project.test_session.elapsed_test_time
+            assert second_elapsed_time_after_pause == first_elapsed_time_after_pause
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_stopped__elapsed_time_returns_previous_test_session_elapsed_time(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            project.test_session.start()
+            time.sleep(0.25)
+            elapsed_time_before_stop = project.test_session.elapsed_test_time
+            assert elapsed_time_before_stop.total_seconds() > 0
+            time.sleep(0.25)
+            project.test_session.stop()
+
+            time.sleep(0.25)
+            elapsed_time_after_stop = project.test_session.elapsed_test_time
+            assert elapsed_time_after_stop > elapsed_time_before_stop
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_stopped__start_new_test__elapsed_time_resets(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            project.test_session.start()
+            time.sleep(2.0)
+            project.test_session.stop()
+            first_test_session_time = project.test_session.elapsed_test_time
+
+            project.test_session.start()
+            second_test_session_time = project.test_session.elapsed_test_time
+            assert second_test_session_time < first_test_session_time
