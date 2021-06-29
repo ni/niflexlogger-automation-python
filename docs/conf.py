@@ -47,6 +47,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 nitpicky = True
 nitpick_ignore = [
     ("py:class", "datetime.datetime"),
+    ("py:class", "datetime.timedelta"),
     ("py:class", "pathlib.Path"),
     ("py:data", "typing.Any"),
     ("py:data", "typing.Iterable"),
