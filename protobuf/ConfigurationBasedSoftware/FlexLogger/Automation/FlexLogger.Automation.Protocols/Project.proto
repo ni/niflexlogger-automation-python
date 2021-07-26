@@ -16,6 +16,8 @@ service Project {
   rpc OpenTestSpecificationDocument(OpenTestSpecificationDocumentRequest) returns (OpenTestSpecificationDocumentResponse) {}
   // RPC call to close the current project.
   rpc Close(CloseProjectRequest) returns (CloseProjectResponse) {}
+  // RPC call to query the file path of the current project.
+  rpc GetProjectFilePath(GetProjectFilePathRequest) returns (GetProjectFilePathResponse) {}
 }
 
 // Information necessary to open the channel specification document.
@@ -76,3 +78,15 @@ message CloseProjectRequest {
 
 // The result of the close project message.
 message CloseProjectResponse {}
+
+// Request object for getting the project file path
+message GetProjectFilePathRequest {
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
+}
+
+// Response object for a get project file path request
+message GetProjectFilePathResponse {
+    // The project file path
+    string project_file_path = 1;
+}
