@@ -15,7 +15,7 @@ Requirements
 ============
 **niflexlogger-automation** has the following requirements:
 
-* FlexLogger 2021 R1+
+* FlexLogger 2021 R3+
 * CPython 3.6 - 3.9
 
 .. _installation_section:

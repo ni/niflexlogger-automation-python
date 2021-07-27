@@ -56,7 +56,7 @@ def _get_version(name: str) -> str:
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_dir = os.path.join(script_dir, name)
     if not os.path.exists(os.path.join(script_dir, "VERSION")):
-        version = "0.1.0"
+        version = "0.1.1"
     else:
         with open(os.path.join(script_dir, "VERSION"), "r") as version_file:
             version = version_file.read().rstrip()
@@ -101,7 +101,7 @@ setup(
         "PrettyTable",
     ],
     setup_requires=["grpcio", "grpcio-tools"],
-    tests_require=["pytest", "mypy", "npTDMS"],
+    tests_require=["pytest", "mypy", "npTDMS", "pytest-timeout", "psutil"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",

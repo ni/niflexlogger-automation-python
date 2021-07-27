@@ -56,9 +56,7 @@ class TestTestSession:
             assert expected_state == project.test_session.state
 
     @pytest.mark.integration  # type: ignore
-    @pytest.mark.parametrize(
-        "project_name", [("DefaultProject"), ("ProjectWithError")]
-    )  # type: ignore
+    @pytest.mark.parametrize("project_name", ["DefaultProject", "ProjectWithError"])  # type: ignore
     def test__open_project_that_cannot_be_started__start_test_session__exception_raised(
         self, project_name: str, app: Application
     ) -> None:
@@ -115,6 +113,87 @@ class TestTestSession:
         assert TestSessionState.IDLE == project.test_session.state
 
     @pytest.mark.integration  # type: ignore
+    def test__test_session_running__pause_test_session__test_session_paused(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        test_session_paused = project.test_session.pause()
+        try:
+            assert test_session_paused is True
+            assert TestSessionState.PAUSED == project.test_session.state
+        finally:
+            project.test_session.stop()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__resume_test_session__test_session_resumes(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        project.test_session.pause()
+        test_session_resumed = project.test_session.resume()
+        try:
+            assert test_session_resumed is True
+            assert TestSessionState.RUNNING == project.test_session.state
+        finally:
+            project.test_session.stop()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__pause_test_session__test_session_remains_paused(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        project.test_session.pause()
+        test_session_paused = project.test_session.pause()
+        try:
+            assert test_session_paused is False
+            assert TestSessionState.PAUSED == project.test_session.state
+        finally:
+            project.test_session.stop()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_running__resume_test_session__test_session_remains_running(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        test_session_resumed = project.test_session.resume()
+        try:
+            assert test_session_resumed is False
+            assert TestSessionState.RUNNING == project.test_session.state
+        finally:
+            project.test_session.stop()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__stop_test_session__test_session_stopped(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        project.test_session.pause()
+
+        stopped = project.test_session.stop()
+
+        assert stopped is True
+        assert TestSessionState.IDLE == project.test_session.state
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_valid_project__pause_test_session__exception_raised(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        with pytest.raises(FlexLoggerError):
+            project_with_produced_data.test_session.pause()
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_valid_project__resume_test_session__exception_raised(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        with pytest.raises(FlexLoggerError):
+            project_with_produced_data.test_session.resume()
+
+    @pytest.mark.integration  # type: ignore
     def test__test_session_running__add_note__note_added(self, app: Application) -> None:
         with open_project(app, "ProjectWithProducedData") as project:
             logging_specification = project.open_logging_specification_document()
@@ -129,8 +208,25 @@ class TestTestSession:
                 project.test_session.stop()
                 self._verify_tdms_file_has_note(temp_dir, "AddNoteTest.tdms", note_str)
 
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__add_note__note_added(self, app: Application) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            logging_specification = project.open_logging_specification_document()
+            with TemporaryDirectory() as temp_dir:
+                logging_specification.set_log_file_base_path(temp_dir)
+                logging_specification.set_log_file_name("AddNoteTest.tdms")
+                project.test_session.start()
+                project.test_session.pause()
+
+                note_str = "Some note about what is happening in the test"
+                project.test_session.add_note(note_str)
+
+                project.test_session.stop()
+                self._verify_tdms_file_has_note(temp_dir, "AddNoteTest.tdms", note_str)
+
+    @staticmethod
     def _verify_tdms_file_has_note(
-        self, log_file_base_path: str, log_file_name: str, expected_note_contents: str
+        log_file_base_path: str, log_file_name: str, expected_note_contents: str
     ) -> None:
         log_file_path = Path(log_file_base_path) / log_file_name
         with TdmsFile.open(str(log_file_path)) as tdms_file:
@@ -188,3 +284,77 @@ class TestTestSession:
                     kill_all_open_flexloggers()
                     if process is not None:
                         process.kill()
+
+
+class TestTestSessionElapsedTime:
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_idle__query_elapsed_time__exception_raised(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithProducedData") as project:
+            with pytest.raises(FlexLoggerError):
+                project.test_session.elapsed_test_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_running__elapsed_time_increases(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+
+        time.sleep(0.25)
+        first_elapsed_time = project.test_session.elapsed_test_time
+        assert first_elapsed_time.total_seconds() > 0
+        time.sleep(0.25)
+        second_elapsed_time = project.test_session.elapsed_test_time
+        assert second_elapsed_time > first_elapsed_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_paused__elapsed_time_pauses(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        time.sleep(0.25)
+        elapsed_time_before_pause = project.test_session.elapsed_test_time
+        assert elapsed_time_before_pause.total_seconds() > 0
+        project.test_session.pause()
+
+        time.sleep(0.25)
+        first_elapsed_time_after_pause = project.test_session.elapsed_test_time
+        assert first_elapsed_time_after_pause > elapsed_time_before_pause
+        time.sleep(0.25)
+        second_elapsed_time_after_pause = project.test_session.elapsed_test_time
+        assert second_elapsed_time_after_pause == first_elapsed_time_after_pause
+        project.test_session.stop()
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_stopped__elapsed_time_returns_previous_test_session_elapsed_time(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        time.sleep(0.25)
+        elapsed_time_before_stop = project.test_session.elapsed_test_time
+        assert elapsed_time_before_stop.total_seconds() > 0
+        time.sleep(0.25)
+        project.test_session.stop()
+
+        time.sleep(0.25)
+        elapsed_time_after_stop = project.test_session.elapsed_test_time
+        assert elapsed_time_after_stop > elapsed_time_before_stop
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_stopped__start_new_test__elapsed_time_resets(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        time.sleep(2.0)
+        project.test_session.stop()
+        first_test_session_time = project.test_session.elapsed_test_time
+
+        project.test_session.start()
+        second_test_session_time = project.test_session.elapsed_test_time
+        assert second_test_session_time < first_test_session_time
+        project.test_session.stop()

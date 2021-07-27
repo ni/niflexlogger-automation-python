@@ -11,9 +11,11 @@ class TestSessionState(Enum):
     """
 
     RUNNING = 2
-    """The :class:`.TestSession` is logging.
+    """The :class:`.TestSession` is running.
 
-    Configuration changes are not allowed during this state.
+    Logging and events are active while the test session is running.
+
+    Configuration changes are not allowed when the test session is running.
     """
 
     INVALID_CONFIGURATION = 3
@@ -21,3 +23,11 @@ class TestSessionState(Enum):
 
     NO_VALID_LOGGED_CHANNELS = 4
     """No channels have been configured, or all channels are disabled or not available."""
+
+    PAUSED = 5
+    """The :class:`.TestSession` is paused.
+
+    Logging and events are not active while the test session is paused.
+
+    Configuration changes are not allowed when the test session is paused.
+    """
