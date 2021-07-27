@@ -1,6 +1,5 @@
 from shutil import rmtree
 from time import sleep
-from pathlib import Path
 
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
@@ -12,6 +11,7 @@ from .utils import (
     kill_all_open_flexloggers,
     open_project,
 )
+
 
 class TestProject:
     @pytest.mark.integration  # type: ignore

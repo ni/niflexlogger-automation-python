@@ -101,7 +101,7 @@ setup(
         "PrettyTable",
     ],
     setup_requires=["grpcio", "grpcio-tools"],
-    tests_require=["pytest", "mypy", "npTDMS"],
+    tests_require=["pytest", "mypy", "npTDMS", "pytest-timeout", "psutil"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",

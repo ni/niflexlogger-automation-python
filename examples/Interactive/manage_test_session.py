@@ -59,8 +59,10 @@ def _resume_test(test_session):
 
 def _monitor_test_time(test_session):
     print("Monitoring test time. Press [Enter] to stop monitoring. . .")
-    thread_exit_event =  threading.Event()
-    monitor_test_thread = threading.Thread(target=_monitor_test_time_thread,args=(test_session,thread_exit_event))
+    thread_exit_event = threading.Event()
+    monitor_test_thread = threading.Thread(
+        target=_monitor_test_time_thread, args=(test_session, thread_exit_event)
+    )
     monitor_test_thread.start()
     Screen().input()
     thread_exit_event.set()

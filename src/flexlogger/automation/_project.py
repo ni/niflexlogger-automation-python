@@ -1,3 +1,4 @@
+import pathlib
 from typing import Callable
 from typing import Optional
 
@@ -14,8 +15,6 @@ from .proto import (
     Project_pb2_grpc,  # type: ignore
 )
 from .proto.Identifiers_pb2 import ProjectIdentifier
-
-import pathlib
 
 
 class Project:
