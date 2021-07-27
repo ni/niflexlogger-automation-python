@@ -157,7 +157,9 @@ class TestSession:
         """
         stub = TestSession_pb2_grpc.TestSessionStub(self._channel)
         try:
-            get_elapsed_test_time_response = stub.GetElapsedTestTime(TestSession_pb2.GetElapsedTestTimeRequest())
+            get_elapsed_test_time_response = stub.GetElapsedTestTime(
+                TestSession_pb2.GetElapsedTestTimeRequest()
+            )
             return timedelta(seconds=get_elapsed_test_time_response.elapsed_test_time)
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()

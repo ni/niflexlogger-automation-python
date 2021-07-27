@@ -13,6 +13,7 @@ from .utils import (
     open_project,
 )
 
+
 class TestProject:
     @pytest.mark.integration  # type: ignore
     def test__launch_flexLogger__open_default_project__project_contains_standard_four_documents(

@@ -321,7 +321,9 @@ class TestTestSession:
             assert second_elapsed_time_after_pause == first_elapsed_time_after_pause
 
     @pytest.mark.integration  # type: ignore
-    def test__test_session_stopped__elapsed_time_returns_previous_test_session_elapsed_time(self, app: Application) -> None:
+    def test__test_session_stopped__elapsed_time_returns_previous_test_session_elapsed_time(
+        self, app: Application
+    ) -> None:
         with open_project(app, "ProjectWithProducedData") as project:
             project.test_session.start()
             time.sleep(0.25)
@@ -335,7 +337,9 @@ class TestTestSession:
             assert elapsed_time_after_stop > elapsed_time_before_stop
 
     @pytest.mark.integration  # type: ignore
-    def test__test_session_stopped__start_new_test__elapsed_time_resets(self, app: Application) -> None:
+    def test__test_session_stopped__start_new_test__elapsed_time_resets(
+        self, app: Application
+    ) -> None:
         with open_project(app, "ProjectWithProducedData") as project:
             project.test_session.start()
             time.sleep(2.0)
