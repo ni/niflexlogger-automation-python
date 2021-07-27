@@ -12,7 +12,7 @@ class TestSessionState(Enum):
 
     RUNNING = 2
     """The :class:`.TestSession` is running.
-    
+
     Logging and events are active while the test session is running.
 
     Configuration changes are not allowed when the test session is running.
@@ -26,7 +26,7 @@ class TestSessionState(Enum):
 
     PAUSED = 5
     """The :class:`.TestSession` is paused.
-    
+
     Logging and events are not active while the test session is paused.
 
     Configuration changes are not allowed when the test session is paused.

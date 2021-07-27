@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import Callable
 
 from grpc import Channel, RpcError
@@ -9,8 +10,6 @@ from .proto import (
     TestSession_pb2_grpc,
 )
 from .proto.TestSessionState_pb2 import TestSessionState as TestSessionState_pb2
-
-from datetime import timedelta
 
 STATE_MAP = {
     TestSessionState_pb2.TEST_SESSION_STATE_IDLE: TestSessionState.IDLE,
@@ -150,7 +149,8 @@ class TestSession:
         """Queries the elapsed test time
 
         Returns:
-            The current tests's elapsed time if a test is running or paused, the most recent test's elapsed time if a test has been run and stopped.
+            The current tests's elapsed time if a test is running or paused,
+            the most recent test's elapsed time if a test has been run and stopped.
 
         Raises:
             FlexLoggerError: if no test has ever been run since the project was loaded
