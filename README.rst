@@ -46,7 +46,7 @@ for detailed information on how to use **niflexlogger-automation**.
 .. _tests_section:
 
 Automated Tests
-=====
+===============
 The Python API package contains a number of automated tests which should be used to
 validate API changes before submitting a pull request. If a pull request contains
 new API functionality, new automated tests that exercise the new functionality
