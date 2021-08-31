@@ -1,4 +1,4 @@
 sphinx >= 2.1
 sphinx-autodoc-typehints
-sphinx-rtd-theme
+sphinx-rtd-theme >= 1.0.0rc1
 .
