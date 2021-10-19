@@ -43,7 +43,7 @@ Usage
 Refer to the `documentation <https://niflexlogger-automation.readthedocs.io>`_
 for detailed information on how to use **niflexlogger-automation**.
 
-Refer to `Getting Started with CompactDAQ and FlexLogger <https://learn.ni.com/learn/article/getting-started-with-compactdaq-and-flexlogger>`, for more information on installing FlexLogger, using hardware, or downloading FlexLogger examples.
+Refer to `Getting Started with CompactDAQ and FlexLogger <https://learn.ni.com/learn/article/getting-started-with-compactdaq-and-flexlogger>`_, for more information on installing FlexLogger, using hardware, or downloading FlexLogger examples.
 
 .. _tests_section:
 
