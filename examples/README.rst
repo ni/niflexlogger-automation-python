@@ -8,6 +8,7 @@ About
 The Python automation API and examples enable you to modify existing FlexLogger projects and control the execution of FlexLogger test sessions.
 
 The Python Examples folder includes the following types of examples:
+
 * Basic: Demonstrate how to perform specific tasks.
 * Test Sequencer: Demonstrate how to create basic test sequences that involve FlexLogger and hardware, such as DUTs and thermal chambers.
 * Interactive: Demonstrate how to use the FlexLogger Python automation API to perform tasks interactively, depending on user input.
@@ -22,6 +23,7 @@ Requirements
 Folder Structure
 ================
 Each FlexLogger Example folder contains the following components:
+
 * Python Example (.py)
 * Configuration file (.csv) (Only for Test Sequencer examples)
 * Communication configuration file (.ini) (Only for the Thermal Chamber with Communication Protocol example)
@@ -40,7 +42,7 @@ Installation Instructions and Getting Started
 
 Related Resources
 =================
-For additional information about using the FlexLogger Python API and FlexLogger examples, refer the Read the Docs website at 'this link <https://niflexlogger-automation.readthedocs.io/en/latest>"_.
+For additional information about using the FlexLogger Python API and FlexLogger examples, refer the 'Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>'_.
 
 Copyright
 (c) 2021 National Instruments Corporation. All rights reserved.
