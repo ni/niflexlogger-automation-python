@@ -5,7 +5,7 @@ import csv
 import numpy as np
 import configparser
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-from flexlogger.automation import Application, FlexLoggerError
+from flexlogger.automation import Application, FlexLoggerError, TestSessionState
 
 
 def test_sequence1(config_file_path, modbus_config_path):
@@ -53,14 +53,12 @@ def test_sequence1(config_file_path, modbus_config_path):
 
 
 def test1(app_reference, clienthandle, config_path):
-    if not os.path.isabs(config_path):
-        config_path = os.path.abspath(config_path)
     with open(config_path, newline="") as csvfile:
         csvdata = csv.reader(csvfile)
         next(csvdata)  # skip header
         for row in csvdata:
             [
-                path,
+                proj_path,
                 state0,
                 time0,
                 state1,
@@ -72,19 +70,19 @@ def test1(app_reference, clienthandle, config_path):
                 temp,
                 hum,
             ] = row
+            if not os.path.isabs(proj_path):
+                config_root_dir = os.path.dirname(config_path)
+                proj_path = os.path.normpath(os.path.join(config_root_dir, proj_path))
             print("Loading Project...")
-            if not os.path.isabs(path):
-                config_root_dir = os.path.split(config_path)[0]
-                path = os.path.normpath(os.path.join(config_root_dir, path))
             try:
-                project = app_reference.open_project(path)
-            except FlexLoggerError:
-                if not os.path.isfile(path):
+                project = app_reference.open_project(proj_path)
+            except FlexLoggerError as upstream_error:
+                if not os.path.isfile(proj_path):
                     raise FileNotFoundError(
                         "\n\nCheck CSV file. Cannot find FlexLogger project at path:\n{}".format(
-                            path
+                            proj_path
                         )
-                    )
+                    ) from upstream_error
                 else:
                     raise
             print("Project Loaded\n")
@@ -123,7 +121,7 @@ def start_test(
 ):  # This is a workaround for the FlexLogger API .start() method bug
     for retry in range(retries):
         test_session.start()
-        if test_session.state.value == 2:  # Running
+        if test_session.state == TestSessionState.RUNNING:
             return
         elif retry < retries - 1:
             print("Waiting for test session to start. Retry: {}".format(retry + 1))
@@ -184,21 +182,12 @@ def temp_chamber_control(command, command_data, client):
 
 
 def display_elapsed_test_time(total_time, test_session):
-    timestamp = test_session.elapsed_test_time
-    base_time = (
-        (timestamp.days * 24 * 60 * 60) + timestamp.seconds + (timestamp.microseconds / 1000000)
-    )  # Report time in seconds
+    elapsed_time_at_start = test_session.elapsed_test_time
     time_diff = 0
-    total_time_int = int(total_time)
-    while time_diff < total_time_int:
+    total_time_float = float(total_time)
+    while time_diff < total_time_float:
         time.sleep(0.1)
-        timestamp = test_session.elapsed_test_time
-        time_diff = (
-            timestamp.days * 24 * 60 * 60
-            + timestamp.seconds
-            + timestamp.microseconds / 1000000
-            - base_time
-        )
+        time_diff = (test_session.elapsed_test_time - elapsed_time_at_start).total_seconds()
         print("Test Case Time: {} seconds".format(format(time_diff, ".3f")), end="\r")
     print("Test Case Time: {} seconds".format(format(time_diff, ".3f")), end="\n\n")
     return
