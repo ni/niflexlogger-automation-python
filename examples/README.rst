@@ -42,7 +42,7 @@ Installation Instructions and Getting Started
 
 Related Resources
 =================
-For additional information about using the FlexLogger Python API and FlexLogger examples, refer the 'Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>'_.
+For additional information about using the FlexLogger Python API and FlexLogger examples, refer the `Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>`_.
 
 Copyright
 (c) 2021 National Instruments Corporation. All rights reserved.
