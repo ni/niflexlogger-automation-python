@@ -128,7 +128,7 @@ def start_test(
             time.sleep(1)
             continue
         else:
-            raise RuntimeError("display_time_elapsed: Test did not start within timeout")
+            raise RuntimeError("Test did not start within timeout.")
 
 
 def dut_control(command, state="error"):
