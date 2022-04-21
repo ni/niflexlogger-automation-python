@@ -13,6 +13,10 @@ service ChannelSpecificationDocument {
     rpc GetDoubleChannelValue(GetDoubleChannelValueRequest) returns (GetDoubleChannelValueResponse) {}
     // RPC call to set the value of a double channel
     rpc SetDoubleChannelValue(SetDoubleChannelValueRequest) returns (SetDoubleChannelValueResponse) {}
+    // RPC call to get a channel's enable state
+    rpc IsChannelEnabled(IsChannelEnabledRequest) returns (IsChannelEnabledResponse) {}
+    // RPC call to enable/disable channels
+    rpc SetChannelEnabled(SetChannelEnabledRequest) returns (SetChannelEnabledResponse) {}
 }
 
 // Request object for getting all channel names
@@ -55,4 +59,31 @@ message SetDoubleChannelValueRequest {
 
 // Response object for setting a channel value
 message SetDoubleChannelValueResponse {
+}
+
+// Request object for getting a channel enable state
+message IsChannelEnabledRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to get the enable state for
+    string channel_name = 2;
+}
+
+// Response object for getting a channel enable state
+message IsChannelEnabledResponse {
+    bool channel_enabled = 1;
+}
+
+// Request object for setting a channel enable state
+message SetChannelEnabledRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to enable or disable
+    string channel_name = 2;
+    // The enable state to set
+    bool channel_enabled = 3;
+}
+
+// Response object for setting a channel enable state
+message SetChannelEnabledResponse {
 }
