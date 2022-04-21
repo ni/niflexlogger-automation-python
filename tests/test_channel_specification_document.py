@@ -109,3 +109,32 @@ class TestChannelSpecificationDocument:
             channel_data_point.timestamp
         )
         assert expected_repr == repr(channel_data_point)
+
+    @pytest.mark.integration  # type: ignore
+    def test__project_with_writable_channels__disable_channel__channel_disabled(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithSwitchboard") as project:
+            channel_specification = project.open_channel_specification_document()
+
+            channel_specification.set_channel_enabled("Switch 42", False)
+
+            channel_enabled = channel_specification.is_channel_enabled("Switch 42")
+
+            assert not channel_enabled
+
+    @pytest.mark.integration  # type: ignore
+    def test__set_channel_enabled_for_channel_that_does_not_exist__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+        with pytest.raises(FlexLoggerError):
+            channel_specification.set_channel_enabled("Not a channel", True)
+
+    @pytest.mark.integration  # type: ignore
+    def test__set_channel_enabled_for_readonly_channel__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+        with pytest.raises(FlexLoggerError):
+            channel_specification.set_channel_enabled("Channel 1", False)
