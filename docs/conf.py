@@ -15,13 +15,11 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-
 # -- Project information -----------------------------------------------------
 
 project = "flexlogger"
 copyright = "2020, National Instruments"
 author = "National Instruments"
-
 
 # -- General configuration ---------------------------------------------------
 
