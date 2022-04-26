@@ -1,7 +1,6 @@
 console-menu
 grpcio-tools
 grpcio
-nptdms
 prettytable
 psutil
 # This package only works correctly on Windows,
