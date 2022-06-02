@@ -3,39 +3,58 @@
 Getting Started
 ===============
 
-1. Create an instance of the :class:`.Application` class.  There are two ways to do this:
+Learn the basic concepts required to automate FlexLogger tests using the Python API.
 
-  * To launch a new FlexLogger application, call :meth:`.Application.launch()`.
-  * To connect to an already-running FlexLogger application, use the standard initializer
-    :class:`.Application()`. Note that before connecting to an already running instance of FlexLogger,
-    the Automation server preference must be enabled. You can enable this preference by opening the
-    "File>>Preferences" menu item, and then enabling the "Automation server" preference in the "General" tab.
 
-2. Call :meth:`.Application.open_project()` to open a project.
+Prerequisites
+-------------
 
-After this, here's how to do several common tasks:
+Before using the FlexLogger Python API, complete the following tasks.
+  * Install FlexLogger 2021 R3 or later and create a FlexLogger project with one or more input channels.
+  * Enable the Automation server preference in FlexLogger. In FlexLogger, navigate to **File>>Preferences** and check **Enable FlexLogger to receive remote automation commands** in the Automation server section of the General tab.
+  * Download and install Python 3.6 or later from python.org/downloads. For more information on installing and using Python, refer to the Python documentation on `docs.python.org <https://docs.python.org/3/>`_. During installation, enable **Add Python to PATH** so you can execute Python commands more easily.
+  * Install the FlexLogger Automation Python module, ``niflexlogger-automation``, using the method described below or one of the methods described in the `Readme <https://github.com/ni/niflexlogger-automation-python#readme>`_.
 
-* **Start and stop a test**: The :attr:`.Project.test_session` property returns a
-  :class:`.TestSession` object which has :meth:`~.TestSession.start()` and
-  :meth:`~.TestSession.stop()` methods.
+If you are new to Python, start by `creating and running your first script <https://niflexlogger-automation.readthedocs.io/en/latest/getting_started.html#create-run-script>`_. If you an experienced Python user, refer to the `examples <https://niflexlogger-automation.readthedocs.io/en/latest/getting_started.html#code-examples>`_ and `API reference <https://niflexlogger-automation.readthedocs.io/en/latest/api_reference.html>`_.
 
-* **Configure test properties**: The :attr:`.Project.open_logging_specification_document()` method
-  returns a :class:`.LoggingSpecificationDocument` object which has
-  :meth:`~.LoggingSpecificationDocument.get_test_property()`,
-  :meth:`~.LoggingSpecificationDocument.set_test_property()`, and
-  :meth:`~.LoggingSpecificationDocument.remove_test_property()` methods.  The
-  :meth:`~.LoggingSpecificationDocument.get_test_properties()` method returns the full
-  :class:`.TestProperty` list for the project.
 
-* **Configure the log file location**: The :attr:`.Project.open_logging_specification_document()` method
-  returns a :class:`.LoggingSpecificationDocument` object which has
-  :meth:`~.LoggingSpecificationDocument.set_log_file_base_path()` and
-  :meth:`~.LoggingSpecificationDocument.set_log_file_name()` methods.
 
-* **Read and write channel values**: Calling :meth:`.Project.open_channel_specification_document()`
-  returns a :class:`.ChannelSpecificationDocument` object which has
-  :meth:`~.ChannelSpecificationDocument.get_channel_value()` and 
-  :meth:`~.ChannelSpecificationDocument.set_channel_value()` methods.
+Installing the FlexLogger Automation Python module
+--------------------------------------------------
+Install the FlexLogger Automation Python module so you can control FlexLogger tests programatically.
+
+1. Open the command prompt.
+2. Execute the following command to install the module.
+
+   ``pip install niflexlogger-automation``
+
+.. _create_run_script:
+
+Creating and running your first script
+--------------------------------------
+Use the Start and Stop a Test example code to automate a FlexLogger test. The steps below describe how to perform this task with a text editor and the command prompt. You can also use your favorite integrated development environment (IDE). 
+
+1. Close FlexLogger if it is running.
+2. Open a text editor.
+3. Copy and paste the code provided below.
+
+.. literalinclude:: ../examples/Basic/launch_application.py
+   :language: python
+   :linenos:
+
+4. Save the file with a ``.py`` extension. For example, ``my_script.py``. Enclose file paths in quotation marks if you have spaces in your folder or file names.
+
+5. Open the command prompt as an administrator.
+6. Change the directory to the location where you saved your script. For example,
+
+   ``cd C:\Users\Desktop``
+7. Run the script with the ``python`` command. The Start and Stop a Test example requires that you provide the path to the project you want to control as an input. Use quotation marks when specifying the path. For example,
+
+   ``python my_script.py “C:\Users\Desktop\my_FlexLogger_Project.flxproj”``
+
+   The Python script launches FlexLogger, opens the project you specified, and starts running a test. The command prompt displays a status message and provides you with the option to stop the test and close the project.
+
+.. _code_examples:
 
 Examples
 ========
@@ -55,7 +74,7 @@ Connect to FlexLogger when it is already running
    :language: python
    :linenos:
 
-Test Session
+Test session
 ------------
 
 Start and stop a test
