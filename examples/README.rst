@@ -15,8 +15,8 @@ The Python Examples folder includes the following types of examples:
 
 Requirements
 ============
-* FlexLogger 2021 R3 or later
-* Python 3.6-3.9
+* FlexLogger 2022 Q2 or later
+* Python 3.6-3.10
 * pymodbus 2.5.3 (Only for the Thermal Chamber with Communication Protocol example)
 * numpy 1.0 (Only for the Thermal Chamber with Communication Protocol example)
 
