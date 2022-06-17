@@ -10,7 +10,7 @@ Prerequisites
 -------------
 
 Before using the FlexLogger Python API, complete the following tasks.
-  * Install FlexLogger 2021 R3 or later and create a FlexLogger project with one or more input channels.
+  * Install FlexLogger 2022 Q2 or later and create a FlexLogger project with one or more input channels.
   * Enable the Automation server preference in FlexLogger. In FlexLogger, navigate to **File>>Preferences** and check **Enable FlexLogger to receive remote automation commands** in the Automation server section of the General tab.
   * Download and install Python 3.6 or later from python.org/downloads. For more information on installing and using Python, refer to the Python documentation on `docs.python.org <https://docs.python.org/3/>`_. During installation, enable **Add Python to PATH** so you can execute Python commands more easily.
   * Install the FlexLogger Automation Python module, ``niflexlogger-automation``, using the method described below or one of the methods described in the `Readme <https://github.com/ni/niflexlogger-automation-python#readme>`_.
@@ -50,7 +50,7 @@ Use the Start and Stop a Test example code to automate a FlexLogger test. The st
    ``cd C:\Users\Desktop``
 7. Run the script with the ``python`` command. The Start and Stop a Test example requires that you provide the path to the project you want to control as an input. Use quotation marks when specifying the path. For example,
 
-   ``python my_script.py “C:\Users\Desktop\my_FlexLogger_Project.flxproj”``
+   ``python my_script.py "C:\Users\Desktop\my_FlexLogger_Project.flxproj"``
 
    The Python script launches FlexLogger, opens the project you specified, and starts running a test. The command prompt displays a status message and provides you with the option to stop the test and close the project.
 
