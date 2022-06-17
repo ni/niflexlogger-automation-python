@@ -1,6 +1,7 @@
 from shutil import rmtree
 from time import sleep
 
+import os
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
 
@@ -245,4 +246,4 @@ class TestProject:
         with copy_project("DefaultProject") as new_project_path:
             with Application.launch() as app:
                 project = app.open_project(new_project_path)
-                assert project.project_file_path == new_project_path
+                assert os.path.samefile(project.project_file_path, new_project_path)
