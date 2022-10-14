@@ -246,3 +246,8 @@ class TestProject:
             with Application.launch() as app:
                 project = app.open_project(new_project_path)
                 assert project.project_file_path == new_project_path
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_default_project__save__no_error(self, app: Application) -> None:
+        with open_project(app, "DefaultProject") as project:
+            assert project.save()

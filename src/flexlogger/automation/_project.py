@@ -2,6 +2,7 @@ import pathlib
 from typing import Callable
 from typing import Optional
 
+from google.protobuf import empty_pb2
 from grpc import Channel, RpcError
 
 from ._channel_specification_document import ChannelSpecificationDocument
@@ -138,6 +139,21 @@ class Project:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to close project") from error
+
+    def save(self) -> None:
+        """Save the project.
+
+        Raises:
+            FlexLoggerError: if saving the project fails due to a communication error.
+            If there is no communication error with the FlexLogger application, this function will not raise an
+            exception, but instead return a boolean indicating if the project was properly saved.
+        """
+        stub = Project_pb2_grpc.ProjectStub(self._channel)
+        try:
+            stub.Save(empty_pb2.Empty())
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to save project") from error
 
     @property
     def test_session(self) -> TestSession:
