@@ -1,6 +1,7 @@
 from shutil import rmtree
 from time import sleep
 
+import os
 import pytest  # type: ignore
 from flexlogger.automation import Application, FlexLoggerError
 
