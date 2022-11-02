@@ -7,6 +7,7 @@ from flexlogger.automation import (
     Application,
     ChannelDataPoint,
     ChannelSpecificationDocument,
+    DataRateLevel,
     FlexLoggerError,
 )
 
@@ -138,3 +139,32 @@ class TestChannelSpecificationDocument:
         channel_specification = channels_with_produced_data
         with pytest.raises(FlexLoggerError):
             channel_specification.set_channel_enabled("Channel 1", False)
+
+    @pytest.mark.integration  # type: ignore
+    def test__project_with_channels__set_data_rate__data_rate_updated(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+
+        channel_specification.set_data_rate(DataRateLevel.SLOW, 2)
+
+        data_rate = channel_specification.get_data_rate(DataRateLevel.SLOW)
+        assert data_rate == 2
+
+    @pytest.mark.integration  # type: ignore
+    def test__project_with_channels__get_data_rate_level_on_invalid_channel__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+
+        with pytest.raises(FlexLoggerError):
+            channel_specification.get_module_data_rate_level("Channel 1")
+
+    @pytest.mark.integration  # type: ignore
+    def test__project_with_channels__set_data_rate_level_on_invalid_channel__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+
+        with pytest.raises(FlexLoggerError):
+            channel_specification.set_module_data_rate_level("Channel 1", DataRateLevel.SLOW)

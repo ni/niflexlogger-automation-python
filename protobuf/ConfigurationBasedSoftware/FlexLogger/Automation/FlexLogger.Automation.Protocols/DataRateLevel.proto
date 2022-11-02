@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum DataRateLevel {
+  DATA_RATE_LEVEL_NONE = 0;
+  // The slow analog input rate
+  DATA_RATE_LEVEL_SLOW = 1;
+  // The medium analog input rate
+  DATA_RATE_LEVEL_MEDIUM = 2;
+  // The fast analog input rate
+  DATA_RATE_LEVEL_FAST = 3;
+  // The counter input rate
+  DATA_RATE_LEVEL_COUNTER = 4;
+  // The digital input rate
+  DATA_RATE_LEVEL_DIGITAL = 6;
+  // On demand sample rate
+  DATA_RATE_LEVEL_ON_DEMAND = 7;
+}

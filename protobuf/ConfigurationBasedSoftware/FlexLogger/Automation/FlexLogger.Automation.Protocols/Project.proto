@@ -3,6 +3,7 @@
 package national_instruments.flex_logger.automation.protocols;
 
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/empty.proto";
 
 // Service interface for a server side project.
 service Project {
@@ -18,6 +19,8 @@ service Project {
   rpc Close(CloseProjectRequest) returns (CloseProjectResponse) {}
   // RPC call to query the file path of the current project.
   rpc GetProjectFilePath(GetProjectFilePathRequest) returns (GetProjectFilePathResponse) {}
+  // RPC call to save the current project.
+  rpc Save(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
 
 // Information necessary to open the channel specification document.

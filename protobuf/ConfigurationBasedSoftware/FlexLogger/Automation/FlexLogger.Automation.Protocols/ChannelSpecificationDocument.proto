@@ -2,8 +2,10 @@
 
 package national_instruments.flex_logger.automation.protocols;
 
-import "google/protobuf/timestamp.proto";
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/DataRateLevel.proto";
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 // Service interface for a server side channel specification document.
 service ChannelSpecificationDocument {
@@ -17,6 +19,16 @@ service ChannelSpecificationDocument {
     rpc IsChannelEnabled(IsChannelEnabledRequest) returns (IsChannelEnabledResponse) {}
     // RPC call to enable/disable channels
     rpc SetChannelEnabled(SetChannelEnabledRequest) returns (SetChannelEnabledResponse) {}
+    // RPC call to get the data rate for a specific data rate level
+    rpc GetDataRate(GetDataRateRequest) returns (GetDataRateResponse) {}
+    // RPC call to set the data rate of a specific data rate level
+    rpc SetDataRate(SetDataRateRequest) returns (google.protobuf.Empty) {}
+    // RPC call to get the data rate level of the subsystem that owns a channel
+    rpc GetDataRateLevel(GetDataRateLevelRequest) returns (GetDataRateLevelResponse) {}
+    // RPC call to set the data rate level of the subsystem that owns a channel
+    rpc SetDataRateLevel(SetDataRateLevelRequest) returns (google.protobuf.Empty) {}
+    // RPC call to get the actual data rate of the subsystem that owns a channel
+    rpc GetActualDataRate(GetActualDataRateRequest) returns (GetActualDataRateResponse) {}
 }
 
 // Request object for getting all channel names
@@ -86,4 +98,66 @@ message SetChannelEnabledRequest {
 
 // Response object for setting a channel enable state
 message SetChannelEnabledResponse {
+}
+
+// Request object for getting the data rate
+message GetDataRateRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The data rate level (Slow, Medium, Fast, Counter, Digital, OnDemand)
+    DataRateLevel data_rate_level = 2;
+}
+
+// Response object for getting the data rate
+message GetDataRateResponse {
+    // The value of the data rate
+    double data_rate = 1;
+}
+
+// Request object for setting the data rate
+message SetDataRateRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The data rate level (Slow, Medium, Fast, Counter, Digital, OnDemand)
+    DataRateLevel data_rate_level = 2;
+    // The value of the data rate to set
+    double data_rate = 3;
+}
+
+// Request object for getting the data rate of a specific channel
+message GetDataRateLevelRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel in the subsystem to set the data rate to
+    string channel_name = 2;
+}
+
+// Response object for getting the data rate of a specific channel
+message GetDataRateLevelResponse {
+    // The data rate level
+    DataRateLevel data_rate_level = 1;
+}
+
+// Request object for setting the data rate level of a specific channel
+message SetDataRateLevelRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel in the subsystem to set the data rate to
+    string channel_name = 2;
+    // The data rate level to set
+    DataRateLevel data_rate_level = 3;
+}
+
+// Request object for getting the actual data rate of a specific channel
+message GetActualDataRateRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel in the subsystem to set the data rate to
+    string channel_name = 2;
+}
+
+// Response object for getting the actual data rate of a specific channel
+message GetActualDataRateResponse {
+    // The data rate
+    double data_rate = 1;
 }

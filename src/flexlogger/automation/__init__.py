@@ -10,3 +10,4 @@ from ._test_specification_document import TestSpecificationDocument
 from ._flexlogger_error import FlexLoggerError
 from ._channel_data_point import ChannelDataPoint
 from ._test_property import TestProperty
+from ._data_rate_level import DataRateLevel
