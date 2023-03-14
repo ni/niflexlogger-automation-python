@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="D683DC20688C6F7507CD9790605353F3EAB65D82993FDFAEBBD45D660903FF14EB8254B1FB4E8E938A7B0625082C552071C918DC6DF155B958D4D9ABB3764736" Timestamp="1D94DB50B56411F" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="9.8.0.613" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="9.6.0.49152" Version="9.6.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="9.8.0.613" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="9.8.0.613" Name="FlexLogger" Version="23.0.0.0" />
+	</SourceModelFeatureSet>
+	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<LoggingConfigurationModel Id="3b412b908301474587f70def16479b5b">
+			<ProcessingElementModelOwner Id="646caa43f52446f7b6cf39e7b9d1088a">
+				<TriggeredLoggingProvider Id="72313a7a17de4ed6bb1b93b0e6f8099e" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-07-30T00:12:02.774938699999999999951973139733496509506949223577976226806640625+02:00" />
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="19fe41c4dd6f4802a31edc115012cdc0" LogFileBackupPath="&quot;C:\\Users\\peteri\\Documents\\FlexLogger\\data\\backups&quot;" LogFileBasePath="&quot;C:\\MyDataGoesHere&quot;" LogFileDescription="This is the description of the log file." LogFileName="MyData.tdms" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+					<UserDefinedMetadata Id="894f64eb8d574af2949ab9dd4b5f0764">
+						<UserDefinedMetadataItem DataType="String" Id="ca719d29575b42e99c5549d5847196a2" Name="Operator">
+							<p.Value>bparrott</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="7b2083669202430784a7c3064821fbbe" Name="DUT">
+							<p.Value>""</p.Value>
+						</UserDefinedMetadataItem>
+					</UserDefinedMetadata>
+				</TdmsLoggingProvider>
+			</ProcessingElementModelOwner>
+		</LoggingConfigurationModel>
+	</LoggingSpecification>
+</SourceFile>
