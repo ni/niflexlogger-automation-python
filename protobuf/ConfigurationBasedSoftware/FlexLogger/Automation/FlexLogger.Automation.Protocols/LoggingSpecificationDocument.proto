@@ -3,6 +3,7 @@
 package national_instruments.flex_logger.automation.protocols;
 
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/empty.proto";
 
 // Service interface for a server side logging specification document.
 service LoggingSpecificationDocument {
@@ -14,8 +15,14 @@ service LoggingSpecificationDocument {
     rpc GetLogFileName(GetLogFileNameRequest) returns (GetLogFileNameResponse) {}
     // RPC call to set the log file name
     rpc SetLogFileName(SetLogFileNameRequest) returns (SetLogFileNameResponse) {}
+    // RPC call to get the description
+    rpc GetLogFileDescription(GetLogFileDescriptionRequest) returns (GetLogFileDescriptionResponse) {}
+    // RPC call to set the description
+    rpc SetLogFileDescription(SetLogFileDescriptionRequest) returns (google.protobuf.Empty) {}
     // RPC call to get all test properties
     rpc GetTestProperties(GetTestPropertiesRequest) returns (GetTestPropertiesResponse) {}
+    // RPC call to set all test properties
+    rpc SetTestProperties(SetTestPropertiesRequest) returns (google.protobuf.Empty) {}
     // RPC call to get a specific test property
     rpc GetTestProperty(GetTestPropertyRequest) returns (GetTestPropertyResponse) {}
     // RPC call to set a specific test property
@@ -68,12 +75,32 @@ message GetLogFileNameResponse {
 message SetLogFileNameRequest {
     // The id for the logging specification document
     national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
-    // The log file base path
+    // The log file name
     string log_file_name = 2;
 }
 
 // Response object for a set log file name
 message SetLogFileNameResponse {
+}
+
+// Request object for getting the log file description
+message GetLogFileDescriptionRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a get log file description request
+message GetLogFileDescriptionResponse {
+    // The log file description
+    string log_file_description = 1;
+}
+
+// Request object for setting the log file description
+message SetLogFileDescriptionRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The log file description
+    string log_file_description = 2;
 }
 
 // Message that defines an individual test property
@@ -93,6 +120,14 @@ message GetTestPropertiesRequest {
 message GetTestPropertiesResponse {
     // The test properties for the logging specification document. Can be empty.
     repeated TestProperty test_properties = 1;
+}
+
+// Request object for setting all test properties
+message SetTestPropertiesRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The test properties for the logging specification document. Can be empty.
+    repeated TestProperty test_properties = 2;
 }
 
 // Request object for getting a specific test property

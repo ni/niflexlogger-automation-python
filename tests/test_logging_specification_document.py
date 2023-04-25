@@ -31,7 +31,7 @@ class TestLoggingSpecificationDocument:
     def test__open_project__get_logging_path__logging_path_matches_user_setting(
         self, app: Application
     ) -> None:
-        with open_project(app, "ProjectWithUpdatedLoggingPath") as project:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
             logging_specification = project.open_logging_specification_document()
 
             assert r"C:\MyDataGoesHere" == logging_specification.get_log_file_base_path()
@@ -39,7 +39,7 @@ class TestLoggingSpecificationDocument:
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__set_logging_path__logging_path_updates(self, app: Application) -> None:
-        with open_project(app, "ProjectWithUpdatedLoggingPath") as project:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
             logging_specification = project.open_logging_specification_document()
 
             logging_specification.set_log_file_base_path(r"C:\MyDataGoesThere")
@@ -108,6 +108,27 @@ class TestLoggingSpecificationDocument:
             assert name is not None
 
     @pytest.mark.integration  # type: ignore
+    def test__open_project__get_logging_description__logging_description_matches_user_setting(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            assert r"This is the description of the log file." == logging_specification.get_log_file_description()
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_logging_description__logging_path_updates(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            new_description = r"This is the new description of the log file."
+            # Precondition
+            assert new_description != logging_specification.get_log_file_description()
+            logging_specification.set_log_file_description(new_description)
+
+            assert new_description == logging_specification.get_log_file_description()
+
+    @pytest.mark.integration  # type: ignore
     def test__open_project__get_test_properties__all_properties_returned(
         self, app: Application, logging_spec_with_test_properties: LoggingSpecificationDocument
     ) -> None:
@@ -123,6 +144,36 @@ class TestLoggingSpecificationDocument:
             properties[3], "Best Configuration Based Data Logging Software", "FlexLogger", False
         )
         self.assert_property_matches(properties[4], "Who you gonna call?", "Ghostbusters", False)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_test_properties__all_properties_update(
+        self, app: Application, logging_spec_with_test_properties: LoggingSpecificationDocument
+    ) -> None:
+            # Precondition
+            properties = logging_spec_with_test_properties.get_test_properties()
+            assert 5 == len(properties)
+            # #  Name                          Value               Prompt_on_start
+            # 0  Operator                      bparrott            false
+            # 1  DUT                           Serial number: ...  true
+            # 2  Property                      string.Empty        false
+            # 3  Best Configuration Based ...  FlexLogger          false
+            # 4  Who you gonna call?           Ghostbusters        false
+            logging_spec_with_test_properties.set_test_properties([
+                TestProperty("Operator", "peteri", True),                        # change value and prompt
+                TestProperty("DUT", "12345", True),                              # change value
+                TestProperty("I cannot think", "of anything to put here", False) # add property
+            ])
+
+            properties = logging_spec_with_test_properties.get_test_properties()
+            assert 6 == len(properties)
+            self.assert_property_matches(properties[0], "Operator", "peteri", True)
+            self.assert_property_matches(properties[1], "DUT", "12345", True)
+            self.assert_property_matches(properties[2], "Property", "", False)
+            self.assert_property_matches(
+                properties[3], "Best Configuration Based Data Logging Software", "FlexLogger", False
+            )
+            self.assert_property_matches(properties[4], "Who you gonna call?", "Ghostbusters", False)
+            self.assert_property_matches(properties[5], "I cannot think", "of anything to put here", False)
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__get_test_properties__get_test_property_matches(

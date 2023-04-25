@@ -157,6 +157,47 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set log file name") from error
 
+    def get_log_file_description(self) -> str:
+        """Get the log file description.
+
+        Returns:
+            The description of the log file.
+
+        Raises:
+            FlexLoggerError: if getting the log file description fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetLogFileDescription(
+                LoggingSpecificationDocument_pb2.GetLogFileDescriptionRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            return response.log_file_description
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get log file description") from error
+
+    def set_log_file_description(self, log_file_description: str) -> None:
+        """Set the log file description.
+
+        Args:
+            log_file_description: The log file description.
+
+        Raises:
+            FlexLoggerError: if setting the log file description fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetLogFileDescription(
+                LoggingSpecificationDocument_pb2.SetLogFileDescriptionRequest(
+                    document_identifier=self._identifier, log_file_description=log_file_description
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set log file description") from error
+
     def _convert_to_test_property(
         self, test_property: LoggingSpecificationDocument_pb2.TestProperty
     ) -> TestProperty:
@@ -164,6 +205,15 @@ class LoggingSpecificationDocument:
             test_property.property_name,
             test_property.property_value,
             test_property.prompt_on_start,
+        )
+
+    def _convert_from_test_property(
+        self, test_property: TestProperty
+    ) -> LoggingSpecificationDocument_pb2.TestProperty:
+        return LoggingSpecificationDocument_pb2.TestProperty(
+            property_name=test_property.name,
+            property_value=test_property.value,
+            prompt_on_start=test_property.prompt_on_start,
         )
 
     def get_test_properties(self) -> List[TestProperty]:
@@ -187,6 +237,29 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get test properties") from error
 
+    def set_test_properties(self, test_properties: List[TestProperty]) -> None:
+        """Set test properties.
+
+        Args:
+            test_properties: A list of test properties to add or modify on this document.
+
+        Raises:
+            FlexLoggerError: if setting the test properties fails.
+        """
+        if len(test_properties) == 0:
+            return
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetTestProperties(
+                LoggingSpecificationDocument_pb2.SetTestPropertiesRequest(
+                    document_identifier=self._identifier,
+                    test_properties=[self._convert_from_test_property(x) for x in test_properties]
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set test properties") from error
+        
     def get_test_property(self, test_property_name: str) -> TestProperty:
         """Get the test property with the specified name.
 

@@ -13,7 +13,7 @@ DATA_RATE_LEVEL_LOOKUP = {
 
 
 def main(project_path):
-    """Launch FlexLogger, open a project, and sets the data rate values."""
+    """Launch FlexLogger, open a project, and set the data rate values."""
     with Application.launch() as app:
         project = app.open_project(path=project_path)
         channel_specification = project.open_channel_specification_document()
@@ -29,7 +29,6 @@ def main(project_path):
 
         print("Data rate set. Press Enter to save and close the project...")
         input()
-        project.save()
         project.close()
     return 0
 
