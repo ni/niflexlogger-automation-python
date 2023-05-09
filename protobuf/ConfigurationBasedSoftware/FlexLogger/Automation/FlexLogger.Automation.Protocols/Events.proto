@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/EventType.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Service interface for the FlexLogger events.
+service FlexLoggerEvents {
+  // RPC call to send an event for test purposes.
+  rpc SendEvent(SubscribeToEventsResponse) returns (google.protobuf.Empty) {}
+  // RPC call to subscribe to FlexLogger events.
+  rpc SubscribeToEvents(SubscribeToEventsRequest) returns (stream SubscribeToEventsResponse) {}
+  // RPC call to unsubscribe from events.
+  rpc UnsubscribeFromEvents(UnsubscribeFromEventsRequest) returns (google.protobuf.Empty) {}
+  // RPC call to specify which events to subscribe to.
+  rpc RegisterEvents(SubscribeToEventsRequest) returns (google.protobuf.Empty) {}
+  // RPC call to get which events are currently registered.
+  rpc GetRegisteredEvents(GetRegisteredEventsRequest) returns (GetRegisteredEventsResponse) {}
+}
+
+// Request object for subscribing to events
+message SubscribeToEventsRequest {
+    // The event client id
+    string client_id = 1;
+    // The event types to register to
+    repeated EventType event_types = 2;
+}
+
+// SubscribeToEvents Response
+message SubscribeToEventsResponse {
+    // The type of event being sent
+    EventType event_type = 1;
+    // Event Name
+    string event_name = 2;
+    // Event payload
+    string payload = 3;
+    // Time the event was sent
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+// Request object for unsubscribing
+message UnsubscribeFromEventsRequest {
+    // The event client id
+    string client_id = 1;
+}
+
+// Request object for getting registered events
+message GetRegisteredEventsRequest {
+    // The event client id
+    string client_id = 1;
+}
+
+// GetRegisteredEvents response
+message GetRegisteredEventsResponse {
+    // The registered events
+    repeated EventType event_types = 1;
+}
