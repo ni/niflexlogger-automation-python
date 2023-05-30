@@ -9,6 +9,7 @@ def main(project_path):
     with Application.launch() as app:
         project = app.open_project(path=project_path)
         print("Project file path: " + str(project.project_file_path))
+        print("Project name: " + project.project_name)
         print("Press Enter to close the project...")
         input()
         project.close()
