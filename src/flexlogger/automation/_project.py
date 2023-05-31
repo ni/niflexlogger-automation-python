@@ -1,3 +1,4 @@
+import os.path
 import pathlib
 from typing import Callable
 from typing import Optional
@@ -175,3 +176,13 @@ class Project:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get project file path") from error
+
+    @property
+    def project_name(self) -> Optional[str]:
+        """Get the project name
+
+        Returns: The project name if the file path exists, None otherwise
+        """
+        project_path = self.project_file_path
+
+        return os.path.basename(os.path.splitext(project_path)[0])
