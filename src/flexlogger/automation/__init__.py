@@ -11,3 +11,10 @@ from ._flexlogger_error import FlexLoggerError
 from ._channel_data_point import ChannelDataPoint
 from ._test_property import TestProperty
 from ._data_rate_level import DataRateLevel
+from ._event_payloads import EventPayload
+from ._event_payloads import AlarmPayload
+from ._event_payloads import FilePayload
+from . import _event_names as EventNames
+from ._event_type import EventType
+from ._events import FlexLoggerEventHandler
+from ._severity_level import SeverityLevel

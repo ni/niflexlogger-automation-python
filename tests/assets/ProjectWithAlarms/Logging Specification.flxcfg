@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SourceFile Checksum="263CD0AB671914D1554780BF05A1A5AF61353ED8CC1C01C62966F60A2CCDE225934512F7F8FA989D50B7C08E25EF06C71BA5A6E98A665534B3DD15FC5A4A08B7" Timestamp="1D6A7CE9C51EF2F" xmlns="http://www.ni.com/PlatformFramework">
+	<SourceModelFeatureSet>
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="21.0.0.0" />
+	</SourceModelFeatureSet>
+	<LoggingSpecification xmlns="http://www.ni.com/Lumberjack.Core">
+		<LoggingConfigurationModel Id="3302b7bff24741518de43c1f1b01b360">
+			<ProcessingElementModelOwner Id="58d7b6e35442424c8e242e40ebc662b1">
+				<TriggeredLoggingProvider Id="600fb80409f64e15919a2e5ab48843f6" ModelTypeId="[string]CBA104E4-2D21-4AC7-915B-D7DCC1243DCE" StartTime="2020-09-08T13:26:02.9171500999999999999691240037957840058879810385406017303466796875-05:00" />
+				<TdmsLoggingProvider DataReductionStrategy="Decimate" Id="769b2ab339c94bc5b3d2eafd4dc8151a" LogFileBackupPath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data\\backups&quot;" LogFileBasePath="&quot;C:\\Users\\Public\\Documents\\FlexLogger\\data&quot;" ModelTypeId="[string]59163356-411F-436B-A6B6-82FB1EFB19E1">
+					<UserDefinedMetadata Id="d5f250af140343559827266789a46971">
+						<UserDefinedMetadataItem DataType="String" Id="1f88e6acb9df4161b6a766936fea66e1" Name="Operator">
+							<p.Value>gstoll</p.Value>
+						</UserDefinedMetadataItem>
+						<UserDefinedMetadataItem DataType="String" Id="445f9a4c5ea14ca2aab965b9961a70c4" Name="DUT">
+							<p.Value>""</p.Value>
+						</UserDefinedMetadataItem>
+					</UserDefinedMetadata>
+				</TdmsLoggingProvider>
+			</ProcessingElementModelOwner>
+		</LoggingConfigurationModel>
+	</LoggingSpecification>
+</SourceFile>
