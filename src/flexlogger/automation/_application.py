@@ -17,6 +17,7 @@ from typing import Any, List, Optional, Union
 import psutil  # type: ignore
 from grpc import insecure_channel, RpcError
 
+from ._events import FlexLoggerEventHandler
 from ._flexlogger_error import FlexLoggerError
 from ._project import Project
 from .proto import (
@@ -49,6 +50,8 @@ class Application:
         self._server_port = server_port if server_port is not None else self._detect_server_port()
         self._connect()
         self._launched = False
+        self._event_handler = None
+        self._client_id = uuid.uuid4().hex
 
     def __enter__(self) -> "Application":
         return self
@@ -58,6 +61,18 @@ class Application:
         # If the user wants to override this behavior they can call close()
         # or disconnect() explicitly.
         self._disconnect(exit_application=self._launched)
+
+    @property
+    def event_handler(self) -> FlexLoggerEventHandler:
+        """The application event handler."""
+        if self._event_handler is not None:
+            return self._event_handler
+
+        self._event_handler = FlexLoggerEventHandler(self._channel,
+                                                     self._client_id,
+                                                     self,
+                                                     self._raise_exception_if_closed)
+        return self._event_handler
 
     @property
     def server_port(self) -> int:
@@ -173,6 +188,7 @@ class Application:
             finally:
                 self._channel.close()
                 self._channel = None
+                self._event_handler = None
 
     def _raise_exception_if_closed(self) -> None:
         if self._channel is None:

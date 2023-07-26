@@ -1,6 +1,7 @@
 console-menu
 grpcio-tools
 grpcio
+importlib
 prettytable
 psutil
 # This package only works correctly on Windows,

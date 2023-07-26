@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum EventType {
+  EVENT_TYPE_NONE = 0;
+  // Alarm event
+  EVENT_TYPE_ALARM = 1;
+  // Log File event
+  EVENT_TYPE_LOG_FILE = 2;
+  // Test Session event
+  EVENT_TYPE_TEST_SESSION = 3;
+  // Custom event
+  EVENT_TYPE_CUSTOM = 4;
+}
