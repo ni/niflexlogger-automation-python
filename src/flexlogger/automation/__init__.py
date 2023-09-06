@@ -18,3 +18,7 @@ from . import _event_names as EventNames
 from ._event_type import EventType
 from ._events import FlexLoggerEventHandler
 from ._severity_level import SeverityLevel
+from ._start_trigger_condition import StartTriggerCondition
+from ._stop_trigger_condition import StopTriggerCondition
+from ._value_change_condition import ValueChangeCondition
+from ._value_change_type import ValueChangeType

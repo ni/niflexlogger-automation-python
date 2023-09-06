@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum ValueChangeType {
+  TYPE_NONE = 0;
+  TYPE_RISE_ABOVE_VALUE = 1;
+  TYPE_RISE_ABOVE_VALUE_INCLUSIVE = 2;
+  TYPE_FALL_BELOW_VALUE = 3;
+  TYPE_FALL_BELOW_VALUE_INCLUSIVE = 4;
+  TYPE_ENTER_RANGE = 5;
+  TYPE_LEAVE_RANGE = 6;
+}

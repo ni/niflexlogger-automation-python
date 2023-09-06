@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum StartTriggerCondition {
+  START_TRIGGER_CONDITION_TEST_START = 0;
+  START_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE  = 1;
+  START_TRIGGER_CONDITION_TIME = 2;
+}
