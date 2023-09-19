@@ -15,15 +15,14 @@ def main(project_path):
         start_value_change_condition = ValueChangeCondition()
         start_value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
         start_value_change_condition.channel_name = 'Replace this string with the channel name to monitor.'
-        start_value_change_condition.value = 1.0
+        start_value_change_condition.min_value = 1.0
         start_value_change_condition.max_value = 2.0
         start_value_change_condition.time = 0.0
 
         stop_value_change_condition = ValueChangeCondition()
         stop_value_change_condition.value_change_type = ValueChangeType.FALL_BELOW_VALUE
         stop_value_change_condition.channel_name = 'Replace this string with the channel name to monitor.'
-        stop_value_change_condition.value = 0.0
-        stop_value_change_condition.max_value = 0.0
+        stop_value_change_condition.threshold = 1.0
         stop_value_change_condition.time = 0.0
 
         logging_specification.set_start_trigger_settings_to_value_change(start_value_change_condition)

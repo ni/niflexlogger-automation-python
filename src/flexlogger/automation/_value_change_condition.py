@@ -8,20 +8,23 @@ class ValueChangeCondition:
             json_condition = json.loads(value_change_condition)
             self._channel_name = json_condition['ChannelName']
             self._value_change_type = ValueChangeType.from_value_change_type_pb2(int(json_condition['ValueChangeType']))
-            self._value = float(json_condition['Value'])
+            self._threshold = float(json_condition['Threshold'])
+            self._min_value = float(json_condition['MinValue'])
             self._max_value = float(json_condition['MaxValue'])
             self._time = float(json_condition['Time'])
         else:
             self._channel_name = ''
             self._value_change_type = ValueChangeType.NONE
-            self._value = 0
+            self._threshold = 0
+            self._min_value = 0
             self._max_value = 0
             self._time = 0
 
     def __eq__(self, other):
         objects_equal = (self._channel_name == other.channel_name and
                          self._value_change_type == other.value_change_type and
-                         self._value == other.value and
+                         self._threshold == other.threshold and
+                         self._min_value == other.min_value and
                          self._max_value == other.max_value and
                          self._time == other.time)
         return objects_equal
@@ -30,11 +33,13 @@ class ValueChangeCondition:
         value_change_condition_string = 'ValueChangeCondition\r\n' \
                                         'channel_name = {0}\r\n' \
                                         'value_change_type = {1}\r\n' \
-                                        'value = {2}\r\n' \
-                                        'value_max = {3}\r\n' \
-                                        'time = {4}'.format(self._channel_name,
+                                        'threshold = {2}\r\n' \
+                                        'min_value = {3}\r\n' \
+                                        'max_value = {4}\r\n' \
+                                        'time = {5}'.format(self._channel_name,
                                                             self._value_change_type,
-                                                            self._value,
+                                                            self._threshold,
+                                                            self._min_value,
                                                             self._max_value,
                                                             self._time)
         return value_change_condition_string
@@ -58,13 +63,22 @@ class ValueChangeCondition:
         self._value_change_type = value
 
     @property
-    def value(self) -> float:
-        """The value or range minimum."""
-        return self._value
+    def threshold(self) -> float:
+        """The threshold."""
+        return self._threshold
 
-    @value.setter
-    def value(self, value: float):
-        self._value = value
+    @threshold.setter
+    def threshold(self, value: float):
+        self._threshold = value
+
+    @property
+    def min_value(self) -> float:
+        """The range minimum."""
+        return self._min_value
+
+    @min_value.setter
+    def min_value(self, value: float):
+        self._min_value = value
 
     @property
     def max_value(self) -> float:

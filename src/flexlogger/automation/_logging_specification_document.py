@@ -1,6 +1,8 @@
 from google.protobuf.duration_pb2 import Duration
 from google.protobuf.timestamp_pb2 import Timestamp
 import datetime
+from dateutil import parser
+from dateutil import tz
 from grpc import Channel, RpcError
 from typing import Callable, List
 
@@ -363,7 +365,7 @@ class LoggingSpecificationDocument:
               The object returned varies based on the start trigger condition.
                 - When the start trigger condition is TEST_START, the object is None
                 - When the start trigger condition is CHANNEL_VALUE_CHANGE, the object is of type ValueChangeCondition
-                - When the start trigger condition is ABSOLUTE_TIME, the object is a string containing the test start time
+                - When the start trigger condition is ABSOLUTE_TIME, the object is a datetime object containing the test start time.
 
         Raises:
             FlexLoggerError: if getting the start trigger settings fails.
@@ -382,7 +384,10 @@ class LoggingSpecificationDocument:
                 value_change_condition = ValueChangeCondition(response.start_trigger_settings)
                 return start_trigger_condition, value_change_condition
             else:
-                return start_trigger_condition, response.start_trigger_settings
+                utc_start_time = parser.parse(response.start_trigger_settings)
+                utc_start_time = utc_start_time.replace(tzinfo=tz.tzutc())
+                start_time = utc_start_time.astimezone(tz.tzlocal())
+                return start_trigger_condition, start_time
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get the start trigger settings") from error
@@ -454,7 +459,8 @@ class LoggingSpecificationDocument:
                     document_identifier=self._identifier,
                     channel_name=value_change_condition.channel_name,
                     value_change_type=value_change_condition.value_change_type.to_value_change_type_pb2(),
-                    value=value_change_condition.value,
+                    threshold=value_change_condition.threshold,
+                    min_value=value_change_condition.min_value,
                     max_value=value_change_condition.max_value,
                     leading_time=value_change_condition.time
                 )
@@ -467,7 +473,7 @@ class LoggingSpecificationDocument:
         """Set the start trigger to Absolute Time
 
         Args:
-            time: Test start time
+            time: Test start time. If it's timezone-naive, it's assumed to be in UTC.
 
         Raises:
             FlexLoggerError: if setting the start trigger fails.
@@ -519,7 +525,8 @@ class LoggingSpecificationDocument:
                     document_identifier=self._identifier,
                     channel_name=value_change_condition.channel_name,
                     value_change_type=value_change_condition.value_change_type.to_value_change_type_pb2(),
-                    value=value_change_condition.value,
+                    threshold=value_change_condition.threshold,
+                    min_value=value_change_condition.min_value,
                     max_value=value_change_condition.max_value,
                     trailing_time=value_change_condition.time
                 )

@@ -4,6 +4,7 @@ grpcio
 importlib
 prettytable
 psutil
+python-dateutil
 # This package only works correctly on Windows,
 # but add this specifier to allow installing it on
 # Linux, which is helpful for pypi builds and readthedocs.

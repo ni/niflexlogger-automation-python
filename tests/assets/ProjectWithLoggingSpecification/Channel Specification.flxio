@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SourceFile Checksum="4D9E031E733A3E8C91849792190415369609DF38FFB30D46E60F10FF5D0C83311228ACE8A55AD9B77DE48882D1711EAD8C8E01790F08138DC951F0D0F1080205" Timestamp="1D665F58F66400B" xmlns="http://www.ni.com/PlatformFramework">
+<SourceFile Checksum="8AEB1AA2F7E72084A97C19B685C2BECAF7129D4B8FBF5EC683B5A983D4489D0C0A1B2A84FD7C4712C9DE1656C223EAD1F47F8C4791162CB59B429BEE9913BE84" Timestamp="1D9EA8207431C98" xmlns="http://www.ni.com/PlatformFramework">
 	<SourceModelFeatureSet>
-		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="FlexLogger DAQmx" Name="http://www.ni.com/FlexLogger/DAQmx" OldestCompatibleVersion="8.3.0.5" Version="8.3.0.5" />
-		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
-		<ParsableNamespace AssemblyFileVersion="8.3.0.2028" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
-		<ApplicationVersionInfo Build="8.3.0.2028" Name="FlexLogger" Version="20.3.0.0" />
+		<ParsableNamespace AssemblyFileVersion="9.10.0.2344" FeatureSetName="FlexLogger DAQmx" Name="http://www.ni.com/FlexLogger/DAQmx" OldestCompatibleVersion="9.9.0.49152" Version="9.9.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="9.10.0.2555" FeatureSetName="FlexLogger XNET" Name="http://www.ni.com/FlexLogger/XNET" OldestCompatibleVersion="9.3.0.49152" Version="9.3.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="9.10.0.2555" FeatureSetName="Lumberjack Core" Name="http://www.ni.com/Lumberjack.Core" OldestCompatibleVersion="9.10.0.1" Version="9.10.0.1" />
+		<ParsableNamespace AssemblyFileVersion="9.10.0.2546" FeatureSetName="Calculated Channels" Name="http://www.ni.com/Lumberjack.Providers.CalculatedChannel" OldestCompatibleVersion="9.0.0.49152" Version="9.0.0.49152" />
+		<ParsableNamespace AssemblyFileVersion="9.10.0.2546" FeatureSetName="Editor" Name="http://www.ni.com/PlatformFramework" OldestCompatibleVersion="8.1.0.49152" Version="8.1.0.49152" />
+		<ApplicationVersionInfo Build="9.10.0.2344" Name="FlexLogger" Version="23.6.0.0" />
 	</SourceModelFeatureSet>
 	<ChannelSpecification xmlns="http://www.ni.com/Lumberjack.Core">
 		<ChannelConfigurationModel Id="982c173af0c64610a860339d38593bba">
@@ -18,8 +20,107 @@
 						<SampleTiming Id="a2c36c356af34115b9d6825ac7f4fc20" Level="[SampleRateLevel]LegacyCounter" Units="[Unit]Hertz" Value="[double]100" />
 						<SampleTiming Id="814122c312aa4893a2481f15bcb5bd74" Level="[SampleRateLevel]Digital" Units="[Unit]Hertz" Value="[double]10" />
 						<OnDemandTiming Id="930f7580a3a54932a0b7431eb8c0d42c" Level="[SampleRateLevel]OnDemand" />
+						<SampleTiming Id="b8a327accf245468f3a40413ebf50c7" Level="[SampleRateLevel]AnalogOutput" Units="[Unit]Hertz" Value="[double]10" />
 					</TopLevelTimingOwner>
 				</DAQmxProcessingElement>
+				<XnetPortModel CustomBaudrates="" CustomFdBaudrates="" Id="9a0e3949051d45778312e35e5f6ca7f5" PhysicalPort="[string]NI 9862/Port1" ProcessingElementName="[string]CAN2" TransceiverCapability="HighSpeed" xmlns="http://www.ni.com/FlexLogger/XNET">
+					<XnetProcessingElementParameter Id="de237e0c20144a268e6c4ad66804228b" ParameterName="[string]Settings JSON" Type="[Type]String" Value="[string]" />
+					<XnetCommunicationStatusOutputInfo CriticalAlarm="33429444b3814f69b886a58bcd4d3990" DataType="[Type]String" FullName="CAN2 Communication status" Id="969986e2db5040c08cc08fc2a1a1466b" LoggingDisabled="[bool]True" SampleRate="[double]100" Source="Output" Units="[string]" WarningAlarm="936802351e344aaa83e2f18958110981">
+						<AlarmModel Id="936802351e344aaa83e2f18958110981" Severity="[AlarmSeverity]Warning" TriggerModel="a38c67e5dd494786844d11d3cefd3bf9" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]c7d4ce04-a8b5-4d0c-8b23-196ea05f175b" AliasToMonitor="[string]CAN2 Communication status" Id="a38c67e5dd494786844d11d3cefd3bf9">
+								<AboveValueTriggerModel Id="c9d3f08db394b9c99cca9126726d00d" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="33429444b3814f69b886a58bcd4d3990" Severity="[AlarmSeverity]Critical" TriggerModel="ec802cd73bd44e27aad4ae7724a42076" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]4f192af7-52c9-4c33-8ebb-4aec8016f85b" AliasToMonitor="[string]CAN2 Communication status" Id="ec802cd73bd44e27aad4ae7724a42076">
+								<AboveValueTriggerModel Id="64676854e70b4513a5338cf3f0f775bd" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetCommunicationStatusOutputInfo>
+					<XnetRawFrameOutputInfo CriticalAlarm="33cef1fccf554a71833ee9e6a14523c6" DataType="[Type]Wfm(UInt8)" FullName="CAN2 Raw Logging" Id="7906228e6504a4a9e03f8ac0728b242" SampleRate="[double]100" Source="Raw" Units="[string]" WarningAlarm="89f8c3ef08df4af3bc766e4cfa736e37">
+						<AlarmModel Id="89f8c3ef08df4af3bc766e4cfa736e37" Severity="[AlarmSeverity]Warning" TriggerModel="19385343aef844e5922d54e63ab16bcc" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]58622ddb-1261-460f-8785-05a171e406a4" AliasToMonitor="[string]CAN2 Raw Logging" Id="19385343aef844e5922d54e63ab16bcc">
+								<AboveValueTriggerModel Id="dabc371b5da348aaa35ff32269dd31b3" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="33cef1fccf554a71833ee9e6a14523c6" Severity="[AlarmSeverity]Critical" TriggerModel="a7297e0dd25e4b6e9335c4c284e9ea2b" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]969edd1b-6679-42be-b50d-705303dbb7f9" AliasToMonitor="[string]CAN2 Raw Logging" Id="a7297e0dd25e4b6e9335c4c284e9ea2b">
+								<AboveValueTriggerModel Id="d07914e33761410d95653006989f03e9" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetRawFrameOutputInfo>
+					<XnetRawFrameInputInfo FullName="Raw Frame Input" Id="dfc27bb4b7b44f4a31acc7dcb2667b8" Source="Input" />
+					<XnetBusStatisticsOutputInfo CriticalAlarm="ff75765c4b3d44b78f8d549668061b06" DataType="[Type]String" FullName="CAN2 Bus Statistics" Id="5186e3b9aeb7450ea82a71304f31c0ea" LoggingDisabled="[bool]True" SampleRate="[double]100" Source="Output" Units="[string]" WarningAlarm="5d471e7f1e6499d9e0030089511ac4f">
+						<AlarmModel Id="5d471e7f1e6499d9e0030089511ac4f" Severity="[AlarmSeverity]Warning" TriggerModel="e9a1a1da228442619d686f4026c3df66" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]764cf632-8c0a-41a9-b2a9-8e94a9909def" AliasToMonitor="[string]CAN2 Bus Statistics" Id="e9a1a1da228442619d686f4026c3df66">
+								<AboveValueTriggerModel Id="f89b2bdad7ad48e9afe1a8aae3b0ff31" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="ff75765c4b3d44b78f8d549668061b06" Severity="[AlarmSeverity]Critical" TriggerModel="9367fd495b894390b948d41b231b7064" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]7fcfe7c3-5c5b-40c6-a980-76e7e2556837" AliasToMonitor="[string]CAN2 Bus Statistics" Id="9367fd495b894390b948d41b231b7064">
+								<AboveValueTriggerModel Id="e81785aefdd4c9ca798f43a4d9d492a" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetBusStatisticsOutputInfo>
+				</XnetPortModel>
+				<XnetPortModel CustomBaudrates="" CustomFdBaudrates="" Id="922622767c0e41a5abac5dc7bfe4659a" PhysicalPort="[string]NI 9862/Port1" ProcessingElementName="[string]CAN1" TransceiverCapability="HighSpeed" xmlns="http://www.ni.com/FlexLogger/XNET">
+					<XnetProcessingElementParameter Id="844fbd75a6134f57a0cd575893648a96" ParameterName="[string]Settings JSON" Type="[Type]String" Value="[string]" />
+					<XnetCommunicationStatusOutputInfo CriticalAlarm="bb0aff2fa4e146909297dbaace1c974a" DataType="[Type]String" FullName="CAN1 Communication status" Id="8c1bc5be5ee349a9890c376d8c8e68ed" LoggingDisabled="[bool]True" SampleRate="[double]100" Source="Output" Units="[string]" WarningAlarm="a8ed13e0d2a44cfb8c35e10f5813360a">
+						<AlarmModel Id="a8ed13e0d2a44cfb8c35e10f5813360a" Severity="[AlarmSeverity]Warning" TriggerModel="a6b4f09438824ef1a4c30613256e9774" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]8e574fb1-b70f-4bf6-9212-d9c260c9c3cf" AliasToMonitor="[string]CAN1 Communication status" Id="a6b4f09438824ef1a4c30613256e9774">
+								<AboveValueTriggerModel Id="25eee30ac56a4ae68a7280553fe76ebf" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="bb0aff2fa4e146909297dbaace1c974a" Severity="[AlarmSeverity]Critical" TriggerModel="dddc8f90b5564bae89cf02be5fc233e2" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]3ecf6ed0-e054-40e8-96eb-4bfeee46fed6" AliasToMonitor="[string]CAN1 Communication status" Id="dddc8f90b5564bae89cf02be5fc233e2">
+								<AboveValueTriggerModel Id="306d3f7c76664948b7815571c0d78b03" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetCommunicationStatusOutputInfo>
+					<XnetRawFrameOutputInfo CriticalAlarm="eedcb03dec4a4b8b83ec932e10c7e4a3" DataType="[Type]Wfm(UInt8)" FullName="CAN1 Raw Logging" Id="cf52f8d3a1864222b14416cd722760a6" SampleRate="[double]100" Source="Raw" Units="[string]" WarningAlarm="e12948c2ddc46a6bcb9a204a4c9cec4">
+						<AlarmModel Id="e12948c2ddc46a6bcb9a204a4c9cec4" Severity="[AlarmSeverity]Warning" TriggerModel="ef52d23fc986487ea2dbd8336e266105" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]fc88c48b-580a-4b24-ac11-3565679ffabd" AliasToMonitor="[string]CAN1 Raw Logging" Id="ef52d23fc986487ea2dbd8336e266105">
+								<AboveValueTriggerModel Id="587c199336754808ade8ce75f3083fcf" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="eedcb03dec4a4b8b83ec932e10c7e4a3" Severity="[AlarmSeverity]Critical" TriggerModel="dce5bb9c418b4315b6fe4cf0ac64ae2d" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]610e36ad-fb74-4d8e-8ec3-18cb778c2edb" AliasToMonitor="[string]CAN1 Raw Logging" Id="dce5bb9c418b4315b6fe4cf0ac64ae2d">
+								<AboveValueTriggerModel Id="738cd3a9e6ac4292860c8ae8d6420fa4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetRawFrameOutputInfo>
+					<XnetRawFrameInputInfo FullName="Raw Frame Input_1" Id="8902e1d1e42046af866859d9b0db3b64" Source="Input" />
+					<XnetBusStatisticsOutputInfo CriticalAlarm="d5744887533c40a38ab23fe920d9a285" DataType="[Type]String" FullName="CAN1 Bus Statistics" Id="cc10dc720b814b35860ef75a6880763c" LoggingDisabled="[bool]True" SampleRate="[double]100" Source="Output" Units="[string]" WarningAlarm="8e5a830c3294400db5e2d189aa7cf7f3">
+						<AlarmModel Id="8e5a830c3294400db5e2d189aa7cf7f3" Severity="[AlarmSeverity]Warning" TriggerModel="fe70882a25ea4a62b12adc112bb2991f" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]4990c2e4-bdd4-48d2-999b-a18c7230915b" AliasToMonitor="[string]CAN1 Bus Statistics" Id="fe70882a25ea4a62b12adc112bb2991f">
+								<AboveValueTriggerModel Id="638c9023c8c347e89f5c0624aa11bd60" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="d5744887533c40a38ab23fe920d9a285" Severity="[AlarmSeverity]Critical" TriggerModel="7bb53caa0e8449a0863529c41403687b" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]5faaf52c-e70b-4263-88cc-3b110c217018" AliasToMonitor="[string]CAN1 Bus Statistics" Id="7bb53caa0e8449a0863529c41403687b">
+								<AboveValueTriggerModel Id="cce9d4f1749b44c5ba757a0aadded4e4" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+					</XnetBusStatisticsOutputInfo>
+				</XnetPortModel>
+				<VariableProvider Id="aabc3acc0aea40138f23718b1c4b03ef" ModelTypeId="[string]EAE65B83-4518-45A9-AA71-7A049C2B2563" xmlns="http://www.ni.com/Lumberjack.Providers.CalculatedChannel">
+					<VariableConsumer AssociatedProducer="[string]Variable.producer" FullName="Variable" Id="d9673fca91aa4ed890e9898d40dc55f3" MappingAlias="[string]e97b80e5-bc3b-40d0-a59d-8160e7f7fc85">
+						<SupportedDataType xmlns="http://www.ni.com/Lumberjack.Core" />
+					</VariableConsumer>
+					<VariableProducer CriticalAlarm="58e01ebb3f0d4e06ad613f697fec83a2" DataType="[Type]Double" FullName="Variable.producer" Id="23f2bed9c7d64395b8c91d6507a96da5" SampleRate="[double]100" Units="[string]" WarningAlarm="a132890f99294009963c68b86f385063">
+						<AlarmModel Id="a132890f99294009963c68b86f385063" Severity="[AlarmSeverity]Warning" TriggerModel="bc92babcfbf046cd9bffd29c1ab8baa4" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]81011ad1-f45c-40ea-8544-0a78334ab999" AliasToMonitor="[string]Variable.producer" Id="bc92babcfbf046cd9bffd29c1ab8baa4">
+								<AboveValueTriggerModel Id="98f016ac8b374e8985dc7620b2eb4900" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<AlarmModel Id="58e01ebb3f0d4e06ad613f697fec83a2" Severity="[AlarmSeverity]Critical" TriggerModel="d19c4bfc523b4fb6a3eab93c45cac9ba" xmlns="http://www.ni.com/Lumberjack.Core">
+							<ChannelMonitorTriggerModel Alias="[string]28808622-03e0-4f60-8229-eac7978969a6" AliasToMonitor="[string]Variable.producer" Id="d19c4bfc523b4fb6a3eab93c45cac9ba">
+								<AboveValueTriggerModel Id="25781e0c2e35426b9bc0e4abb9bb0c42" />
+							</ChannelMonitorTriggerModel>
+						</AlarmModel>
+						<Keyword Id="25c0872c07a7403e84296255f3266372" Name="NotPublicToSystemLink" xmlns="http://www.ni.com/Lumberjack.Core" />
+					</VariableProducer>
+				</VariableProvider>
 			</ProcessingElementModelOwner>
 		</ChannelConfigurationModel>
 		<ChassisModelOwner Id="462b641e98e04963bf760b558012bc65" />

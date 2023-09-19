@@ -259,12 +259,14 @@ message SetValueChangeStartTriggerSettingsRequest {
     string channel_name = 2;
     // The value change condition
     ValueChangeType value_change_type = 3;
+    // The threshold
+    double threshold = 4;
     // The min value
-    double value = 4;
+    double min_value = 5;
     // The max value
-    double max_value = 5;
+    double max_value = 6;
     // The leading time to include in seconds
-    double leading_time = 6;
+    double leading_time = 7;
 }
 
 // Request object for SetTimeStartTriggerSettings
@@ -289,12 +291,14 @@ message SetValueChangeStopTriggerSettingsRequest {
     string channel_name = 2;
     // The value change condition
     ValueChangeType value_change_type = 3;
+    // The threshold
+    double threshold = 4;
     // The min value
-    double value = 4;
+    double min_value = 5;
     // The max value
-    double max_value = 5;
+    double max_value = 6;
     // The leading time to include in seconds
-    double trailing_time = 6;
+    double trailing_time = 7;
 }
 
 // Request object for SetTimeStopTriggerSettings
