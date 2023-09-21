@@ -28,9 +28,9 @@ def main(project_path):
         logging_specification.set_start_trigger_settings_to_value_change(start_value_change_condition)
         logging_specification.set_stop_trigger_settings_to_value_change(stop_value_change_condition)
 
-    print("Press Enter to close the project...")
-    input()
-    project.close()
+        print("Press Enter to close the project...")
+        input()
+        project.close()
 
     return 0
 

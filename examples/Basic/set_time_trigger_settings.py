@@ -20,9 +20,9 @@ def main(project_path):
         duration = timedelta(seconds=100)
         logging_specification.set_stop_trigger_settings_to_duration(duration)
 
-    print("Press Enter to close the project...")
-    input()
-    project.close()
+        print("Press Enter to close the project...")
+        input()
+        project.close()
 
     return 0
 

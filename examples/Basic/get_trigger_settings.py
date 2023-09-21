@@ -30,9 +30,9 @@ def main(project_path):
         elif stop_trigger_condition == StopTriggerCondition.TEST_TIME_ELAPSED:
             print("Time Elapsed: " + stop_trigger_settings)
 
-    print("Press Enter to close the project...")
-    input()
-    project.close()
+        print("Press Enter to close the project...")
+        input()
+        project.close()
 
     return 0
 
