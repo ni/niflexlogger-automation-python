@@ -19,7 +19,7 @@ def main(project_path):
             print("Channel Value Change Condition :")
             print(start_trigger_settings)
         elif start_trigger_condition == StartTriggerCondition.ABSOLUTE_TIME:
-            print("Start Time: " + start_trigger_settings)
+            print("Start Time: " + start_trigger_settings.strftime("%x, %X"))
 
         # Get and print the stop trigger settings
         stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
