@@ -6,6 +6,8 @@ import json
 
 
 class EventPayload:
+    """Represents an event payload."""
+
     def __init__(self, event_response: Events_pb2.SubscribeToEventsResponse) -> None:
         self._event_type = EventType.from_event_type_pb2(event_response.event_type)
         self._event_name = event_response.event_name
@@ -29,6 +31,8 @@ class EventPayload:
 
 
 class AlarmPayload(EventPayload):
+    """Represents an alarm event payload."""
+
     def __init__(self, event_response: Events_pb2.SubscribeToEventsResponse) -> None:
         super().__init__(event_response)
         json_payload = json.loads(self._payload)
@@ -101,6 +105,8 @@ class AlarmPayload(EventPayload):
 
 
 class FilePayload(EventPayload):
+    """Represents a file event payload."""
+
     def __init__(self, event_response: Events_pb2.SubscribeToEventsResponse) -> None:
         super().__init__(event_response)
         self._file_path = self._payload
