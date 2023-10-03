@@ -41,7 +41,7 @@ class FlexLoggerEventHandler:
     def __exit__(self, *args):
         self.unregister_from_events()
 
-    def get_registered_events(self) -> [EventType]:
+    def get_registered_events(self):
         """Gets the list of registered event types.
 
         Returns
