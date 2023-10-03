@@ -99,6 +99,7 @@ setup(
         "pywin32; platform_system=='Windows'",
         "console-menu",
         "PrettyTable",
+        "python-dateutil",
     ],
     setup_requires=["grpcio", "grpcio-tools"],
     tests_require=["pytest", "mypy", "npTDMS", "pytest-timeout", "psutil"],

@@ -3,6 +3,10 @@ import json
 
 
 class ValueChangeCondition:
+    """Represents a value change condition.
+     Create a ValueChangeCondition object when you want to set the start or stop trigger to value change.
+    """
+
     def __init__(self, value_change_condition='') -> None:
         if len(value_change_condition) > 0:
             json_condition = json.loads(value_change_condition)
