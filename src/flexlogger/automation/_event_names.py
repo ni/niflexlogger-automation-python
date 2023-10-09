@@ -1,3 +1,5 @@
+"""List of event names."""
+
 ALARM_ADDED = "Active Alarm Added"
 ALARM_REMOVED = "Active Alarm Removed"
 ALARM_CHANGED = "Active Alarm Changed"

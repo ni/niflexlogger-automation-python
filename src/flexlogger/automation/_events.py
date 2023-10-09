@@ -17,6 +17,10 @@ from typing import Callable, Iterator
 
 
 class FlexLoggerEventHandler:
+    """Represents a FlexLogger event handler.
+    You must create a FlexLoggerEventHandler object to be able to register for events.
+    """
+
     def __init__(self, channel: Channel,
                  client_id: str,
                  application,
@@ -37,7 +41,7 @@ class FlexLoggerEventHandler:
     def __exit__(self, *args):
         self.unregister_from_events()
 
-    def get_registered_events(self) -> [EventType]:
+    def get_registered_events(self) -> list[EventType]:
         """Gets the list of registered event types.
 
         Returns

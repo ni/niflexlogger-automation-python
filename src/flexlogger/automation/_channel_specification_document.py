@@ -252,6 +252,7 @@ class ChannelSpecificationDocument:
     def set_data_rate_level(self, channel_name: str, data_rate_level: DataRateLevel) -> None:
         """Set the data rate level of the specified channel
            Note: This may affect other channels in the same module or chassis set to the same data rate level.
+
         Args:
             channel_name: The name of the channel.
             data_rate_level: The data rate level to set.
