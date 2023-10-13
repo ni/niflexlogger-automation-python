@@ -2,8 +2,13 @@
 
 package national_instruments.flex_logger.automation.protocols;
 
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/StartTriggerCondition.proto";
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/StopTriggerCondition.proto";
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/ValueChangeType.proto";
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 // Service interface for a server side logging specification document.
 service LoggingSpecificationDocument {
@@ -33,6 +38,26 @@ service LoggingSpecificationDocument {
     rpc GetResolvedLogFileBasePath(GetResolvedLogFileBasePathRequest) returns (GetResolvedLogFileBasePathResponse) {}
     // RPC call to get the resolved log file name
     rpc GetResolvedLogFileName(GetResolvedLogFileNameRequest) returns (GetResolvedLogFileNameResponse) {}
+    // RPC call to get the start trigger settings
+    rpc GetStartTriggerSettings(GetStartTriggerSettingsRequest) returns (GetStartTriggerSettingsResponse) {}
+    // RPC call to get the stop trigger settings
+    rpc GetStopTriggerSettings(GetStopTriggerSettingsRequest) returns (GetStopTriggerSettingsResponse) {}
+    // RPC call to set the start trigger settings to Test Start
+    rpc SetTestStartTriggerSettings(SetTestStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the start trigger settings to Channel value change
+    rpc SetValueChangeStartTriggerSettings(SetValueChangeStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the start trigger settings to Absolute time
+    rpc SetTimeStartTriggerSettings(SetTimeStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the stop trigger settings to Test stop
+    rpc SetTestStopTriggerSettings(SetTestStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the stop trigger settings to Channel value change
+    rpc SetValueChangeStopTriggerSettings(SetValueChangeStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the stop trigger settings to Test time elapsed
+    rpc SetTimeStopTriggerSettings(SetTimeStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to get the retrigerring configuration
+    rpc IsRetriggeringEnabled(IsRetriggeringEnabledRequest) returns (IsRetriggeringEnabledResponse) {}
+    // RPC call to set the retrigerring configuration
+    rpc SetRetriggering(SetRetriggeringRequest) returns (google.protobuf.Empty) {}
 }
 
 // Request object for getting the log file base path
@@ -192,3 +217,114 @@ message GetResolvedLogFileNameResponse {
     string resolved_log_file_name = 1;
 }
 
+// Request object for getting the start trigger settings
+message GetStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for a getting the start trigger settings
+message GetStartTriggerSettingsResponse {
+    // The start trigger condition
+    StartTriggerCondition start_trigger_condition = 1;
+    // The start trigger settings
+    string start_trigger_settings = 2;
+}
+
+// Request object for getting the stop trigger settings
+message GetStopTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for getting the stop trigger settings
+message GetStopTriggerSettingsResponse {
+    // The stop trigger condition
+    StopTriggerCondition stop_trigger_condition = 1;
+    // The stop trigger settings
+    string stop_trigger_settings = 2;
+}
+
+// Request object for SetTestStartTriggerSettings
+message SetTestStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Request object for SetValueChangeStartTriggerSettings
+message SetValueChangeStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The channel name
+    string channel_name = 2;
+    // The value change condition
+    ValueChangeType value_change_type = 3;
+    // The threshold
+    double threshold = 4;
+    // The min value
+    double min_value = 5;
+    // The max value
+    double max_value = 6;
+    // The leading time to include in seconds
+    double leading_time = 7;
+}
+
+// Request object for SetTimeStartTriggerSettings
+message SetTimeStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The time to start the test
+    google.protobuf.Timestamp time = 2;
+}
+
+// Request object for SetTestStopTriggerSettings
+message SetTestStopTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Request object for SetValueChangeStopTriggerSettings
+message SetValueChangeStopTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The channel name
+    string channel_name = 2;
+    // The value change condition
+    ValueChangeType value_change_type = 3;
+    // The threshold
+    double threshold = 4;
+    // The min value
+    double min_value = 5;
+    // The max value
+    double max_value = 6;
+    // The leading time to include in seconds
+    double trailing_time = 7;
+}
+
+// Request object for SetTimeStopTriggerSettings
+message SetTimeStopTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The duration
+    google.protobuf.Duration duration = 2;
+}
+
+// Request object for IsRetriggeringEnabled
+message IsRetriggeringEnabledRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+}
+
+// Response object for IsRetriggeringEnabled
+message IsRetriggeringEnabledResponse {
+    // The retriggering configuration
+    bool is_retriggering_enabled = 1;
+}
+
+// Request object for SetRetriggering
+message SetRetriggeringRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The triggering configuration
+    bool is_retriggering_enabled = 2;
+}

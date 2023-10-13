@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 import uuid
+from datetime import timedelta
 from pathlib import Path
 from socket import SOCK_STREAM
 from typing import Any, List, Optional, Union
@@ -194,23 +195,29 @@ class Application:
         if self._channel is None:
             raise FlexLoggerError("Application has already been disconnected") from None
 
-    def open_project(self, path: Union[str, Path]) -> Project:
+    def open_project(self, path: Union[str, Path], timeout: int = -1) -> Project:
         """Open a project.
 
         Args:
             path: The path to the project you want to open.
+            timeout: The timeout in seconds.
+                     If the value is negative, it will be ignored and the call will wait indefinitely.
 
         Returns:
             The opened project.
 
         Raises:
-            FlexLoggerError: if opening the project fails.
+            FlexLoggerError: if opening the project fails or the timeout is reached.
         """
         try:
             stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
-            response = stub.OpenProject(
-                FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path))
-            )
+            if timeout < 0:
+                response = stub.OpenProject(
+                    FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path)))
+            else:
+                response = stub.OpenProject(
+                    FlexLoggerApplication_pb2.OpenProjectRequest(project_path=str(path)), timeout=timeout)
+
             # FlexLogger can hang if you open and then immediately close a project,
             # this seems sufficient to prevent that.
             time.sleep(1.0)

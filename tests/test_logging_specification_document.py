@@ -1,3 +1,6 @@
+from datetime import datetime
+from datetime import timedelta
+from dateutil import tz
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from time import sleep
@@ -8,7 +11,11 @@ from flexlogger.automation import (
     Application,
     FlexLoggerError,
     LoggingSpecificationDocument,
+    StartTriggerCondition,
+    StopTriggerCondition,
     TestProperty,
+    ValueChangeCondition,
+    ValueChangeType
 )
 from nptdms import TdmsFile  # type: ignore
 
@@ -372,6 +379,209 @@ class TestLoggingSpecificationDocument:
         assert 'flexlogger.automation.TestProperty("Property", "New Value", True)' == repr(
             test_property
         )
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_test_start__start_trigger_is_test_start(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            logging_specification.set_start_trigger_settings_to_test_start()
+
+            start_trigger_condition, start_trigger_settings = logging_specification.get_start_trigger_settings()
+            assert start_trigger_condition == StartTriggerCondition.TEST_START
+            assert start_trigger_settings is None
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_channel_value_change__start_trigger_is_channel_value_change(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 5.0
+            value_change_condition.max_value = 7.0
+            value_change_condition.time = 1.0
+            logging_specification.set_start_trigger_settings_to_value_change(value_change_condition)
+
+            start_trigger_condition, start_trigger_settings = logging_specification.get_start_trigger_settings()
+            assert start_trigger_condition == StartTriggerCondition.CHANNEL_VALUE_CHANGE
+            assert start_trigger_settings == value_change_condition
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_channel_value_change_with_invalid_channel__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Invalid Channel'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 5.0
+            value_change_condition.max_value = 7.0
+            value_change_condition.time = 1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_start_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_channel_value_change_with_invalid_range__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 8.0
+            value_change_condition.max_value = 5.0
+            value_change_condition.time = 1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_start_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_channel_value_change_with_invalid_time__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 4.0
+            value_change_condition.max_value = 5.0
+            value_change_condition.time = -1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_start_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_time__start_trigger_is_time(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            start_time = datetime.utcnow()
+            start_time = start_time.replace(microsecond=0)
+            logging_specification.set_start_trigger_settings_to_absolute_time(start_time)
+
+            start_trigger_condition, start_trigger_settings = logging_specification.get_start_trigger_settings()
+            assert start_trigger_condition == StartTriggerCondition.ABSOLUTE_TIME
+            expected_time = start_time.replace(tzinfo=tz.tzutc())
+            expected_time = expected_time.astimezone(tz.tzlocal())
+            assert start_trigger_settings == expected_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_test_stop__stop_trigger_is_test_stop(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            logging_specification.set_stop_trigger_settings_to_test_stop()
+
+            stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
+            assert stop_trigger_condition == StopTriggerCondition.TEST_STOP
+            assert stop_trigger_settings is None
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_channel_value_change__stop_trigger_is_channel_value_change(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 5.0
+            value_change_condition.max_value = 7.0
+            value_change_condition.time = 1.0
+            logging_specification.set_stop_trigger_settings_to_value_change(value_change_condition)
+
+            stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
+            assert stop_trigger_condition == StopTriggerCondition.CHANNEL_VALUE_CHANGE
+            assert stop_trigger_settings == value_change_condition
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_channel_value_change_with_invalid_channel__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Invalid Channel'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 5.0
+            value_change_condition.max_value = 7.0
+            value_change_condition.time = 1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_stop_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_channel_value_change_with_invalid_range__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 8.0
+            value_change_condition.max_value = 5.0
+            value_change_condition.time = 1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_stop_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_channel_value_change_with_invalid_time__exception_raised(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 4.0
+            value_change_condition.max_value = 5.0
+            value_change_condition.time = -1.0
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_stop_trigger_settings_to_value_change(value_change_condition)
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_time__stop_trigger_is_time(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            duration = timedelta(seconds=100)
+            logging_specification.set_stop_trigger_settings_to_duration(duration)
+
+            stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
+            assert stop_trigger_condition == StopTriggerCondition.TEST_TIME_ELAPSED
+            assert stop_trigger_settings == '00:01:40'
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_retriggering__re_triggering_is_set(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+            value_change_condition = ValueChangeCondition()
+            value_change_condition.channel_name = 'Variable'
+            value_change_condition.value_change_type = ValueChangeType.ENTER_RANGE
+            value_change_condition.min_value = 5.0
+            value_change_condition.max_value = 7.0
+            value_change_condition.time = 1.0
+            logging_specification.set_start_trigger_settings_to_value_change(value_change_condition)
+            duration = timedelta(seconds=100)
+            logging_specification.set_stop_trigger_settings_to_duration(duration)
+
+            logging_specification.set_retriggering(True)
+
+            re_triggering = logging_specification.is_retriggering_enabled()
+            assert re_triggering
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_retriggering__exception_raised(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+            logging_specification.set_start_trigger_settings_to_test_start()
+
+            with pytest.raises(FlexLoggerError):
+                logging_specification.set_retriggering(True)
 
     def assert_property_matches(
         self,
