@@ -1,9 +1,16 @@
+from google.protobuf.duration_pb2 import Duration
+from google.protobuf.timestamp_pb2 import Timestamp
+import datetime
+from dateutil import parser
+from dateutil import tz
+from grpc import Channel, RpcError
 from typing import Callable, List
 
-from grpc import Channel, RpcError
-
 from ._flexlogger_error import FlexLoggerError
+from ._start_trigger_condition import StartTriggerCondition
+from ._stop_trigger_condition import StopTriggerCondition
 from ._test_property import TestProperty
+from ._value_change_condition import ValueChangeCondition
 from .proto import LoggingSpecificationDocument_pb2, LoggingSpecificationDocument_pb2_grpc
 from .proto.Identifiers_pb2 import ElementIdentifier
 
@@ -347,3 +354,248 @@ class LoggingSpecificationDocument:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to remove test property") from error
+
+    def get_start_trigger_settings(self):
+        """Get the start trigger settings.
+
+        Returns:
+            A tuple containing 2 strings:
+            - The start trigger condition
+            - The start trigger settings
+              The object returned varies based on the start trigger condition.
+                - When the start trigger condition is TEST_START, the object is None
+                - When the start trigger condition is CHANNEL_VALUE_CHANGE, the object is of type ValueChangeCondition
+                - When the start trigger condition is ABSOLUTE_TIME, the object is a datetime object containing the test start time.
+
+        Raises:
+            FlexLoggerError: if getting the start trigger settings fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.GetStartTriggerSettingsRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            start_trigger_condition = StartTriggerCondition.from_start_trigger_condition_pb2(response.start_trigger_condition)
+            if start_trigger_condition == StartTriggerCondition.TEST_START:
+                return start_trigger_condition, None
+            elif start_trigger_condition == StartTriggerCondition.CHANNEL_VALUE_CHANGE:
+                value_change_condition = ValueChangeCondition(response.start_trigger_settings)
+                return start_trigger_condition, value_change_condition
+            else:
+                utc_start_time = parser.parse(response.start_trigger_settings)
+                utc_start_time = utc_start_time.replace(tzinfo=tz.tzutc())
+                start_time = utc_start_time.astimezone(tz.tzlocal())
+                return start_trigger_condition, start_time
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get the start trigger settings") from error
+
+    def get_stop_trigger_settings(self) -> (StopTriggerCondition, str):
+        """Get the stop trigger settings.
+
+        Returns:
+            A tuple containing 2 strings:
+            - The stop trigger condition
+            - The stop trigger settings
+              The object returned varies based on the stop trigger condition.
+                - When the stop trigger condition is TEST_STOP, the object is None
+                - When the stop trigger condition is CHANNEL_VALUE_CHANGE, the object is of type ValueChangeCondition
+                - When the stop trigger condition is TEST_TIME_ELAPSED, the object is a string containing the test duration
+
+        Raises:
+            FlexLoggerError: if getting the stop trigger settings fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetStopTriggerSettings(
+                LoggingSpecificationDocument_pb2.GetStopTriggerSettingsRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            stop_trigger_condition = StopTriggerCondition.from_stop_trigger_condition_pb2(response.stop_trigger_condition)
+            if stop_trigger_condition == StopTriggerCondition.TEST_STOP:
+                return stop_trigger_condition, None
+            elif stop_trigger_condition == StopTriggerCondition.CHANNEL_VALUE_CHANGE:
+                value_change_condition = ValueChangeCondition(response.stop_trigger_settings)
+                return stop_trigger_condition, value_change_condition
+            else:
+                return stop_trigger_condition, response.stop_trigger_settings
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get the stop trigger settings") from error
+
+    def set_start_trigger_settings_to_test_start(self) -> None:
+        """Set the start trigger to Test Start
+
+        Raises:
+            FlexLoggerError: if setting the start trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetTestStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetTestStartTriggerSettingsRequest(
+                    document_identifier=self._identifier
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the start trigger to Test Start") from error
+
+    def set_start_trigger_settings_to_value_change(self, value_change_condition: ValueChangeCondition) -> None:
+        """Set the start trigger to Channel Value Change
+
+        Args:
+            value_change_condition: The value change parameters as an object of type ValueChangeCondition
+
+        Raises:
+            FlexLoggerError: if setting the start trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetValueChangeStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetValueChangeStartTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    channel_name=value_change_condition.channel_name,
+                    value_change_type=value_change_condition.value_change_type.to_value_change_type_pb2(),
+                    threshold=value_change_condition.threshold,
+                    min_value=value_change_condition.min_value,
+                    max_value=value_change_condition.max_value,
+                    leading_time=value_change_condition.time
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the start trigger to Channel Value Change") from error
+
+    def set_start_trigger_settings_to_absolute_time(self, time: datetime) -> None:
+        """Set the start trigger to Absolute Time
+
+        Args:
+            time: Test start time. If it's timezone-naive, it's assumed to be in UTC.
+
+        Raises:
+            FlexLoggerError: if setting the start trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            test_start_time = Timestamp()
+            test_start_time.FromDatetime(time)
+            stub.SetTimeStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetTimeStartTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    time=test_start_time
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the start trigger to Absolute Time") from error
+
+    def set_stop_trigger_settings_to_test_stop(self) -> None:
+        """Set the stop trigger to Test Stop
+
+        Raises:
+            FlexLoggerError: if setting the stop trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetTestStopTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetTestStopTriggerSettingsRequest(
+                    document_identifier=self._identifier
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the stop trigger to Test Stop") from error
+
+    def set_stop_trigger_settings_to_value_change(self, value_change_condition: ValueChangeCondition) -> None:
+        """Set the stop trigger to Channel Value Change
+
+        Args:
+            value_change_condition: The value change parameters as an object of type ValueChangeCondition
+
+        Raises:
+            FlexLoggerError: if setting the stop trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetValueChangeStopTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetValueChangeStopTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    channel_name=value_change_condition.channel_name,
+                    value_change_type=value_change_condition.value_change_type.to_value_change_type_pb2(),
+                    threshold=value_change_condition.threshold,
+                    min_value=value_change_condition.min_value,
+                    max_value=value_change_condition.max_value,
+                    trailing_time=value_change_condition.time
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the stop trigger to Channel Value Change") from error
+
+    def set_stop_trigger_settings_to_duration(self, duration: datetime.timedelta) -> None:
+        """Set the stop trigger to Test Time Elapsed
+
+        Args:
+            duration: The length of time after which to stop the test.
+
+        Raises:
+            FlexLoggerError: if setting the stop trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            test_duration = Duration()
+            test_duration.FromTimedelta(duration)
+            stub.SetTimeStopTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetTimeStopTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    duration=test_duration
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the stop trigger to Test Time Elapsed") from error
+
+    def is_retriggering_enabled(self) -> bool:
+        """Get the re-triggering configuration.
+
+        Returns:
+            True if re-triggering is enabled, False otherwise
+
+        Raises:
+            FlexLoggerError: if getting the re-triggering configuration fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.IsRetriggeringEnabled(
+                LoggingSpecificationDocument_pb2.IsRetriggeringEnabledRequest(
+                    document_identifier=self._identifier
+                )
+            )
+            return response.is_retriggering_enabled
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get the re-triggering configuration") from error
+
+    def set_retriggering(self, retriggering: bool) -> None:
+        """Set the re-triggering configuration.
+
+        Args:
+            retriggering: True to enable re-triggering, False to disable it.
+
+        Raises:
+            FlexLoggerError: if setting the re-triggering configuration fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetRetriggering(
+                LoggingSpecificationDocument_pb2.SetRetriggeringRequest(
+                    document_identifier=self._identifier,
+                    is_retriggering_enabled=retriggering
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the re-triggering configuration") from error

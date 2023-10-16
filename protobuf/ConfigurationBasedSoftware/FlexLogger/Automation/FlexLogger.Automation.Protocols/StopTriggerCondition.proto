@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum StopTriggerCondition {
+  STOP_TRIGGER_CONDITION_TEST_STOP = 0;
+  STOP_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE  = 1;
+  STOP_TRIGGER_CONDITION_TIME_ELAPSED = 2;
+}
