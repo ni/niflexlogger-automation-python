@@ -3,6 +3,7 @@
 package national_instruments.flex_logger.automation.protocols;
 
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/empty.proto";
 
 // Service interface for the server application.
 service FlexLoggerApplication {
@@ -10,6 +11,8 @@ service FlexLoggerApplication {
   rpc OpenProject(OpenProjectRequest) returns (OpenProjectResponse) {}
   // RPC call to get the currently active (open) project from the server.
   rpc GetActiveProject(GetActiveProjectRequest) returns (GetActiveProjectResponse) {}
+  // RPC call to get the FlexLogger version from the server.
+  rpc GetVersion(google.protobuf.Empty) returns (GetVersionResponse) {}
 }
 
 // Information necessary to open an existing Project.
@@ -35,4 +38,12 @@ message GetActiveProjectResponse {
     bool active_project_available = 1;
     // The id of the active project. Should not be used if active_project_available is false.
     national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 2;
+}
+
+// Response object for the get version request.
+message GetVersionResponse {
+    // The numeric internal version (24.0.0.0)
+    string version = 1;
+    // The string version contaning the year and quarter (2024 Q1)
+    string version_string = 2;
 }

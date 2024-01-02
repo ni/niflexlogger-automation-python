@@ -1,3 +1,4 @@
+from google.protobuf import empty_pb2
 import mmap
 import os
 import re
@@ -257,6 +258,29 @@ class Application:
         except (RpcError, ValueError, AttributeError) as rpc_error:
             self._raise_exception_if_closed()
             raise FlexLoggerError("Failed to get the active project") from rpc_error
+
+    def get_version(self) -> (str, str):
+        """Gets the FlexLogger server version.
+
+        Returns:
+            A tuple containing the FlexLogger versions (internal version and user visible version).
+
+        Raises:
+            FlexLoggerError: if getting the version fails.
+        """
+        try:
+            stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
+            response = stub.GetVersion(empty_pb2.Empty())
+            return response.version, response.version_string
+        # For most methods, catching ValueError is sufficient to detect whether the Application
+        # has been closed, and avoids race conditions where another thread closes the Application
+        # in the middle of the first thread's call.
+        #
+        # This method passes self._channel directly to a stub, and this raises an AttributeError
+        # if self._channel is None, so catch this as well.
+        except (RpcError, ValueError, AttributeError) as rpc_error:
+            self._raise_exception_if_closed()
+            raise FlexLoggerError("Failed to get version") from rpc_error
 
     @classmethod
     def _launch_flexlogger(cls, timeout_in_seconds: float, path: Optional[Path] = None) -> int:
