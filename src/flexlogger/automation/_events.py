@@ -13,7 +13,7 @@ from .proto.EventType_pb2 import EventType as EventType_pb2
 from concurrent.futures import ThreadPoolExecutor
 from google.protobuf.timestamp_pb2 import Timestamp
 from grpc import Channel, RpcError
-from typing import Callable, Iterator
+from typing import Callable, Iterator, List
 
 
 class FlexLoggerEventHandler:
@@ -41,7 +41,7 @@ class FlexLoggerEventHandler:
     def __exit__(self, *args):
         self.unregister_from_events()
 
-    def get_registered_events(self) -> list[EventType]:
+    def get_registered_events(self) -> List[EventType]:
         """Gets the list of registered event types.
 
         Returns
