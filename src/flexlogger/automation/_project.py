@@ -146,6 +146,8 @@ class Project:
 
         Raises:
             FlexLoggerError: if saving the project fails due to a communication error.
+            If there is no communication error with the FlexLogger application, this function will not raise an
+            exception, but instead return a boolean indicating if the project was properly saved.
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:

@@ -10,6 +10,8 @@ def main(project_path):
     # goes out of scope, the application will be closed.  To prevent this,
     # call app.disconnect() before the scope ends.
     with Application.launch() as app:
+        versions = app.get_version()
+        print("FlexLogger version: " + versions[1])
         project = app.open_project(path=project_path, timeout=180)
         print("Press Enter to close project...")
         input()
