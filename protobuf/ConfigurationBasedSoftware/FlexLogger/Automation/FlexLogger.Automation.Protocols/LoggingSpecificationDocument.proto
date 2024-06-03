@@ -24,6 +24,10 @@ service LoggingSpecificationDocument {
     rpc GetLogFileDescription(GetLogFileDescriptionRequest) returns (GetLogFileDescriptionResponse) {}
     // RPC call to set the description
     rpc SetLogFileDescription(SetLogFileDescriptionRequest) returns (google.protobuf.Empty) {}
+    // RPC call to get items from the data files pane
+    rpc GetLogFiles(GetLogFilesRequest) returns (GetLogFilesResponse) {}
+    // RPC call to clear the data files pane
+    rpc RemoveLogFiles(RemoveLogFilesRequest) returns (google.protobuf.Empty) {}
     // RPC call to get all test properties
     rpc GetTestProperties(GetTestPropertiesRequest) returns (GetTestPropertiesResponse) {}
     // RPC call to set all test properties
@@ -126,6 +130,38 @@ message SetLogFileDescriptionRequest {
     national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
     // The log file description
     string log_file_description = 2;
+}
+
+// Log file types
+enum LogFileType {
+    // TDMS files
+    TDMS = 0;
+    // CSV files
+    CSV = 1;
+    // TDMS backup files
+    TDMS_BACKUP = 2;
+}
+
+// Request object for GetLogFiles
+message GetLogFilesRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The type of log files to get
+    LogFileType log_file_type = 2;
+}
+
+// Response object for GetLogFiles
+message GetLogFilesResponse {
+    // The full paths on disk of the log files, sorted chronologically by file creation time
+    repeated string log_files = 1;
+}
+
+// Request object for RemoveLogFiles
+message RemoveLogFilesRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // Delete files on disk?
+    bool delete_files = 2;
 }
 
 // Message that defines an individual test property
