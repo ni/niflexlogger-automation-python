@@ -19,12 +19,25 @@ If you are new to Python, start by `creating and running your first script <http
 
 
 
-Installing the FlexLogger Automation Python module
---------------------------------------------------
-Install the FlexLogger Automation Python module so you can control FlexLogger tests programatically.
+Installing the FlexLogger Automation Python module in Visual Studio Code
+------------------------------------------------------------------------
+1. Open Visual Studio Code and select Terminal>>New Terminal.
+2. Execute the following command in the terminal to install the module.
 
-1. Open the command prompt.
-2. Execute the following command to install the module.
+   ``pip install niflexlogger-automation``
+
+If you have multiple Python versions installed in your computer, you can specify to which version you will install the module by using:
+
+   ``py -<version> -m pip install niflexlogger-automation``
+
+
+Installing the FlexLogger Automation Python module in PyCharm
+------------------------------------------------------------------------
+1. Open PyCharm and create or browse to a project. 
+2. Go to View>>Tool Windows>>Terminal
+3. Install the package with the following command:
+
+Note: In PyCharm, when you create a new project with a virtual environment (venv), the virtual environment is automatically activated in the terminal associated with the project.  In a virtual environment, the installed packages are isolated from the global Python environment and apply only to the virtual environment being used.
 
    ``pip install niflexlogger-automation``
 
@@ -165,3 +178,12 @@ before your FlexLogger API calls:
 If this fixes the problem, try configuring your proxy to not affect traffic to localhost.
 See `this GitHub issue <https://github.com/ni/niflexlogger-automation-python/issues/13>`_
 for an example.
+
+Getting Python Command Redirects
+---------------------------------------
+If you encounter issues where typing Python commands leads you to the Microsoft Store, you may need to turn off Execution Aliases in Windows. Go to Settings>>Apps>>Apps & features>>App execution aliases and turn off the aliases for Python.
+
+
+File path errors
+---------------------------------------
+Ensure you know the exact path to your FlexLogger project and script. Incorrect paths can lead to errors when running examples. This can be particularly important when following the provided documentation examples.
