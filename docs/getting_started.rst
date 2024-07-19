@@ -18,6 +18,15 @@ Before using the FlexLogger Python API, complete the following tasks.
 If you are new to Python, start by `creating and running your first script <https://niflexlogger-automation.readthedocs.io/en/latest/getting_started.html#create-run-script>`_. If you an experienced Python user, refer to the `examples <https://niflexlogger-automation.readthedocs.io/en/latest/getting_started.html#code-examples>`_ and `API reference <https://niflexlogger-automation.readthedocs.io/en/latest/api_reference.html>`_.
 
 
+Installing the FlexLogger Automation Python module
+--------------------------------------------------
+Install the FlexLogger Automation Python module so you can control FlexLogger tests programatically.
+
+1. Open the command prompt.
+2. Execute the following command to install the module.
+
+   ``pip install niflexlogger-automation``
+
 
 Installing the FlexLogger Automation Python module in Visual Studio Code
 ------------------------------------------------------------------------
@@ -42,6 +51,7 @@ Note: In PyCharm, when you create a new project with a virtual environment (venv
    ``pip install niflexlogger-automation``
 
 .. _create_run_script:
+
 
 Creating and running your first script
 --------------------------------------
