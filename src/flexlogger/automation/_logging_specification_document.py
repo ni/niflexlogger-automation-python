@@ -1,6 +1,7 @@
 from google.protobuf.duration_pb2 import Duration
 from google.protobuf.timestamp_pb2 import Timestamp
 import datetime
+from datetime import timezone
 from dateutil import parser
 from dateutil import tz
 from grpc import Channel, RpcError
@@ -10,10 +11,18 @@ from ._flexlogger_error import FlexLoggerError
 from ._start_trigger_condition import StartTriggerCondition
 from ._stop_trigger_condition import StopTriggerCondition
 from ._test_property import TestProperty
+from ._log_file_type import LogFileType
 from ._value_change_condition import ValueChangeCondition
 from .proto import LoggingSpecificationDocument_pb2, LoggingSpecificationDocument_pb2_grpc
 from .proto.Identifiers_pb2 import ElementIdentifier
 
+from .proto.LoggingSpecificationDocument_pb2 import LogFileType as LogFileType_pb2
+
+LOG_FILE_TYPE_MAP = {
+    LogFileType.TDMS: LogFileType_pb2.TDMS,
+    LogFileType.CSV: LogFileType_pb2.CSV,
+    LogFileType.TDMS_BACKUP_FILES: LogFileType_pb2.TDMS_BACKUP,
+}
 
 class LoggingSpecificationDocument:
     """Represents a document that describes how data is logged.
@@ -205,6 +214,53 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set log file description") from error
 
+    def get_log_files(self, log_file_type: LogFileType) -> List[str]:
+        """Get log files in the data files pane of the project.
+
+        Args:
+            log_file_type: The type of log files to get.
+
+        Returns:
+            A list of the log files in the project.
+            The entries are sorted chronologically with the most recent file last.
+
+        Raises:
+            FlexLoggerError: if getting the log files fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.GetLogFiles(
+                LoggingSpecificationDocument_pb2.GetLogFilesRequest(
+                    document_identifier=self._identifier,
+                    log_file_type = LOG_FILE_TYPE_MAP[log_file_type]
+                )
+            )
+            return [log_file for log_file in response.log_files]
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get data files") from error
+
+    def remove_log_files(self, delete_files: bool = False) -> None:
+        """Remove log files from the data files pane of the project.
+
+        Args:
+            delete_files: True to delete files on disk, False to remove only from project.
+
+        Raises:
+            FlexLoggerError: if removing the log files fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.RemoveLogFiles(
+                LoggingSpecificationDocument_pb2.RemoveLogFilesRequest(
+                    document_identifier=self._identifier,
+                    delete_files=delete_files
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to remove log files") from error
+
     def _convert_to_test_property(
         self, test_property: LoggingSpecificationDocument_pb2.TestProperty
     ) -> TestProperty:
@@ -392,7 +448,7 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get the start trigger settings") from error
 
-    def get_stop_trigger_settings(self) -> (StopTriggerCondition, str):
+    def get_stop_trigger_settings(self) -> tuple[StopTriggerCondition, str]:
         """Get the stop trigger settings.
 
         Returns:
