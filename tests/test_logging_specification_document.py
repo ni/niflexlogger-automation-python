@@ -10,7 +10,9 @@ import pytest  # type: ignore
 from flexlogger.automation import (
     Application,
     FlexLoggerError,
+    LogFileType,
     LoggingSpecificationDocument,
+    Project,
     StartTriggerCondition,
     StopTriggerCondition,
     TestProperty,
@@ -19,7 +21,7 @@ from flexlogger.automation import (
 )
 from nptdms import TdmsFile  # type: ignore
 
-from .utils import get_project_path, open_project
+from .utils import get_project_path, open_project, copy_project
 
 
 @pytest.fixture(scope="class")
@@ -31,6 +33,21 @@ def logging_spec_with_test_properties(app: Application) -> Iterator[LoggingSpeci
     """
     with open_project(app, "ProjectWithTestProperties") as project:
         yield project.open_logging_specification_document()
+
+@pytest.fixture(scope="class")
+def project_with_produced_data(app: Application) -> Iterator[Project]:
+    """Fixture for opening ProjectWithProducedData.
+
+    This is useful to improve test time by not opening/closing this project in every test.
+    """
+    with copy_project("ProjectWithProducedData") as project_path:
+        project = app.open_project(project_path)
+        yield project
+        try:
+            project.close()
+        except FlexLoggerError:
+            # utils.kill_all_open_flexloggers may have killed this process already, that's fine
+            pass
 
 
 class TestLoggingSpecificationDocument:
@@ -134,6 +151,59 @@ class TestLoggingSpecificationDocument:
             logging_specification.set_log_file_description(new_description)
 
             assert new_description == logging_specification.get_log_file_description()
+
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_ran__remove_log_files__no_log_file_returned(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        project.test_session.start()
+        sleep(2.0)
+        project.test_session.stop()
+
+        logging_specification = project.open_logging_specification_document()
+        logging_specification.remove_log_files(delete_files=True)
+
+        log_files = logging_specification.get_log_files(LogFileType.TDMS)
+        assert len(log_files) == 0
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_ran__get_log_files__log_file_returned(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        logging_specification = project.open_logging_specification_document()
+        logging_specification.remove_log_files(delete_files=True)
+        project.test_session.start()
+        sleep(2.0)
+        project.test_session.stop()
+
+        log_files = logging_specification.get_log_files(LogFileType.TDMS)
+
+        assert len(log_files) == 1
+        assert Path(log_files[0]).exists() is True
+
+    @pytest.mark.integration  # type: ignore
+    def test__test_session_ran_twice__get_log_files__two_log_files_returned(
+        self, app: Application, project_with_produced_data: Project
+    ) -> None:
+        project = project_with_produced_data
+        logging_specification = project.open_logging_specification_document()
+        logging_specification.remove_log_files(delete_files=True)
+        project.test_session.start()
+        sleep(2.0)
+        project.test_session.stop()
+        project.test_session.start()
+        sleep(2.0)
+        project.test_session.stop()
+
+        log_files = logging_specification.get_log_files(LogFileType.TDMS)
+
+        assert len(log_files) == 2
+        assert Path(log_files[0]).exists() is True
+        assert Path(log_files[1]).exists() is True
+        assert Path(log_files[0]).stat().st_ctime < Path(log_files[1]).stat().st_ctime
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__get_test_properties__all_properties_returned(
