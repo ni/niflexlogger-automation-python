@@ -202,6 +202,51 @@ class ChannelSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set the channel enable state") from error
 
+    def is_channel_logging_enabled(self, channel_name: str) -> bool:
+        """Get the current logging state of the specified channel.
+
+        Args:
+            channel_name: The name of the channel.
+
+        Raises:
+            FlexLoggerError: if getting the channel value fails.
+        """
+        stub = ChannelSpecificationDocument_pb2_grpc.ChannelSpecificationDocumentStub(self._channel)
+        try:
+            response = stub.IsChannelLoggingEnabled(
+                ChannelSpecificationDocument_pb2.IsChannelLoggingEnabledRequest(
+                    document_identifier=self._identifier, channel_name=channel_name
+                )
+            )
+
+            return response.channel_logging_enabled
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get channel logging enable state") from error
+
+    def set_channel_logging_enabled(self, channel_name: str, channel_logging_enabled: bool) -> None:
+        """Enable or disable logging for the specified channel.
+
+        Args:
+            channel_name: The name of the channel.
+            channel_logging_enabled: The channel logging enabled state: true to enable logging, false to disable it.
+
+        Raises:
+            FlexLoggerError: if enabling or disabling the channel logging fails.
+        """
+        stub = ChannelSpecificationDocument_pb2_grpc.ChannelSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetChannelLoggingEnabled(
+                ChannelSpecificationDocument_pb2.SetChannelLoggingEnabledRequest(
+                    document_identifier=self._identifier,
+                    channel_name=channel_name,
+                    channel_logging_enabled=channel_logging_enabled,
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the channel logging state") from error
+
     def set_channel_value(self, channel_name: str, channel_value: float) -> None:
         """Set the current value of the specified channel.
 

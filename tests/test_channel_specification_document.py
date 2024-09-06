@@ -141,6 +141,46 @@ class TestChannelSpecificationDocument:
             channel_specification.set_channel_enabled("Channel 1", False)
 
     @pytest.mark.integration  # type: ignore
+    def test__project_with_writable_channels__disable_channel_logging__channel_logging_disabled(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithSwitchboard") as project:
+            channel_specification = project.open_channel_specification_document()
+
+            channel_specification.set_channel_logging_enabled("Switch 42", False)
+
+            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Switch 42")
+
+            assert not channel_logging_enabled
+
+    @pytest.mark.integration  # type: ignore
+    def test__project_with_writable_channels__channel_logging_enabled(
+        self, app: Application
+    ) -> None:
+        with open_project(app, "ProjectWithSwitchboard") as project:
+            channel_specification = project.open_channel_specification_document()
+
+            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Switch 42")
+
+            assert channel_logging_enabled
+
+    @pytest.mark.integration  # type: ignore
+    def test__set_channel_logging_enabled_for_channel_that_does_not_exist__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+        with pytest.raises(FlexLoggerError):
+            channel_specification.set_channel_logging_enabled("Not a channel", True)
+
+    @pytest.mark.integration  # type: ignore
+    def test__set_channel_logging_enabled_for_readonly_channel__exception_raised(
+        self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
+    ) -> None:
+        channel_specification = channels_with_produced_data
+        with pytest.raises(FlexLoggerError):
+            channel_specification.set_channel_logging_enabled("Channel 1", False)
+
+    @pytest.mark.integration  # type: ignore
     def test__project_with_channels__set_data_rate__data_rate_updated(
         self, app: Application, channels_with_produced_data: ChannelSpecificationDocument
     ) -> None:
