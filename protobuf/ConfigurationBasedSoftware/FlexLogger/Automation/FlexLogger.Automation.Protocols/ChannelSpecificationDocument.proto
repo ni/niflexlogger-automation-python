@@ -11,14 +11,24 @@ import "google/protobuf/timestamp.proto";
 service ChannelSpecificationDocument {
     // RPC call to get all channel names
     rpc GetChannelNames(GetChannelNamesRequest) returns (GetChannelNamesResponse) {}
+    // RPC call to get channel names filtered by channel type
+    rpc GetFilteredChannelNames(GetFilteredChannelNamesRequest) returns (GetChannelNamesResponse) {}
     // RPC call to get the latest value of a double channel
     rpc GetDoubleChannelValue(GetDoubleChannelValueRequest) returns (GetDoubleChannelValueResponse) {}
     // RPC call to set the value of a double channel
     rpc SetDoubleChannelValue(SetDoubleChannelValueRequest) returns (SetDoubleChannelValueResponse) {}
+    // RPC call to get the latest values of double channels
+    rpc GetDoubleChannelValues(GetDoubleChannelValuesRequest) returns (GetDoubleChannelValuesResponse) {}
+    // RPC call to set the values of double channels
+    rpc SetDoubleChannelValues(SetDoubleChannelValuesRequest) returns (google.protobuf.Empty) {}
     // RPC call to get a channel's enable state
     rpc IsChannelEnabled(IsChannelEnabledRequest) returns (IsChannelEnabledResponse) {}
     // RPC call to enable/disable channels
     rpc SetChannelEnabled(SetChannelEnabledRequest) returns (SetChannelEnabledResponse) {}
+    // RPC call to get a channel logging's state
+    rpc IsChannelLoggingEnabled(IsChannelLoggingEnabledRequest) returns (IsChannelLoggingEnabledResponse) {}
+    // RPC call to enable/disable channel logging
+    rpc SetChannelLoggingEnabled(SetChannelLoggingEnabledRequest) returns (SetChannelLoggingEnabledResponse) {}
     // RPC call to get the data rate for a specific data rate level
     rpc GetDataRate(GetDataRateRequest) returns (GetDataRateResponse) {}
     // RPC call to set the data rate of a specific data rate level
@@ -43,6 +53,22 @@ message GetChannelNamesResponse {
     repeated string channel_names = 1;
 }
 
+// Request object for getting channel names filtered by channel type
+message GetFilteredChannelNamesRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // Return configured channels.
+    bool configuredChannels = 2;
+    // Return input channels.
+    bool inputChannels = 3;
+    // Return output channels.
+    bool outputChannels = 4;
+    // Return analog channels.
+    bool analogChannels = 5;
+    // Return digital channels.
+    bool digitalChannels = 6;
+}
+
 // Request object for getting a channel value
 message GetDoubleChannelValueRequest {
     // The id for the channel specification document
@@ -63,14 +89,46 @@ message GetDoubleChannelValueResponse {
 message SetDoubleChannelValueRequest {
     // The id for the channel specification document
     national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
-    // The name of the channel to get a double value for
+    // The name of the channel to set
     string channel_name = 2;
-    // The value of the channel at the timestamp
+    // The value of the channel to set
     double channel_value = 3;
 }
 
 // Response object for setting a channel value
 message SetDoubleChannelValueResponse {
+}
+
+// Message that defines an individual channel value
+message ChannelValue {
+    // The name of the channel
+    string channel_name = 1;
+    // The value of the channel
+    double channel_value = 2;
+    // The timestamp of the value
+    google.protobuf.Timestamp value_timestamp = 3;
+}
+
+// Request object for getting channel values
+message GetDoubleChannelValuesRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The names of the channels to get double values for
+    repeated string channel_names = 2;
+}
+
+// Response object for getting channel values
+message GetDoubleChannelValuesResponse {
+    // The channel values and their timestamps
+    repeated ChannelValue channel_values = 1;
+}
+
+// Request object for setting channel values
+message SetDoubleChannelValuesRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The channel values to set
+    repeated ChannelValue channel_values = 2;
 }
 
 // Request object for getting a channel enable state
@@ -98,6 +156,33 @@ message SetChannelEnabledRequest {
 
 // Response object for setting a channel enable state
 message SetChannelEnabledResponse {
+}
+
+// Request object for getting a channel logging state
+message IsChannelLoggingEnabledRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to get the logging state for
+    string channel_name = 2;
+}
+
+// Response object for getting a channel logging state
+message IsChannelLoggingEnabledResponse {
+    bool channel_logging_enabled = 1;
+}
+
+// Request object for setting a channel logging state
+message SetChannelLoggingEnabledRequest {
+    // The id for the channel specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The name of the channel to enable or disable
+    string channel_name = 2;
+    // The enable state to set
+    bool channel_logging_enabled = 3;
+}
+
+// Response object for setting a channel enable state
+message SetChannelLoggingEnabledResponse {
 }
 
 // Request object for getting the data rate

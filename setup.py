@@ -56,7 +56,7 @@ def _get_version(name: str) -> str:
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_dir = os.path.join(script_dir, name)
     if not os.path.exists(os.path.join(script_dir, "VERSION")):
-        version = "0.1.10"
+        version = "0.2.0"
     else:
         with open(os.path.join(script_dir, "VERSION"), "r") as version_file:
             version = version_file.read().rstrip()
