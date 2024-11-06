@@ -3,6 +3,7 @@
 package national_instruments.flex_logger.automation.protocols;
 
 import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "ConfigurationBasedSoftware/FlexLogger/Automation/FlexLogger.Automation.Protocols/AutomationClientType.proto";
 import "google/protobuf/empty.proto";
 
 // Service interface for the server application.
@@ -13,6 +14,8 @@ service FlexLoggerApplication {
   rpc GetActiveProject(GetActiveProjectRequest) returns (GetActiveProjectResponse) {}
   // RPC call to get the FlexLogger version from the server.
   rpc GetVersion(google.protobuf.Empty) returns (GetVersionResponse) {}
+  // RPC call to initialize the API client
+  rpc Initialize(InitializeRequest) returns (google.protobuf.Empty) {}
 }
 
 // Information necessary to open an existing Project.
@@ -46,4 +49,11 @@ message GetVersionResponse {
     string version = 1;
     // The string version contaning the year and quarter (2024 Q1)
     string version_string = 2;
+}
+
+// Client initialization request, to be called immediately after connecting.
+message InitializeRequest
+{
+    // The client type (Python, C#, TestStand, LabVIEW, etc)
+    AutomationClientType client_type = 1;
 }
