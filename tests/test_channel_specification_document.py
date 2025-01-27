@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from time import sleep
 from typing import Iterator
+import time
 
 import pytest  # type: ignore
 from flexlogger.automation import (
@@ -70,7 +71,11 @@ class TestChannelSpecificationDocument:
             now = datetime.now(timezone.utc)
             channel_specification.set_channel_value("Switch 42", 84.5)
 
+            wait_for_channel_value_changed_timeout = 5
+            start = time.time()
             updated_value = channel_specification.get_channel_value("Switch 42")
+            while (updated_value.value != 84.5) and (time.time() - start < wait_for_channel_value_changed_timeout):
+                sleep(0.1)
 
             assert "Switch 42" == updated_value.name
             assert 84.5 == updated_value.value
@@ -118,9 +123,9 @@ class TestChannelSpecificationDocument:
         with open_project(app, "ProjectWithSwitchboard") as project:
             channel_specification = project.open_channel_specification_document()
 
-            channel_specification.set_channel_enabled("Switch 42", False)
+            channel_specification.set_channel_enabled("Sink 42", False)
 
-            channel_enabled = channel_specification.is_channel_enabled("Switch 42")
+            channel_enabled = channel_specification.is_channel_enabled("Sink 42")
 
             assert not channel_enabled
 
@@ -147,9 +152,9 @@ class TestChannelSpecificationDocument:
         with open_project(app, "ProjectWithSwitchboard") as project:
             channel_specification = project.open_channel_specification_document()
 
-            channel_specification.set_channel_logging_enabled("Switch 42", False)
+            channel_specification.set_channel_logging_enabled("Sink 42", False)
 
-            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Switch 42")
+            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Sink 42")
 
             assert not channel_logging_enabled
 
@@ -160,7 +165,7 @@ class TestChannelSpecificationDocument:
         with open_project(app, "ProjectWithSwitchboard") as project:
             channel_specification = project.open_channel_specification_document()
 
-            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Switch 42")
+            channel_logging_enabled = channel_specification.is_channel_logging_enabled("Sink 42")
 
             assert channel_logging_enabled
 
@@ -198,7 +203,7 @@ class TestChannelSpecificationDocument:
         channel_specification = channels_with_produced_data
 
         with pytest.raises(FlexLoggerError):
-            channel_specification.get_module_data_rate_level("Channel 1")
+            channel_specification.get_data_rate_level("Channel 1")
 
     @pytest.mark.integration  # type: ignore
     def test__project_with_channels__set_data_rate_level_on_invalid_channel__exception_raised(
@@ -207,4 +212,4 @@ class TestChannelSpecificationDocument:
         channel_specification = channels_with_produced_data
 
         with pytest.raises(FlexLoggerError):
-            channel_specification.set_module_data_rate_level("Channel 1", DataRateLevel.SLOW)
+            channel_specification.set_data_rate_level("Channel 1", DataRateLevel.SLOW)

@@ -17,7 +17,7 @@ from typing import Any, List, Optional, Union
 # module so buildthedocs will be able to use automodule correctly to generate
 # our API Reference documentation.
 import psutil  # type: ignore
-from grpc import insecure_channel, RpcError
+from grpc import insecure_channel, RpcError, StatusCode
 
 from ._events import FlexLoggerEventHandler
 from ._flexlogger_error import FlexLoggerError
@@ -27,6 +27,7 @@ from .proto import (
     Application_pb2_grpc,  # type: ignore
     FlexLoggerApplication_pb2,  # type: ignore
     FlexLoggerApplication_pb2_grpc,  # type: ignore
+    AutomationClientType_pb2, # type: ignore
 )
 
 _FLEXLOGGER_REGISTRY_KEY_PATH = r"SOFTWARE\National Instruments\FlexLogger"
@@ -134,6 +135,13 @@ class Application:
             raise ValueError("Tried to connect to invalid port number %d" % self._server_port)
         try:
             self._channel = insecure_channel("localhost:%d" % self._server_port)
+            try:
+                stub = FlexLoggerApplication_pb2_grpc.FlexLoggerApplicationStub(self._channel)
+                stub.Initialize(FlexLoggerApplication_pb2.InitializeRequest(client_type=AutomationClientType_pb2.CLIENT_TYPE_PYTHON))
+            except RpcError as error:
+                # Ignore UNIMPLEMENTED exceptions. Older FLexLogger does not support the Initialize message.
+                if error.code() != StatusCode.UNIMPLEMENTED:
+                    raise
         except RpcError as error:
             raise FlexLoggerError(
                 'Failed to connect to FlexLogger. Ensure the "Automation server" preference is '
