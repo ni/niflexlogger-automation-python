@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+enum AutomationClientType {
+  // The application type that is connecting to FlexLogger through API is Unknown.
+  CLIENT_TYPE_UNKNOWN = 0;
+  // The application type that is connecting to FlexLogger through API is Python.
+  CLIENT_TYPE_PYTHON = 1;
+  // The application type that is connecting to FlexLogger through API is LabVIEW.
+  CLIENT_TYPE_LABVIEW = 2;
+  // The application type that is connecting to FlexLogger through API is TestStand.
+  CLIENT_TYPE_TESTSTAND = 3;
+  // The application type that is connecting to FlexLogger through API is .NET.
+  CLIENT_TYPE_DOTNET = 4;
+}

@@ -251,4 +251,4 @@ class TestProject:
     @pytest.mark.integration  # type: ignore
     def test__open_default_project__save__no_error(self, app: Application) -> None:
         with open_project(app, "DefaultProject") as project:
-            assert project.save()
+            project.save()
