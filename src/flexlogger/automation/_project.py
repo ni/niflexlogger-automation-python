@@ -136,7 +136,7 @@ class Project:
         """
         stub = Project_pb2_grpc.ProjectStub(self._channel)
         try:
-            stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=False))
+            stub.Close(Project_pb2.CloseProjectRequest(allow_prompts=False, project=self._identifier))
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to close project") from error

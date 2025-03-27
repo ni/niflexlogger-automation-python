@@ -77,6 +77,8 @@ message OpenTestSpecificationDocumentResponse {
 message CloseProjectRequest {
     // True to allow prompts to be displayed.
     bool allow_prompts = 1;
+    // Project envoy identifier
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 2;
 }
 
 // The result of the close project message.
