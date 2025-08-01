@@ -252,3 +252,10 @@ class TestProject:
     def test__open_default_project__save__no_error(self, app: Application) -> None:
         with open_project(app, "DefaultProject") as project:
             project.save()
+
+    @pytest.mark.integration # type: ignore
+    def test_open_default_project__saveas__no_error(self, app: Application) -> None:
+        with open_project(app, "DefaultProject") as project:
+            project.saveas("TestProjectSaveAs", "C:\\temp")
+            assert os.path.exists("C:\\temp\\TestProjectSaveAs\\TestProjectSaveAs.flxproj")
+            rmtree("C:\\temp\\TestProjectSaveAs")
