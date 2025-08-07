@@ -47,5 +47,4 @@ class FlexLoggerError(Exception):
             return ""
         
         cause = cast(RpcError, self.__cause__)
-        search_result = re.search(r"\(([^)]+)", cause.details())
-        return search_result.group(1)  # type: ignore
+        return cause.details()
