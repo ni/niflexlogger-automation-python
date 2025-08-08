@@ -258,4 +258,5 @@ class TestProject:
         with open_project(app, "DefaultProject") as project:
             project.saveas("TestProjectSaveAs", "C:\\temp")
             assert os.path.exists("C:\\temp\\TestProjectSaveAs\\TestProjectSaveAs.flxproj")
-            rmtree("C:\\temp\\TestProjectSaveAs")
+        app.close()
+        rmtree("C:\\temp\\TestProjectSaveAs")
