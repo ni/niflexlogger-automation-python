@@ -14,6 +14,9 @@ class StopTriggerCondition(Enum):
     """Stop logging after a designated duration of time has elapsed."""
     TEST_TIME_ELAPSED = 2
 
+    """Stop logging when a designated button is pressed."""
+    BUTTON_PRESSED = 3
+
     def to_stop_trigger_condition_pb2(self) -> StopTriggerCondition_pb2:
         return STOP_TRIGGER_CONDITION_MAP.get(self.value)
 
@@ -25,11 +28,13 @@ class StopTriggerCondition(Enum):
 STOP_TRIGGER_CONDITION_MAP = {
     0: StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TEST_STOP,
     1: StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE,
-    2: StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TIME_ELAPSED
+    2: StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TIME_ELAPSED,
+    3: StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_BUTTON_PRESSED
 }
 
 STOP_TRIGGER_CONDITION_PB2_MAP = {
     StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TEST_STOP: StopTriggerCondition.TEST_STOP,
     StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE: StopTriggerCondition.CHANNEL_VALUE_CHANGE,
-    StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TIME_ELAPSED: StopTriggerCondition.TEST_TIME_ELAPSED
+    StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_TIME_ELAPSED: StopTriggerCondition.TEST_TIME_ELAPSED,
+    StopTriggerCondition_pb2.STOP_TRIGGER_CONDITION_BUTTON_PRESSED: StopTriggerCondition.BUTTON_PRESSED
 }
