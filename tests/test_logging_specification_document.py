@@ -539,6 +539,30 @@ class TestLoggingSpecificationDocument:
             assert start_trigger_settings == expected_time
 
     @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_elapsed_time__start_trigger_is_elapsed_time(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            elapsed_time = timedelta(seconds=45, milliseconds=500)
+            logging_specification.set_start_trigger_settings_to_elapsed_time(elapsed_time)
+
+            start_trigger_condition, start_trigger_settings = logging_specification.get_start_trigger_settings()
+            assert start_trigger_condition == StartTriggerCondition.TIME_ELAPSED
+            assert start_trigger_settings == elapsed_time
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_start_trigger_button_pressed__start_trigger_is_button_pressed(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            button_name = "Start Button"
+            logging_specification.set_start_trigger_settings_to_button_pressed(button_name)
+
+            start_trigger_condition, start_trigger_settings = logging_specification.get_start_trigger_settings()
+            assert start_trigger_condition == StartTriggerCondition.BUTTON_PRESSED
+            assert start_trigger_settings == button_name
+
+    @pytest.mark.integration  # type: ignore
     def test__open_project__set_stop_trigger_test_stop__stop_trigger_is_test_stop(self, app: Application) -> None:
         with open_project(app, "ProjectWithLoggingSpecification") as project:
             logging_specification = project.open_logging_specification_document()
@@ -622,6 +646,18 @@ class TestLoggingSpecificationDocument:
             stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
             assert stop_trigger_condition == StopTriggerCondition.TEST_TIME_ELAPSED
             assert stop_trigger_settings == '00:01:40'
+
+    @pytest.mark.integration  # type: ignore
+    def test__open_project__set_stop_trigger_button_pressed__stop_trigger_is_button_pressed(self, app: Application) -> None:
+        with open_project(app, "ProjectWithLoggingSpecification") as project:
+            logging_specification = project.open_logging_specification_document()
+
+            button_name = "Stop Button"
+            logging_specification.set_stop_trigger_settings_to_button_pressed(button_name)
+
+            stop_trigger_condition, stop_trigger_settings = logging_specification.get_stop_trigger_settings()
+            assert stop_trigger_condition == StopTriggerCondition.BUTTON_PRESSED
+            assert stop_trigger_settings == button_name
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__set_retriggering__re_triggering_is_set(self, app: Application) -> None:

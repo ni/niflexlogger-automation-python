@@ -24,6 +24,31 @@ LOG_FILE_TYPE_MAP = {
     LogFileType.TDMS_BACKUP_FILES: LogFileType_pb2.TDMS_BACKUP,
 }
 
+
+def _parse_time_string_to_timedelta(time_string: str) -> datetime.timedelta:
+    """Parse a time string in format 'HH:MM:SS.ffffff' to timedelta.
+    
+    Args:
+        time_string: Time string in format like '00:00:45.5000000'
+        
+    Returns:
+        timedelta object representing the elapsed time
+    """
+    try:
+        # Parse format like "00:00:45.5000000"
+        time_parts = time_string.split(':')
+        if len(time_parts) != 3:
+            raise ValueError(f"Invalid time format: {time_string}")
+        
+        hours = int(time_parts[0])
+        minutes = int(time_parts[1])
+        seconds = float(time_parts[2])
+        
+        return datetime.timedelta(hours=hours, minutes=minutes, seconds=seconds)
+    except (ValueError, IndexError) as e:
+        raise ValueError(f"Failed to parse time string '{time_string}': {e}")
+
+
 class LoggingSpecificationDocument:
     """Represents a document that describes how data is logged.
 
@@ -422,6 +447,8 @@ class LoggingSpecificationDocument:
                 - When the start trigger condition is TEST_START, the object is None
                 - When the start trigger condition is CHANNEL_VALUE_CHANGE, the object is of type ValueChangeCondition
                 - When the start trigger condition is ABSOLUTE_TIME, the object is a datetime object containing the test start time.
+                - When the start trigger condition is TIME_ELAPSED, the object is a datetime.timedelta containing the elapsed time.
+                - When the start trigger condition is BUTTON_PRESSED, the object is a string containing the button name.
 
         Raises:
             FlexLoggerError: if getting the start trigger settings fails.
@@ -439,11 +466,18 @@ class LoggingSpecificationDocument:
             elif start_trigger_condition == StartTriggerCondition.CHANNEL_VALUE_CHANGE:
                 value_change_condition = ValueChangeCondition(response.start_trigger_settings)
                 return start_trigger_condition, value_change_condition
-            else:
+            elif start_trigger_condition == StartTriggerCondition.ABSOLUTE_TIME:
                 utc_start_time = parser.parse(response.start_trigger_settings)
                 utc_start_time = utc_start_time.replace(tzinfo=tz.tzutc())
                 start_time = utc_start_time.astimezone(tz.tzlocal())
                 return start_trigger_condition, start_time
+            elif start_trigger_condition == StartTriggerCondition.TIME_ELAPSED:
+                elapsed_time = _parse_time_string_to_timedelta(response.start_trigger_settings)
+                return start_trigger_condition, elapsed_time
+            elif start_trigger_condition == StartTriggerCondition.BUTTON_PRESSED:
+                return start_trigger_condition, response.start_trigger_settings
+            else:
+                return start_trigger_condition, response.start_trigger_settings
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get the start trigger settings") from error
@@ -459,6 +493,7 @@ class LoggingSpecificationDocument:
                 - When the stop trigger condition is TEST_STOP, the object is None
                 - When the stop trigger condition is CHANNEL_VALUE_CHANGE, the object is of type ValueChangeCondition
                 - When the stop trigger condition is TEST_TIME_ELAPSED, the object is a string containing the test duration
+                - When the stop trigger condition is BUTTON_PRESSED, the object is a string containing the button name
 
         Raises:
             FlexLoggerError: if getting the stop trigger settings fails.
@@ -548,6 +583,50 @@ class LoggingSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set the start trigger to Absolute Time") from error
 
+    def set_start_trigger_settings_to_elapsed_time(self, elapsed_time: datetime.timedelta) -> None:
+        """Set the start trigger to Elapsed Time
+
+        Args:
+            elapsed_time: Time delta after which to start the test.
+
+        Raises:
+            FlexLoggerError: if setting the start trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            # Convert timedelta to total seconds for the protobuf API
+            elapsed_seconds = elapsed_time.total_seconds()
+            stub.SetElapsedTimeStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetElapsedTimeStartTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    elapsed_time=elapsed_seconds
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the start trigger to Elapsed Time") from error
+
+    def set_start_trigger_settings_to_button_pressed(self, button_name: str) -> None:
+        """Set the start trigger to Button Pressed
+
+        Args:
+            button_name: The name of the button that triggers the test start.
+
+        Raises:
+            FlexLoggerError: if setting the start trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetButtonPressedStartTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetButtonPressedStartTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    button_name=button_name
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the start trigger to Button Pressed") from error
+
     def set_stop_trigger_settings_to_test_stop(self) -> None:
         """Set the stop trigger to Test Stop
 
@@ -613,6 +692,27 @@ class LoggingSpecificationDocument:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set the stop trigger to Test Time Elapsed") from error
+
+    def set_stop_trigger_settings_to_button_pressed(self, button_name: str) -> None:
+        """Set the stop trigger to Button Pressed
+
+        Args:
+            button_name: The name of the button that triggers the test stop.
+
+        Raises:
+            FlexLoggerError: if setting the stop trigger fails.
+        """
+        stub = LoggingSpecificationDocument_pb2_grpc.LoggingSpecificationDocumentStub(self._channel)
+        try:
+            stub.SetButtonPressedStopTriggerSettings(
+                LoggingSpecificationDocument_pb2.SetButtonPressedStopTriggerSettingsRequest(
+                    document_identifier=self._identifier,
+                    button_name=button_name
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to set the stop trigger to Button Pressed") from error
 
     def is_retriggering_enabled(self) -> bool:
         """Get the re-triggering configuration.
