@@ -21,6 +21,19 @@ service Project {
   rpc GetProjectFilePath(GetProjectFilePathRequest) returns (GetProjectFilePathResponse) {}
   // RPC call to save the current project.
   rpc Save(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  // RPC call to save the current project with a specific file path.
+  rpc SaveAs(SaveAsRequest) returns (SaveAsResponse) {}
+}
+
+message SaveAsRequest {
+    // The path to the existing project to be opened.
+    string project_name = 1;
+    string project_directory = 2;
+}
+
+message SaveAsResponse {
+    // The id of the project that was saved.
+    national_instruments.diagram_sdk.automation.protocols.ProjectIdentifier project = 1;
 }
 
 // Information necessary to open the channel specification document.

@@ -52,12 +52,18 @@ service LoggingSpecificationDocument {
     rpc SetValueChangeStartTriggerSettings(SetValueChangeStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
     // RPC call to set the start trigger settings to Absolute time
     rpc SetTimeStartTriggerSettings(SetTimeStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the start trigger settings to Elapsed time
+    rpc SetElapsedTimeStartTriggerSettings(SetElapsedTimeStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the start trigger settings to a button press
+    rpc SetButtonPressedStartTriggerSettings(SetButtonPressedStartTriggerSettingsRequest) returns (google.protobuf.Empty) {}
     // RPC call to set the stop trigger settings to Test stop
     rpc SetTestStopTriggerSettings(SetTestStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
     // RPC call to set the stop trigger settings to Channel value change
     rpc SetValueChangeStopTriggerSettings(SetValueChangeStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
     // RPC call to set the stop trigger settings to Test time elapsed
     rpc SetTimeStopTriggerSettings(SetTimeStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
+    // RPC call to set the stop trigger settings to a button press
+    rpc SetButtonPressedStopTriggerSettings(SetButtonPressedStopTriggerSettingsRequest) returns (google.protobuf.Empty) {}
     // RPC call to get the retrigerring configuration
     rpc IsRetriggeringEnabled(IsRetriggeringEnabledRequest) returns (IsRetriggeringEnabledResponse) {}
     // RPC call to set the retrigerring configuration
@@ -313,6 +319,21 @@ message SetTimeStartTriggerSettingsRequest {
     google.protobuf.Timestamp time = 2;
 }
 
+message SetElapsedTimeStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The time to start the test
+    double elapsed_time = 2;
+}
+
+// Request object for SetButtonPressedStartTriggerSettings
+message SetButtonPressedStartTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The button name to start the test
+    string button_name = 2;
+}
+
 // Request object for SetTestStopTriggerSettings
 message SetTestStopTriggerSettingsRequest {
     // The id for the logging specification document
@@ -343,6 +364,14 @@ message SetTimeStopTriggerSettingsRequest {
     national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
     // The duration
     google.protobuf.Duration duration = 2;
+}
+
+// Request object for SetButtonPressedStopTriggerSettings
+message SetButtonPressedStopTriggerSettingsRequest {
+    // The id for the logging specification document
+    national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+    // The button name to stop the test
+    string button_name = 2;
 }
 
 // Request object for IsRetriggeringEnabled
