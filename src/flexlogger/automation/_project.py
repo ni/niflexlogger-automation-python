@@ -156,6 +156,26 @@ class Project:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to save project") from error
 
+    def saveas(self, project_name: str, project_directory: str) -> None:
+        """Saves the currently loaded project to a specified location with a given project name.
+
+        Args:
+            project_name: The name of the project to save as.
+            project_directory: The directory path where the project should be saved.
+
+        Raises:
+            FlexLoggerError: if saving the project fails due to a communication error.
+        """
+        stub = Project_pb2_grpc.ProjectStub(self._channel)
+        try:
+            stub.SaveAs(Project_pb2.SaveAsRequest(
+                project_name=project_name,
+                project_directory=project_directory
+            ))
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to save project") from error
+
     @property
     def test_session(self) -> TestSession:
         """Get the test session for the project."""

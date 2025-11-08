@@ -14,6 +14,12 @@ class StartTriggerCondition(Enum):
     """Begin logging at a designated date and time."""
     ABSOLUTE_TIME = 2
 
+    """Begin logging after a designated amount of time has elapsed."""
+    TIME_ELAPSED = 3
+
+    """Begin logging when a designated button is pressed."""
+    BUTTON_PRESSED = 4
+
     def to_start_trigger_condition_pb2(self) -> StartTriggerCondition_pb2:
         return START_TRIGGER_CONDITION_MAP.get(self.value)
 
@@ -25,11 +31,15 @@ class StartTriggerCondition(Enum):
 START_TRIGGER_CONDITION_MAP = {
     0: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TEST_START,
     1: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE,
-    2: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME
+    2: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME,
+    3: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME_ELAPSED,
+    4: StartTriggerCondition_pb2.START_TRIGGER_CONDITION_BUTTON_PRESSED
 }
 
 START_TRIGGER_CONDITION_PB2_MAP = {
     StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TEST_START: StartTriggerCondition.TEST_START,
     StartTriggerCondition_pb2.START_TRIGGER_CONDITION_CHANNEL_VALUE_CHANGE: StartTriggerCondition.CHANNEL_VALUE_CHANGE,
-    StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME: StartTriggerCondition.ABSOLUTE_TIME
+    StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME: StartTriggerCondition.ABSOLUTE_TIME,
+    StartTriggerCondition_pb2.START_TRIGGER_CONDITION_TIME_ELAPSED: StartTriggerCondition.TIME_ELAPSED,
+    StartTriggerCondition_pb2.START_TRIGGER_CONDITION_BUTTON_PRESSED: StartTriggerCondition.BUTTON_PRESSED
 }
