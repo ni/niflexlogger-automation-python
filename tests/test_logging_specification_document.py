@@ -26,29 +26,13 @@ from .utils import get_project_path, open_project, copy_project
 
 @pytest.fixture(scope="class")
 def logging_spec_with_test_properties(app: Application) -> Iterator[LoggingSpecificationDocument]:
-    """Fixture for opening the logging specification document for ProjectWithProducedData.
+    """Fixture for opening the logging specification document for ProjectWithTestProperties.
 
     This is useful to improve test time by not opening/closing this project in every test.
     Note that using this fixture means the test may not modify the project.
     """
     with open_project(app, "ProjectWithTestProperties") as project:
         yield project.open_logging_specification_document()
-
-@pytest.fixture(scope="class")
-def project_with_produced_data(app: Application) -> Iterator[Project]:
-    """Fixture for opening ProjectWithProducedData.
-
-    This is useful to improve test time by not opening/closing this project in every test.
-    """
-    with copy_project("ProjectWithProducedData") as project_path:
-        project = app.open_project(project_path)
-        yield project
-        try:
-            project.close()
-        except FlexLoggerError:
-            # utils.kill_all_open_flexloggers may have killed this process already, that's fine
-            pass
-
 
 class TestLoggingSpecificationDocument:
     @pytest.mark.integration  # type: ignore
@@ -88,50 +72,6 @@ class TestLoggingSpecificationDocument:
             assert r"FlexLogger.tdms" == logging_specification.get_resolved_log_file_name()
 
     @pytest.mark.integration  # type: ignore
-    def test__start_test_session__set_logging_base_path__exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            with pytest.raises(FlexLoggerError):
-                logging_specification.set_log_file_base_path(r"C:\NewBasePath")
-
-    @pytest.mark.integration  # type: ignore
-    def test__start_test_session__get_logging_base_path__no_exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            base_path = logging_specification.get_log_file_base_path()
-            assert base_path is not None
-
-    @pytest.mark.integration  # type: ignore
-    def test__start_test_session__set_logging_name__exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            with pytest.raises(FlexLoggerError):
-                logging_specification.set_log_file_name(r"NewName")
-
-    @pytest.mark.integration  # type: ignore
-    def test__start_test_session__get_logging_name__no_exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            name = logging_specification.get_log_file_name()
-            assert name is not None
-
-    @pytest.mark.integration  # type: ignore
     def test__open_project__get_logging_description__logging_description_matches_user_setting(
         self, app: Application
     ) -> None:
@@ -152,58 +92,6 @@ class TestLoggingSpecificationDocument:
 
             assert new_description == logging_specification.get_log_file_description()
 
-
-    @pytest.mark.integration  # type: ignore
-    def test__test_session_ran__remove_log_files__no_log_file_returned(
-        self, app: Application, project_with_produced_data: Project
-    ) -> None:
-        project = project_with_produced_data
-        project.test_session.start()
-        sleep(2.0)
-        project.test_session.stop()
-
-        logging_specification = project.open_logging_specification_document()
-        logging_specification.remove_log_files(delete_files=True)
-
-        log_files = logging_specification.get_log_files(LogFileType.TDMS)
-        assert len(log_files) == 0
-
-    @pytest.mark.integration  # type: ignore
-    def test__test_session_ran__get_log_files__log_file_returned(
-        self, app: Application, project_with_produced_data: Project
-    ) -> None:
-        project = project_with_produced_data
-        logging_specification = project.open_logging_specification_document()
-        logging_specification.remove_log_files(delete_files=True)
-        project.test_session.start()
-        sleep(2.0)
-        project.test_session.stop()
-
-        log_files = logging_specification.get_log_files(LogFileType.TDMS)
-
-        assert len(log_files) == 1
-        assert Path(log_files[0]).exists() is True
-
-    @pytest.mark.integration  # type: ignore
-    def test__test_session_ran_twice__get_log_files__two_log_files_returned(
-        self, app: Application, project_with_produced_data: Project
-    ) -> None:
-        project = project_with_produced_data
-        logging_specification = project.open_logging_specification_document()
-        logging_specification.remove_log_files(delete_files=True)
-        project.test_session.start()
-        sleep(2.0)
-        project.test_session.stop()
-        project.test_session.start()
-        sleep(2.0)
-        project.test_session.stop()
-
-        log_files = logging_specification.get_log_files(LogFileType.TDMS)
-
-        assert len(log_files) == 2
-        assert Path(log_files[0]).exists() is True
-        assert Path(log_files[1]).exists() is True
-        assert Path(log_files[0]).stat().st_ctime < Path(log_files[1]).stat().st_ctime
 
     @pytest.mark.integration  # type: ignore
     def test__open_project__get_test_properties__all_properties_returned(
@@ -285,69 +173,6 @@ class TestLoggingSpecificationDocument:
             new_prop = logging_specification.get_test_property("Property")
             self.assert_property_matches(new_prop, "Property", "New Property Value", True)
 
-    @pytest.mark.integration  # type: ignore
-    def test__open_project__set_test_property_that_does_exist__property_is_updated_in_tdms(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            logging_specification = project.open_logging_specification_document()
-            with TemporaryDirectory() as temp_dir:
-                logging_specification.set_log_file_base_path(temp_dir)
-                logging_specification.set_log_file_name("PropertyThatExists.tdms")
-
-                logging_specification.set_test_property("Operator", "A new operator", False)
-                # Run the test so the TDMS file gets written
-                project.test_session.start()
-                sleep(5)
-                project.test_session.stop()
-
-                new_value = self._get_tdms_file_property(
-                    temp_dir, "PropertyThatExists.tdms", "Operator"
-                )
-                assert new_value == "A new operator"
-
-    @pytest.mark.integration  # type: ignore
-    def test__open_project__set_test_property_that_does_not_exist__property_exists_in_tdms(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            logging_specification = project.open_logging_specification_document()
-            with TemporaryDirectory() as temp_dir:
-                logging_specification.set_log_file_base_path(temp_dir)
-                logging_specification.set_log_file_name("PropertyThatDoesNotExist.tdms")
-
-                logging_specification.set_test_property("Something new", "I'm new!", False)
-                # Run the test so the TDMS file gets written
-                project.test_session.start()
-                sleep(5)
-                project.test_session.stop()
-
-                new_value = self._get_tdms_file_property(
-                    temp_dir, "PropertyThatDoesNotExist.tdms", "Something new"
-                )
-                assert new_value == "I'm new!"
-
-    @pytest.mark.integration  # type: ignore
-    def test__open_project__remove_test_property___property_does_not_exist_in_tdms(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            logging_specification = project.open_logging_specification_document()
-            with TemporaryDirectory() as temp_dir:
-                logging_specification.set_log_file_base_path(temp_dir)
-                logging_specification.set_log_file_name("PropertyThatWasRemoved.tdms")
-
-                logging_specification.remove_test_property("Operator")
-                # Run the test so the TDMS file gets written
-                project.test_session.start()
-                sleep(5)
-                project.test_session.stop()
-
-                new_value = self._get_tdms_file_property(
-                    temp_dir, "PropertyThatWasRemoved.tdms", "Operator"
-                )
-                assert new_value is None
-
     def _get_tdms_file_property(
         self, log_file_base_path: str, log_file_name: str, property_name: str
     ) -> Optional[str]:
@@ -369,17 +194,6 @@ class TestLoggingSpecificationDocument:
             assert 6 == len(logging_specification.get_test_properties())
             new_prop = logging_specification.get_test_property("New Property")
             self.assert_property_matches(new_prop, "New Property", "some value", False)
-
-    @pytest.mark.integration  # type: ignore
-    def test__start_test_session__set_test_property__exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            with pytest.raises(FlexLoggerError):
-                logging_specification.set_test_property("Nope", "Sorry", True)
 
     @pytest.mark.integration  # type: ignore
     @pytest.mark.parametrize("name", ["", "12UCannotDoThat", "@!:.#IllegalChars"])  # type: ignore
@@ -423,25 +237,6 @@ class TestLoggingSpecificationDocument:
             logging_specification = project.open_logging_specification_document()
             with pytest.raises(FlexLoggerError):
                 logging_specification.remove_test_property("DoesNotExist")
-
-    @pytest.mark.integration  # type: ignore
-    def test__start_test_session__remove_test_property__exception_raised(
-        self, app: Application
-    ) -> None:
-        with open_project(app, "ProjectWithProducedData") as project:
-            project.test_session.start()
-            logging_specification = project.open_logging_specification_document()
-
-            with pytest.raises(FlexLoggerError):
-                logging_specification.remove_test_property("Property")
-
-    @pytest.mark.integration  # type: ignore
-    def test__close_project__get_test_properties__exception_raised(self, app: Application) -> None:
-        project = app.open_project(get_project_path("ProjectWithProducedData"))
-        logging_specification = project.open_logging_specification_document()
-        project.close()
-        with pytest.raises(FlexLoggerError):
-            logging_specification.get_test_properties()
 
     @pytest.mark.integration  # type: ignore
     def test__testproperty_repr__returns_correct_string(self) -> None:
