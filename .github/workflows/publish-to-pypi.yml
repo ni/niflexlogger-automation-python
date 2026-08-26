@@ -42,14 +42,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-    # Configure this as a protected GitHub environment and register the
-    # same environment in the PyPI trusted-publisher configuration.
-    environment:
-      name: pypi
-
-    permissions:
-      id-token: write
-
     steps:
       # This privileged job does not check out or execute repository code.
       - name: Download distributions
@@ -60,3 +52,6 @@ jobs:
 
       - name: Publish distributions to PyPI
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
