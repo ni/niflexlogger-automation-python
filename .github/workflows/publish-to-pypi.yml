@@ -4,7 +4,6 @@ on:
   release:
     types: [published]
 
-# Default all jobs to minimal access.
 permissions:
   contents: read
 
@@ -14,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # For maximum supply-chain protection, replace version tags with
-      # reviewed full commit SHAs.
+
       - name: Check out release source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
@@ -42,8 +40,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-    # Configure this as a protected GitHub environment and register the
-    # same environment in the PyPI trusted-publisher configuration.
     environment:
       name: pypi
 
@@ -51,7 +47,7 @@ jobs:
       id-token: write
 
     steps:
-      # This privileged job does not check out or execute repository code.
+      
       - name: Download distributions
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
