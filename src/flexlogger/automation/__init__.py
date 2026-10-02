@@ -10,6 +10,11 @@ from ._screen_document import ScreenDocument
 from ._test_specification_document import TestSpecificationDocument
 from ._flexlogger_error import FlexLoggerError
 from ._channel_data_point import ChannelDataPoint
+from ._channel_data_stream import ChannelDataStream
+from ._channel_data_stream import ChannelFrame
+from ._channel_data_stream import DataFrame
+from ._channel_data_stream import WindowStatistics
+from ._channel_metadata import ChannelMetadata
 from ._test_property import TestProperty
 from ._data_rate_level import DataRateLevel
 from ._event_payloads import EventPayload

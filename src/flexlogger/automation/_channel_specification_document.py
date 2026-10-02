@@ -1,12 +1,16 @@
 from datetime import timezone
-from typing import Callable, List
+from typing import Callable, List, Optional
 
 from grpc import Channel, RpcError
 
 from ._channel_data_point import ChannelDataPoint
+from ._channel_data_stream import ChannelDataStream
+from ._channel_metadata import ChannelMetadata
 from ._data_rate_level import DataRateLevel
 from ._flexlogger_error import FlexLoggerError
 from .proto import (
+    ChannelDataStream_pb2,
+    ChannelDataStream_pb2_grpc,
     ChannelSpecificationDocument_pb2,
     ChannelSpecificationDocument_pb2_grpc,
 )
@@ -85,6 +89,29 @@ class ChannelSpecificationDocument:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to get channel names") from error
+
+    def get_channel_metadata(
+        self, channel_names: Optional[List[str]] = None
+    ) -> List[ChannelMetadata]:
+        """Get display information, such as the unit, expected range, and data rate, of channels.
+
+        Args:
+            channel_names: The names of the channels. If omitted, describes all channels.
+
+        Raises:
+            FlexLoggerError: if getting the channel metadata fails.
+        """
+        stub = ChannelDataStream_pb2_grpc.ChannelDataStreamStub(self._channel)
+        try:
+            response = stub.GetChannelMetadata(
+                ChannelDataStream_pb2.GetChannelMetadataRequest(
+                    document_identifier=self._identifier, channel_names=channel_names
+                )
+            )
+            return [ChannelMetadata._from_pb2(channel) for channel in response.channels]
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to get channel metadata") from error
 
     def get_channel_value(self, channel_name: str) -> ChannelDataPoint:
         """Get the current value of the specified channel.
@@ -318,3 +345,51 @@ class ChannelSpecificationDocument:
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to set the data rate level.") from error
+
+    def stream_channel_data(
+        self,
+        channel_names: List[str],
+        window_seconds: Optional[float] = None,
+        points_per_window: Optional[int] = None,
+        max_update_rate_hz: Optional[float] = None,
+        include_statistics: bool = False,
+        include_latest_value: bool = False,
+    ) -> ChannelDataStream:
+        """Stream live data of channels, like the FlexLogger high speed graph.
+
+        Each frame is a snapshot of the last ``window_seconds`` of every channel, reduced to
+        ``points_per_window`` minimum and maximum bins so no peak is lost. The stream keeps running
+        until you cancel it. Use the returned stream as a context manager.
+
+        Args:
+            channel_names: The names of the channels to stream. They share one time window.
+            window_seconds: The length of the window in seconds. If omitted, FlexLogger picks one.
+            points_per_window: The number of minimum and maximum bins across the window, roughly
+                the width of the plot in pixels. If omitted, FlexLogger picks one.
+            max_update_rate_hz: The most frames per second to receive. FlexLogger may send fewer.
+                If omitted, FlexLogger picks a rate.
+            include_statistics: Whether to include the minimum, maximum, and average of each
+                channel over the window.
+            include_latest_value: Whether to include the latest value of each channel.
+
+        Raises:
+            FlexLoggerError: if the stream cannot be started, for example because a channel does
+                not exist, or because the version of FlexLogger does not support streaming.
+        """
+        stub = ChannelDataStream_pb2_grpc.ChannelDataStreamStub(self._channel)
+        try:
+            responses = stub.StreamChannelData(
+                ChannelDataStream_pb2.StreamChannelDataRequest(
+                    document_identifier=self._identifier,
+                    channel_names=channel_names,
+                    window_seconds=window_seconds or 0.0,
+                    points_per_window=points_per_window or 0,
+                    max_update_rate_hz=max_update_rate_hz or 0.0,
+                    include_statistics=include_statistics,
+                    include_latest_value=include_latest_value,
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to stream channel data.") from error
+        return ChannelDataStream(responses, self._raise_if_application_closed)
