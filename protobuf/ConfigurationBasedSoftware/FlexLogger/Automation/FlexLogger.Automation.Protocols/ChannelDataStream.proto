@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package national_instruments.flex_logger.automation.protocols;
+
+import "DiagramSdk/Automation/DiagramSdk.Automation.Protocols/Identifiers.proto";
+import "google/protobuf/timestamp.proto";
+
+// Service interface for streaming live channel data out of FlexLogger.
+service ChannelDataStream {
+  // RPC call to stream live data for a set of channels until the client cancels the call.
+  rpc StreamChannelData(StreamChannelDataRequest) returns (stream StreamChannelDataResponse) {}
+  // RPC call to get display metadata (unit, expected range, data rate, hierarchy) for channels.
+  rpc GetChannelMetadata(GetChannelMetadataRequest) returns (GetChannelMetadataResponse) {}
+}
+
+// The kind of data a stream delivers.
+enum StreamMode {
+  // Treated as STREAM_MODE_DISPLAY.
+  STREAM_MODE_UNSPECIFIED = 0;
+  // Min-max decimated snapshots of a sliding window, like the FlexLogger high speed graph.
+  // Each frame replaces the previous one; frames overlap and may be skipped.
+  STREAM_MODE_DISPLAY = 1;
+}
+
+// Request object for streaming channel data.
+message StreamChannelDataRequest {
+  // The channel specification document identifier.
+  national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+  // The channels to stream. All channels share one time window.
+  repeated string channel_names = 2;
+  // The stream mode.
+  StreamMode mode = 3;
+  // Length of the visible window in seconds. 0 = server default.
+  double window_seconds = 4;
+  // Number of min-max bins across the window (about the plot width in pixels). 0 = server default.
+  uint32 points_per_window = 5;
+  // Upper bound on frames per second. 0 = server default. The server may deliver fewer.
+  double max_update_rate_hz = 6;
+  // Include minimum, maximum, and average over the window for each channel.
+  bool include_statistics = 7;
+  // Include the latest published value and timestamp for each channel.
+  bool include_latest_value = 8;
+}
+
+// Response object for streaming channel data.
+message StreamChannelDataResponse {
+  oneof message {
+    // Always the first message of a stream.
+    StreamStarted started = 1;
+    // A frame of channel data.
+    DataFrame frame = 2;
+    // A non-fatal notice about the stream.
+    StreamStatus status = 3;
+  }
+}
+
+// Confirms a stream and reports the effective parameters.
+message StreamStarted {
+  // Metadata for each streamed channel, in request order.
+  repeated ChannelMetadata channels = 1;
+  // The stream mode in effect.
+  StreamMode effective_mode = 2;
+  // The window length in effect, in seconds.
+  double effective_window_seconds = 3;
+  // The number of min-max bins per window in effect.
+  uint32 effective_points_per_window = 4;
+  // The maximum frame rate in effect.
+  double effective_max_update_rate_hz = 5;
+}
+
+// A frame of channel data.
+message DataFrame {
+  // Increments by one per frame sent.
+  uint64 sequence_number = 1;
+  // Absolute time that the per-channel time offsets are relative to.
+  google.protobuf.Timestamp reference_time = 2;
+  // Data for each streamed channel.
+  repeated ChannelFrame channels = 3;
+  // Total number of frames the server dropped because the client read too slowly.
+  uint64 dropped_frames_total = 4;
+}
+
+// Data for one channel in a frame.
+message ChannelFrame {
+  // The channel name.
+  string channel_name = 1;
+  oneof data {
+    // Min-max decimated series for STREAM_MODE_DISPLAY.
+    MinMaxSeries min_max = 2;
+  }
+  // Window statistics, when requested.
+  WindowStatistics statistics = 3;
+  // Latest published value, when requested.
+  LatestValue latest = 4;
+}
+
+// Points in time order. Each min-max bin contributes its minimum and maximum at the times they
+// occurred, so points aren't evenly spaced. Plot time_offsets[i] against values[i] as one line.
+message MinMaxSeries {
+  // Seconds relative to DataFrame.reference_time.
+  repeated double time_offsets = 1 [packed = true];
+  // Values at each time offset.
+  repeated double values = 2 [packed = true];
+}
+
+// Statistics over the frame's window.
+message WindowStatistics {
+  double minimum = 1;
+  double maximum = 2;
+  double average = 3;
+}
+
+// The latest published value of a channel.
+message LatestValue {
+  double value = 1;
+  google.protobuf.Timestamp timestamp = 2;
+}
+
+// A non-fatal notice about the stream.
+message StreamStatus {
+  // The kind of notice.
+  StreamStatusCode code = 1;
+  // The affected channel, or empty when the notice isn't channel-specific.
+  string channel_name = 2;
+  // A human-readable description.
+  string message = 3;
+}
+
+// The kind of a stream notice.
+enum StreamStatusCode {
+  STREAM_STATUS_CODE_UNSPECIFIED = 0;
+  // A channel stopped producing valid data. Other channels keep streaming.
+  STREAM_STATUS_CODE_CHANNEL_ERROR = 1;
+  // A channel that reported an error is producing data again.
+  STREAM_STATUS_CODE_CHANNEL_RECOVERED = 2;
+  // No frame was sent for a while; the stream is still alive.
+  STREAM_STATUS_CODE_HEARTBEAT = 3;
+}
+
+// Request object for getting channel metadata.
+message GetChannelMetadataRequest {
+  // The channel specification document identifier.
+  national_instruments.diagram_sdk.automation.protocols.ElementIdentifier document_identifier = 1;
+  // The channels to describe. Empty = all channels.
+  repeated string channel_names = 2;
+}
+
+// Response object for getting channel metadata.
+message GetChannelMetadataResponse {
+  // Metadata for each channel, in request order.
+  repeated ChannelMetadata channels = 1;
+}
+
+// Display metadata for a channel.
+message ChannelMetadata {
+  // The channel name.
+  string channel_name = 1;
+  // The unit, or empty when the channel has none.
+  string unit = 2;
+  // The expected minimum value.
+  double expected_minimum = 3;
+  // The expected maximum value.
+  double expected_maximum = 4;
+  // The actual data rate in Hz.
+  double actual_data_rate_hz = 5;
+  // The channel's group path in the I/O table, outermost first.
+  repeated string group_path = 6;
+  // Whether the channel is enabled.
+  bool enabled = 7;
+  // Whether the channel value can be set through automation.
+  bool writable = 8;
+  // The channel data type, for example "double" or "string".
+  string data_type = 9;
+  // Current channel errors.
+  repeated string errors = 10;
+  // Current channel warnings.
+  repeated string warnings = 11;
+}
