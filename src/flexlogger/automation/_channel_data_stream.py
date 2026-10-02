@@ -1,4 +1,3 @@
-import logging
 import threading
 from datetime import datetime, timedelta, timezone
 from typing import Any, Callable, Dict, List, NoReturn, Optional
@@ -8,9 +7,6 @@ from grpc import RpcError, StatusCode
 from ._channel_data_point import ChannelDataPoint
 from ._channel_metadata import ChannelMetadata
 from ._flexlogger_error import FlexLoggerError
-from .proto import ChannelDataStream_pb2
-
-_logger = logging.getLogger(__name__)
 
 
 def _to_utc_datetime(timestamp_pb2: Any) -> datetime:
@@ -49,7 +45,7 @@ class WindowStatistics:
 
 
 class ChannelFrame:
-    """The data of one channel in a :class:`DataFrame`.
+    """The data of one channel in a :class:`StreamFrame`.
 
     FlexLogger reduces the window to minimum and maximum values, like the FlexLogger high speed
     graph. Each bin contributes its minimum and maximum at the times they occurred, so the points
@@ -110,7 +106,7 @@ class ChannelFrame:
 
     @property
     def times_seconds(self) -> List[float]:
-        """The time of each point in seconds, relative to :attr:`DataFrame.reference_time`."""
+        """The time of each point in seconds, relative to :attr:`StreamFrame.reference_time`."""
         return self._times_seconds
 
     @property
@@ -133,7 +129,7 @@ class ChannelFrame:
         return [self._reference_time + timedelta(seconds=offset) for offset in self._times_seconds]
 
 
-class DataFrame:
+class StreamFrame:
     """A snapshot of the visible window of every streamed channel.
 
     Each frame replaces the previous one. Frames overlap, and FlexLogger skips frames when the
@@ -153,7 +149,7 @@ class DataFrame:
         self._dropped_frames_total = dropped_frames_total
 
     @classmethod
-    def _from_pb2(cls, frame_pb2: Any) -> "DataFrame":
+    def _from_pb2(cls, frame_pb2: Any) -> "StreamFrame":
         reference_time = _to_utc_datetime(frame_pb2.reference_time)
         channels = {}
         for channel_frame_pb2 in frame_pb2.channels:
@@ -165,7 +161,7 @@ class DataFrame:
         )
 
     def __repr__(self) -> str:
-        return "flexlogger.automation.DataFrame(%d)" % self._sequence_number
+        return "flexlogger.automation.StreamFrame(%d)" % self._sequence_number
 
     @property
     def sequence_number(self) -> int:
@@ -195,7 +191,7 @@ class ChannelDataStream:
     :meth:`.ChannelSpecificationDocument.stream_channel_data`.
 
     Use the stream as a context manager so it is cancelled when you are done. Iterate over it to
-    receive each :class:`DataFrame`, or call :meth:`start_background` and read
+    receive each :class:`StreamFrame`, or call :meth:`start_background` and read
     :attr:`latest_frame` from code that cannot block.
     """
 
@@ -204,7 +200,7 @@ class ChannelDataStream:
         self._raise_if_application_closed = raise_if_application_closed
         self._is_cancelled = False
         self._lock = threading.Lock()
-        self._latest_frame = None  # type: Optional[DataFrame]
+        self._latest_frame = None  # type: Optional[StreamFrame]
         self._background_thread = None  # type: Optional[threading.Thread]
         self._background_error = None  # type: Optional[Exception]
 
@@ -225,19 +221,16 @@ class ChannelDataStream:
     def __iter__(self) -> "ChannelDataStream":
         return self
 
-    def __next__(self) -> DataFrame:
+    def __next__(self) -> StreamFrame:
         while True:
             message = self._read_message()
             if message is None:
                 raise StopIteration
-            message_type = message.WhichOneof("message")
-            if message_type == "frame":
-                frame = DataFrame._from_pb2(message.frame)
+            if message.WhichOneof("message") == "frame":
+                frame = StreamFrame._from_pb2(message.frame)
                 with self._lock:
                     self._latest_frame = frame
                 return frame
-            if message_type == "status":
-                self._log_status(message.status)
 
     @property
     def metadata(self) -> List[ChannelMetadata]:
@@ -245,7 +238,7 @@ class ChannelDataStream:
         return self._metadata
 
     @property
-    def latest_frame(self) -> Optional[DataFrame]:
+    def latest_frame(self) -> Optional[StreamFrame]:
         """The most recent frame received, or None if no frame has arrived yet.
 
         This is safe to read from any thread.
@@ -263,7 +256,7 @@ class ChannelDataStream:
         self._is_cancelled = True
         self._responses.cancel()
 
-    def start_background(self, callback: Optional[Callable[[DataFrame], None]] = None) -> None:
+    def start_background(self, callback: Optional[Callable[[StreamFrame], None]] = None) -> None:
         """Receive frames on a worker thread instead of by iterating.
 
         Read the most recent frame from :attr:`latest_frame`. Call this at most once, and do not
@@ -282,7 +275,7 @@ class ChannelDataStream:
         )
         self._background_thread.start()
 
-    def _run_background(self, callback: Optional[Callable[[DataFrame], None]]) -> None:
+    def _run_background(self, callback: Optional[Callable[[StreamFrame], None]]) -> None:
         try:
             for frame in self:
                 if callback is not None:
@@ -314,12 +307,3 @@ class ChannelDataStream:
                 "The channel data stream ended because FlexLogger stopped providing data."
             ) from error
         raise FlexLoggerError("Failed to stream channel data") from error
-
-    @staticmethod
-    def _log_status(status_pb2: Any) -> None:
-        if status_pb2.code != ChannelDataStream_pb2.STREAM_STATUS_CODE_HEARTBEAT:
-            _logger.warning(
-                "Channel data stream notice for '%s': %s",
-                status_pb2.channel_name,
-                status_pb2.message,
-            )

@@ -45,6 +45,7 @@ Installation Instructions and Getting Started
 
         $ python -m pip install streamlit
         $ streamlit run "<ExamplePath>\streamlit_live_channels.py"
+
 Related Resources
 =================
 For additional information about using the FlexLogger Python API and FlexLogger examples, refer the `Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>`_.

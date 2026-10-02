@@ -165,8 +165,10 @@ def live_view(channel_name, project_key, unit):
         return
 
     channel = frame.channels[channel_name]
+    # A channel without a published value yet has no latest value.
+    current_value = "%.4g %s" % (channel.latest.value, unit) if channel.latest else "n/a"
     left, middle, right = st.columns(3)
-    left.metric("Current value", "%.4g %s" % (channel.latest.value, unit))
+    left.metric("Current value", current_value)
     middle.metric("Window minimum", "%.4g" % channel.statistics.minimum)
     right.metric("Window maximum", "%.4g" % channel.statistics.maximum)
     # Plotting the minimum and maximum points as one line keeps every peak, like FlexLogger does.

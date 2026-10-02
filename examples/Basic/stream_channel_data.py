@@ -42,12 +42,14 @@ def main(channel_names):
         for frame_index, frame in enumerate(stream):
             print("Frame %d (reference time %s)" % (frame.sequence_number, frame.reference_time))
             for name, channel in frame.channels.items():
+                # A channel without a published value yet has no latest value.
+                latest = channel.latest.value if channel.latest is not None else float("nan")
                 print(
                     "  %s: %d points, latest %g, window minimum %g, maximum %g, average %g"
                     % (
                         name,
                         len(channel.values),
-                        channel.latest.value,
+                        latest,
                         channel.statistics.minimum,
                         channel.statistics.maximum,
                         channel.statistics.average,

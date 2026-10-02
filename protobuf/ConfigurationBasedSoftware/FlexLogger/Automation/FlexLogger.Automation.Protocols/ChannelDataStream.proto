@@ -48,7 +48,7 @@ message StreamChannelDataResponse {
     // Always the first message of a stream.
     StreamStarted started = 1;
     // A frame of channel data.
-    DataFrame frame = 2;
+    StreamFrame frame = 2;
     // A non-fatal notice about the stream.
     StreamStatus status = 3;
   }
@@ -69,7 +69,7 @@ message StreamStarted {
 }
 
 // A frame of channel data.
-message DataFrame {
+message StreamFrame {
   // Increments by one per frame sent.
   uint64 sequence_number = 1;
   // Absolute time that the per-channel time offsets are relative to.
@@ -97,7 +97,7 @@ message ChannelFrame {
 // Points in time order. Each min-max bin contributes its minimum and maximum at the times they
 // occurred, so points aren't evenly spaced. Plot time_offsets[i] against values[i] as one line.
 message MinMaxSeries {
-  // Seconds relative to DataFrame.reference_time.
+  // Seconds relative to StreamFrame.reference_time.
   repeated double time_offsets = 1 [packed = true];
   // Values at each time offset.
   repeated double values = 2 [packed = true];
@@ -120,21 +120,13 @@ message LatestValue {
 message StreamStatus {
   // The kind of notice.
   StreamStatusCode code = 1;
-  // The affected channel, or empty when the notice isn't channel-specific.
-  string channel_name = 2;
-  // A human-readable description.
-  string message = 3;
 }
 
 // The kind of a stream notice.
 enum StreamStatusCode {
   STREAM_STATUS_CODE_UNSPECIFIED = 0;
-  // A channel stopped producing valid data. Other channels keep streaming.
-  STREAM_STATUS_CODE_CHANNEL_ERROR = 1;
-  // A channel that reported an error is producing data again.
-  STREAM_STATUS_CODE_CHANNEL_RECOVERED = 2;
   // No frame was sent for a while; the stream is still alive.
-  STREAM_STATUS_CODE_HEARTBEAT = 3;
+  STREAM_STATUS_CODE_HEARTBEAT = 1;
 }
 
 // Request object for getting channel metadata.
