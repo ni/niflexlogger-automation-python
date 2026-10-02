@@ -22,12 +22,13 @@ class FakeChannelDataStreamServicer(ChannelDataStream_pb2_grpc.ChannelDataStream
 
     def StreamChannelData(self, request, context):
         self.stream_requests.append(request)
+        if not context.add_callback(self.client_disconnected.set):
+            self.client_disconnected.set()
         for message in self.stream_messages:
             yield message
         if self.abort_status is not None:
             context.abort(*self.abort_status)
         if self.keep_stream_open:
-            context.add_callback(self.client_disconnected.set)
             self.client_disconnected.wait(timeout=10)
 
     def GetChannelMetadata(self, request, context):
