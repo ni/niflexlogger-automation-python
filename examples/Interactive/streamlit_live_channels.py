@@ -98,11 +98,11 @@ def overview_page():
     project_name = project_path.stem if project_path else "Unsaved project"
     st.caption("%s - test session: %s" % (project_name, project.test_session.state.name))
     channel_specification = project.open_channel_specification_document()
-    # Only channels with a floating point value can be streamed.
+    # Only acquired channels with a floating point value can be streamed; variables are writable and not streamed.
     metadata = [
         channel
         for channel in channel_specification.get_channel_metadata()
-        if channel.data_type == "double"
+        if channel.data_type == "double" and not channel.writable
     ]
     names = [channel.channel_name for channel in metadata]
     table = pd.DataFrame(
@@ -113,7 +113,10 @@ def overview_page():
             "Rate (Hz)": [channel.actual_data_rate_hz for channel in metadata],
         }
     )
-    selection = st.dataframe(table, hide_index=True, on_select="rerun", selection_mode="single-row")
+    # A fixed key keeps the selection when the live values in the table change between reruns.
+    selection = st.dataframe(
+        table, key="channels", hide_index=True, on_select="rerun", selection_mode="single-row"
+    )
     if selection.selection.rows:
         st.session_state["channel"] = names[selection.selection.rows[0]]
         st.switch_page(channel_page_ref)
