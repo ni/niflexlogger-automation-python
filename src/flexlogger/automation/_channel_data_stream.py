@@ -313,7 +313,7 @@ class ChannelDataStream:
             raise FlexLoggerError(
                 "The channel data stream ended because FlexLogger stopped providing data."
             ) from error
-        raise FlexLoggerError("Failed to stream channel data.") from error
+        raise FlexLoggerError("Failed to stream channel data") from error
 
     @staticmethod
     def _log_status(status_pb2: Any) -> None:

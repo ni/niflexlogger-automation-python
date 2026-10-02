@@ -391,5 +391,5 @@ class ChannelSpecificationDocument:
             )
         except (RpcError, ValueError) as error:
             self._raise_if_application_closed()
-            raise FlexLoggerError("Failed to stream channel data.") from error
+            raise FlexLoggerError("Failed to stream channel data") from error
         return ChannelDataStream(responses, self._raise_if_application_closed)
