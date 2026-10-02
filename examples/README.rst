@@ -19,6 +19,7 @@ Requirements
 * Python 3.6-3.13
 * pymodbus 2.5.3 (Only for the Thermal Chamber with Communication Protocol example)
 * numpy 1.0 (Only for the Thermal Chamber with Communication Protocol example)
+* Streamlit 1.37 or later (Only for the Streamlit live channels example)
 
 Folder Structure
 ================
@@ -40,6 +41,10 @@ Installation Instructions and Getting Started
 
 	$ python "<ExamplePath>\ExampleName.py" "<Additional parameters, if needed>"
 
+   To run the Streamlit live channels example, use Streamlit instead::
+
+        $ python -m pip install streamlit
+        $ streamlit run "<ExamplePath>\streamlit_live_channels.py"
 Related Resources
 =================
 For additional information about using the FlexLogger Python API and FlexLogger examples, refer the `Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>`_.

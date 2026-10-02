@@ -127,6 +127,12 @@ Setting the value of a channel
    :language: python
    :linenos:
 
+Streaming live data of channels
+
+.. literalinclude:: ../examples/Basic/stream_channel_data.py
+   :language: python
+   :linenos:
+
 Logging
 -------
 
