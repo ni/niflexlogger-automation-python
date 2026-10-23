@@ -46,6 +46,10 @@ Installation Instructions and Getting Started
         $ python -m pip install streamlit
         $ streamlit run "<ExamplePath>\streamlit_live_channels.py"
 
+   To stream every sample of channels for 30 seconds and write them to a CSV file, run the raw channel data streaming example::
+
+        $ python "<ExamplePath>\stream_raw_channel_data.py" --seconds 30 --csv samples.csv "<Channel name>" "<Channel name>"
+
 Related Resources
 =================
 For additional information about using the FlexLogger Python API and FlexLogger examples, refer the `Read the Docs website <https://niflexlogger-automation.readthedocs.io/en/latest>`_.

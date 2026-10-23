@@ -133,6 +133,12 @@ Streaming live data of channels
    :language: python
    :linenos:
 
+Streaming every sample of channels
+
+.. literalinclude:: ../examples/Basic/stream_raw_channel_data.py
+   :language: python
+   :linenos:
+
 Logging
 -------
 
