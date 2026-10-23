@@ -48,6 +48,9 @@ def main(channel_names, seconds, csv_path):
                 for name, channel in frame.channels.items():
                     sample_counts[name] += len(channel)
                     for segment in channel.segments:
+                        # Channels without a known data rate report 0; use the interval instead.
+                        if not rates[name] and segment.sample_interval_seconds:
+                            rates[name] = 1.0 / segment.sample_interval_seconds
                         if segment.follows_gap:
                             gap_count += 1
                             gap_time = frame.reference_time + timedelta(
