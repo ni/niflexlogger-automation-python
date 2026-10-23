@@ -297,7 +297,7 @@ class _ChannelDataStreamBase(Generic[_FrameT]):
         self._raise_if_application_closed()
         if code == StatusCode.UNAVAILABLE:
             raise FlexLoggerError(
-                "The channel data stream ended because FlexLogger stopped providing data."
+                "The channel data stream ended because FlexLogger stopped providing data"
             ) from error
         raise FlexLoggerError("Failed to stream channel data") from error
 
