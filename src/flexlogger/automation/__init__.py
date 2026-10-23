@@ -15,6 +15,10 @@ from ._channel_data_stream import ChannelFrame
 from ._channel_data_stream import StreamFrame
 from ._channel_data_stream import WindowStatistics
 from ._channel_metadata import ChannelMetadata
+from ._raw_channel_data_stream import ChannelSamples
+from ._raw_channel_data_stream import RawChannelDataStream
+from ._raw_channel_data_stream import RawStreamFrame
+from ._raw_channel_data_stream import SampleSegment
 from ._test_property import TestProperty
 from ._data_rate_level import DataRateLevel
 from ._event_payloads import EventPayload

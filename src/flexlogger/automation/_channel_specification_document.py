@@ -8,6 +8,7 @@ from ._channel_data_stream import ChannelDataStream
 from ._channel_metadata import ChannelMetadata
 from ._data_rate_level import DataRateLevel
 from ._flexlogger_error import FlexLoggerError
+from ._raw_channel_data_stream import RawChannelDataStream
 from .proto import (
     ChannelDataStream_pb2,
     ChannelDataStream_pb2_grpc,
@@ -393,3 +394,44 @@ class ChannelSpecificationDocument:
             self._raise_if_application_closed()
             raise FlexLoggerError("Failed to stream channel data") from error
         return ChannelDataStream(responses, self._raise_if_application_closed)
+
+    def stream_raw_channel_data(
+        self,
+        channel_names: List[str],
+        max_update_rate_hz: Optional[float] = None,
+    ) -> RawChannelDataStream:
+        """Stream every sample of channels, exactly once and in time order, for analysis.
+
+        Each frame holds the samples that each channel acquired since the previous frame, at the
+        rate of the channel, so appending the frames rebuilds the signal. The stream starts with
+        the samples acquired after it starts. If the client reads too slowly and FlexLogger
+        discards samples before sending them, the first segment after the missing samples
+        reports :attr:`.SampleSegment.follows_gap`. The stream keeps running until you cancel it.
+        Use the returned stream as a context manager.
+
+        To plot channels, use :meth:`stream_channel_data` instead.
+
+        Args:
+            channel_names: The names of the channels to stream.
+            max_update_rate_hz: The most frames per second to receive. Fewer frames carry more
+                samples each. If omitted, FlexLogger picks a rate.
+
+        Raises:
+            FlexLoggerError: if the stream cannot be started, for example because a channel does
+                not exist or cannot be streamed, or because the version of FlexLogger does not
+                support streaming raw channel data.
+        """
+        stub = ChannelDataStream_pb2_grpc.ChannelDataStreamStub(self._channel)
+        try:
+            responses = stub.StreamChannelData(
+                ChannelDataStream_pb2.StreamChannelDataRequest(
+                    document_identifier=self._identifier,
+                    channel_names=channel_names,
+                    mode=ChannelDataStream_pb2.STREAM_MODE_RAW,
+                    max_update_rate_hz=max_update_rate_hz or 0.0,
+                )
+            )
+        except (RpcError, ValueError) as error:
+            self._raise_if_application_closed()
+            raise FlexLoggerError("Failed to stream channel data") from error
+        return RawChannelDataStream(responses, self._raise_if_application_closed)
