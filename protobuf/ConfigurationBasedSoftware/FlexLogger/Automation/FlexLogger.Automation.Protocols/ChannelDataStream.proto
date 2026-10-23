@@ -20,6 +20,9 @@ enum StreamMode {
   // Min-max decimated snapshots of a sliding window, like the FlexLogger high speed graph.
   // Each frame replaces the previous one; frames overlap and may be skipped.
   STREAM_MODE_DISPLAY = 1;
+  // Every sample of each channel exactly once, in time order, at the channel's own rate.
+  // Frames append to each other; they never overlap and are never skipped.
+  STREAM_MODE_RAW = 2;
 }
 
 // Request object for streaming channel data.
@@ -31,14 +34,18 @@ message StreamChannelDataRequest {
   // The stream mode.
   StreamMode mode = 3;
   // Length of the visible window in seconds. 0 = server default.
+  // STREAM_MODE_DISPLAY only; must be 0 for STREAM_MODE_RAW.
   double window_seconds = 4;
   // Number of min-max bins across the window (about the plot width in pixels). 0 = server default.
+  // STREAM_MODE_DISPLAY only; must be 0 for STREAM_MODE_RAW.
   uint32 points_per_window = 5;
-  // Upper bound on frames per second. 0 = server default. The server may deliver fewer.
+  // Upper bound on frames per second, all modes. 0 = server default. The server may deliver fewer.
   double max_update_rate_hz = 6;
   // Include minimum, maximum, and average over the window for each channel.
+  // STREAM_MODE_DISPLAY only; must be false for STREAM_MODE_RAW.
   bool include_statistics = 7;
   // Include the latest published value and timestamp for each channel.
+  // STREAM_MODE_DISPLAY only; must be false for STREAM_MODE_RAW.
   bool include_latest_value = 8;
 }
 
@@ -77,6 +84,7 @@ message StreamFrame {
   // Data for each streamed channel.
   repeated ChannelFrame channels = 3;
   // Total number of frames the server dropped because the client read too slowly.
+  // Always 0 in STREAM_MODE_RAW.
   uint64 dropped_frames_total = 4;
 }
 
@@ -87,6 +95,8 @@ message ChannelFrame {
   oneof data {
     // Min-max decimated series for STREAM_MODE_DISPLAY.
     MinMaxSeries min_max = 2;
+    // New samples since the previous frame, for STREAM_MODE_RAW.
+    SampleSeries samples = 5;
   }
   // Window statistics, when requested.
   WindowStatistics statistics = 3;
@@ -101,6 +111,40 @@ message MinMaxSeries {
   repeated double time_offsets = 1 [packed = true];
   // Values at each time offset.
   repeated double values = 2 [packed = true];
+}
+
+// New samples of one channel since the previous frame, as segments in time order.
+// A channel without new samples has no segments.
+message SampleSeries {
+  repeated SampleSegment segments = 1;
+}
+
+// A run of samples and how they are timed.
+message SampleSegment {
+  oneof timing {
+    // Evenly spaced samples.
+    UniformTiming uniform = 1;
+    // Samples with individual times.
+    SampleTimes times = 2;
+  }
+  // The sample values.
+  repeated double values = 3 [packed = true];
+  // True when samples are missing between the previous segment of this channel and this one.
+  bool follows_gap = 4;
+}
+
+// Timing of evenly spaced samples.
+message UniformTiming {
+  // Seconds from StreamFrame.reference_time to the first sample.
+  double start_offset = 1;
+  // Seconds between samples; greater than 0.
+  double sample_interval = 2;
+}
+
+// Timing of individually timed samples.
+message SampleTimes {
+  // Seconds relative to StreamFrame.reference_time for each value, in increasing order.
+  repeated double time_offsets = 1 [packed = true];
 }
 
 // Statistics over the frame's window.
