@@ -1,12 +1,16 @@
 import threading
 from datetime import datetime, timedelta, timezone
-from typing import Any, Callable, Dict, List, NoReturn, Optional
+from typing import Any, Callable, Dict, Generic, List, NoReturn, Optional, Sequence, TypeVar
 
 from grpc import RpcError, StatusCode
 
 from ._channel_data_point import ChannelDataPoint
 from ._channel_metadata import ChannelMetadata
 from ._flexlogger_error import FlexLoggerError
+from .proto import ChannelDataStream_pb2
+
+_FrameT = TypeVar("_FrameT")
+_StreamT = TypeVar("_StreamT", bound="_ChannelDataStreamBase[Any]")
 
 
 def _to_utc_datetime(timestamp_pb2: Any) -> datetime:
@@ -184,23 +188,25 @@ class StreamFrame:
         return self._dropped_frames_total
 
 
-class ChannelDataStream:
-    """A live stream of channel data from FlexLogger.
+class _ChannelDataStreamBase(Generic[_FrameT]):
+    """Reads a channel data stream: the start message, frames, cancellation, and errors.
 
-    Do not create this class directly; instead, use the return value of
-    :meth:`.ChannelSpecificationDocument.stream_channel_data`.
-
-    Use the stream as a context manager so it is cancelled when you are done. Iterate over it to
-    receive each :class:`StreamFrame`, or call :meth:`start_background` and read
-    :attr:`latest_frame` from code that cannot block.
+    Subclasses turn each frame message into their own frame type in :meth:`_parse_frame`.
     """
 
-    def __init__(self, responses: Any, raise_if_application_closed: Callable[[], None]) -> None:
+    def __init__(
+        self,
+        responses: Any,
+        raise_if_application_closed: Callable[[], None],
+        accepted_modes: Sequence[int],
+        mode_error_message: str,
+    ) -> None:
         self._responses = responses
         self._raise_if_application_closed = raise_if_application_closed
+        self._mode_error_message = mode_error_message
         self._is_cancelled = False
         self._lock = threading.Lock()
-        self._latest_frame = None  # type: Optional[StreamFrame]
+        self._latest_frame = None  # type: Optional[_FrameT]
         self._background_thread = None  # type: Optional[threading.Thread]
         self._background_error = None  # type: Optional[Exception]
 
@@ -208,26 +214,31 @@ class ChannelDataStream:
         if started is None or started.WhichOneof("message") != "started":
             self.cancel()
             raise FlexLoggerError("The channel data stream did not start as expected.")
+        # A server that does not know the requested mode ignores it, so a mismatch means the
+        # server is too old to provide the requested kind of frames.
+        if started.started.effective_mode not in accepted_modes:
+            self.cancel()
+            raise FlexLoggerError(mode_error_message)
         self._metadata = [
             ChannelMetadata._from_pb2(channel) for channel in started.started.channels
         ]
 
-    def __enter__(self) -> "ChannelDataStream":
+    def __enter__(self: _StreamT) -> _StreamT:
         return self
 
     def __exit__(self, *args: Any) -> None:
         self.cancel()
 
-    def __iter__(self) -> "ChannelDataStream":
+    def __iter__(self: _StreamT) -> _StreamT:
         return self
 
-    def __next__(self) -> StreamFrame:
+    def __next__(self) -> _FrameT:
         while True:
             message = self._read_message()
             if message is None:
                 raise StopIteration
             if message.WhichOneof("message") == "frame":
-                frame = StreamFrame._from_pb2(message.frame)
+                frame = self._parse_frame(message.frame)
                 with self._lock:
                     self._latest_frame = frame
                 return frame
@@ -237,37 +248,21 @@ class ChannelDataStream:
         """The metadata of each streamed channel, in the order the channels were requested."""
         return self._metadata
 
-    @property
-    def latest_frame(self) -> Optional[StreamFrame]:
-        """The most recent frame received, or None if no frame has arrived yet.
-
-        This is safe to read from any thread.
-
-        Raises:
-            FlexLoggerError: if the stream running in the background failed.
-        """
-        with self._lock:
-            if self._background_error is not None:
-                raise self._background_error
-            return self._latest_frame
-
     def cancel(self) -> None:
         """Stop the stream. Iteration over the stream ends without an error."""
         self._is_cancelled = True
         self._responses.cancel()
 
-    def start_background(self, callback: Optional[Callable[[StreamFrame], None]] = None) -> None:
-        """Receive frames on a worker thread instead of by iterating.
+    def _parse_frame(self, frame_pb2: Any) -> _FrameT:
+        raise NotImplementedError()
 
-        Read the most recent frame from :attr:`latest_frame`. Call this at most once, and do not
-        also iterate over the stream.
+    def _get_latest_frame(self) -> Optional[_FrameT]:
+        with self._lock:
+            if self._background_error is not None:
+                raise self._background_error
+            return self._latest_frame
 
-        Args:
-            callback: An optional function to call with each frame on the worker thread.
-
-        Raises:
-            RuntimeError: if the stream already runs in the background.
-        """
+    def _start_background(self, callback: Optional[Callable[[_FrameT], None]]) -> None:
         if self._background_thread is not None:
             raise RuntimeError("The stream already runs in the background.")
         self._background_thread = threading.Thread(
@@ -275,7 +270,7 @@ class ChannelDataStream:
         )
         self._background_thread.start()
 
-    def _run_background(self, callback: Optional[Callable[[StreamFrame], None]]) -> None:
+    def _run_background(self, callback: Optional[Callable[[_FrameT], None]]) -> None:
         try:
             for frame in self:
                 if callback is not None:
@@ -298,12 +293,61 @@ class ChannelDataStream:
     def _raise_flexlogger_error(self, error: RpcError) -> NoReturn:
         code = error.code() if hasattr(error, "code") else None
         if code == StatusCode.UNIMPLEMENTED:
-            raise FlexLoggerError(
-                "Streaming channel data requires a newer version of FlexLogger."
-            ) from error
+            raise FlexLoggerError(self._mode_error_message) from error
         self._raise_if_application_closed()
         if code == StatusCode.UNAVAILABLE:
             raise FlexLoggerError(
                 "The channel data stream ended because FlexLogger stopped providing data."
             ) from error
         raise FlexLoggerError("Failed to stream channel data") from error
+
+
+class ChannelDataStream(_ChannelDataStreamBase[StreamFrame]):
+    """A live stream of channel data from FlexLogger.
+
+    Do not create this class directly; instead, use the return value of
+    :meth:`.ChannelSpecificationDocument.stream_channel_data`.
+
+    Use the stream as a context manager so it is cancelled when you are done. Iterate over it to
+    receive each :class:`StreamFrame`, or call :meth:`start_background` and read
+    :attr:`latest_frame` from code that cannot block.
+    """
+
+    def __init__(self, responses: Any, raise_if_application_closed: Callable[[], None]) -> None:
+        super().__init__(
+            responses,
+            raise_if_application_closed,
+            (
+                ChannelDataStream_pb2.STREAM_MODE_UNSPECIFIED,
+                ChannelDataStream_pb2.STREAM_MODE_DISPLAY,
+            ),
+            "Streaming channel data requires a newer version of FlexLogger.",
+        )
+
+    @property
+    def latest_frame(self) -> Optional[StreamFrame]:
+        """The most recent frame received, or None if no frame has arrived yet.
+
+        This is safe to read from any thread.
+
+        Raises:
+            FlexLoggerError: if the stream running in the background failed.
+        """
+        return self._get_latest_frame()
+
+    def start_background(self, callback: Optional[Callable[[StreamFrame], None]] = None) -> None:
+        """Receive frames on a worker thread instead of by iterating.
+
+        Read the most recent frame from :attr:`latest_frame`. Call this at most once, and do not
+        also iterate over the stream.
+
+        Args:
+            callback: An optional function to call with each frame on the worker thread.
+
+        Raises:
+            RuntimeError: if the stream already runs in the background.
+        """
+        self._start_background(callback)
+
+    def _parse_frame(self, frame_pb2: Any) -> StreamFrame:
+        return StreamFrame._from_pb2(frame_pb2)
