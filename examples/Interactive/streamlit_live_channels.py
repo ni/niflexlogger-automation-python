@@ -252,13 +252,17 @@ def overview_table():
             "Rate (Hz)": [format_rate(poller.rate_hz(channel)) for channel in metadata],
         }
     )
-    # A fixed key keeps the selection when the live values in the table change between reruns.
+    # A fixed key keeps the selection when the live values in the table change between reruns; a new
+    # key per visit makes the table come back unselected instead of reopening the last channel.
+    table_key = "channels_%d" % st.session_state.get("table_version", 0)
     selection = st.dataframe(
-        table, key="channels", hide_index=True, on_select="rerun", selection_mode="single-row"
+        table, key=table_key, hide_index=True, on_select="rerun", selection_mode="single-row"
     )
     if selection.selection.rows:
-        st.session_state["channel"] = names[selection.selection.rows[0]]
-        st.switch_page(channel_page_ref)
+        # One page and a full rerun: st.switch_page races in-flight table refreshes over slow links.
+        st.query_params["channel"] = names[selection.selection.rows[0]]
+        st.session_state["table_version"] = st.session_state.get("table_version", 0) + 1
+        st.rerun(scope="app")
 
 
 def format_rate(rate_hz):
@@ -272,10 +276,10 @@ def format_range(metadata):
     return "not specified"
 
 
-def channel_page():
-    channel_name = st.session_state.get("channel")
-    if not channel_name:
-        st.switch_page(overview_page_ref)
+def channel_page(channel_name):
+    if st.button("← All channels"):
+        del st.query_params["channel"]
+        st.rerun()
     project = get_application().get_active_project()
     if project is None:
         st.warning("Open a project in FlexLogger.")
@@ -283,7 +287,11 @@ def channel_page():
 
     project_key = str(project.project_file_path)
     channel_specification = get_channel_streams(project_key).channel_specification
-    metadata = channel_specification.get_channel_metadata([channel_name])[0]
+    try:
+        metadata = channel_specification.get_channel_metadata([channel_name])[0]
+    except FlexLoggerError:
+        st.warning("The project has no channel named %s." % channel_name)
+        return
     st.title(channel_name)
     # Streamlit offers no option to remove single toolbar buttons from a chart, so hide the PNG download.
     st.html(
@@ -372,6 +380,9 @@ def live_view(channel_name, project_key, unit):
     make_chart(channel_name, unit, channel.times_seconds, channel.values, chart_key)
 
 
-overview_page_ref = st.Page(overview_page, title="Project", default=True)
-channel_page_ref = st.Page(channel_page, title="Channel", url_path="channel")
-st.navigation([overview_page_ref, channel_page_ref]).run()
+st.set_page_config(page_title="FlexLogger live channels")
+selected_channel = st.query_params.get("channel")
+if selected_channel:
+    channel_page(selected_channel)
+else:
+    overview_page()
